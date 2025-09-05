@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>💕 Nossa História de Amor 💕</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="CSS/style.css" />
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav">
+        <div class="nav-container">
+          <a href="#home" class="nav-logo">
+            <span class="logo-heart">💕</span>
+            <span class="logo-text">Nossa História</span>
+          </a>
+
+          <div class="nav-menu" id="navMenu">
+            <a href="#home" class="nav-link active">Início</a>
+            <a href="#memories" class="nav-link">Memórias</a>
+            <a href="#videos" class="nav-link">Vídeos</a>
+            <a href="#gallery" class="nav-link">Galeria</a>
+            <a href="#love" class="nav-link">Amor</a>
+          </div>
+
+          <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-background">
+        <div class="hero-pattern"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">Nossa História de Amor</h1>
+          <p class="hero-subtitle">
+            Cada momento com você é uma nova página da nossa história
+          </p>
+          <div class="hero-actions">
+            <a href="#memories" class="btn btn-primary">Nossas Memórias</a>
+            <a href="#videos" class="btn btn-secondary">Ver Vídeos</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="floating-elements">
+            <div class="floating-heart">💕</div>
+            <div class="floating-heart">💖</div>
+            <div class="floating-heart">💝</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Nossos Momentos Especiais</h2>
+          <p class="section-subtitle">Cada foto conta uma história de amor</p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img
+              src="assets/1.png.jpeg"
+              alt="Nosso primeiro encontro"
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <h3>Primeiro Encontro</h3>
+              <p>O dia que mudou nossas vidas</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/2.png.jpeg" alt="Momentos juntos" loading="lazy" />
+            <div class="gallery-overlay">
+              <h3>Momentos Juntos</h3>
+              <p>Cada segundo é especial</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="assets/3.jpeg" alt="Nossa história" loading="lazy" />
+            <div class="gallery-overlay">
+              <h3>Nossa História</h3>
+              <p>Construindo memórias</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="assets/primeira.png.jpeg"
+              alt="Primeira foto juntos"
+              loading="lazy"
+            />
+            <div class="gallery-overlay">
+              <h3>Primeira Foto</h3>
+              <p>O início da jornada</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="videos" class="videos">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Nossos Vídeos Especiais</h2>
+          <p class="section-subtitle">Momentos capturados em movimento</p>
+        </div>
+
+        <div class="videos-grid">
+          <div class="video-item">
+            <div class="video-wrapper">
+              <video controls preload="metadata">
+                <source
+                  src="assets/WhatsApp Video 2025-08-26 at 19.56.37.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-icon">▶</div>
+              </div>
+            </div>
+            <div class="video-info">
+              <h3>Momento Especial 1</h3>
+              <p>Um momento único que capturou nossa alegria</p>
+            </div>
+          </div>
+
+          <div class="video-item">
+            <div class="video-wrapper">
+              <video controls preload="metadata">
+                <source
+                  src="assets/WhatsApp Video 2025-08-26 at 19.56.37 (1).mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-icon">▶</div>
+              </div>
+            </div>
+            <div class="video-info">
+              <h3>Momento Especial 2</h3>
+              <p>Risadas e momentos de pura felicidade</p>
+            </div>
+          </div>
+
+          <div class="video-item">
+            <div class="video-wrapper">
+              <video controls preload="metadata">
+                <source
+                  src="assets/WhatsApp Video 2025-08-26 at 19.56.38.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-icon">▶</div>
+              </div>
+            </div>
+            <div class="video-info">
+              <h3>Momento Especial 3</h3>
+              <p>Compartilhando alegria e amor</p>
+            </div>
+          </div>
+
+          <div class="video-item">
+            <div class="video-wrapper">
+              <video controls preload="metadata">
+                <source
+                  src="assets/WhatsApp Video 2025-08-26 at 19.56.38 (1).mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <div class="video-overlay">
+                <div class="play-icon">▶</div>
+              </div>
+            </div>
+            <div class="video-info">
+              <h3>Momento Especial 4</h3>
+              <p>Mais um momento inesquecível juntos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Memories Section -->
+    <section id="memories" class="memories">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Nossas Memórias Preciosas</h2>
+          <p class="section-subtitle">Histórias que fazem nosso amor crescer</p>
+        </div>
+
+        <div class="memories-timeline">
+          <div class="memory-item">
+            <div class="memory-date">
+              <span class="date-day">02</span>
+              <span class="date-month">Set</span>
+              <span class="date-year">2023</span>
+            </div>
+            <div class="memory-content">
+              <div class="memory-image">
+                <img
+                  src="assets/primeira.png.jpeg"
+                  alt="Primeira foto juntos"
+                />
+              </div>
+              <div class="memory-text">
+                <h3>Nosso Primeiro Encontro</h3>
+                <p>
+                  Me lembro bem em te ver em vários stories que a Thayssa
+                  postava, e sempre te achava linda (mas não sabia quem era) e
+                  depois de muito tempo, descobri que era a irmã da melhor aluna
+                  que já tive na vida!
+                </p>
+                <p>
+                  Mas você me odiava e eu nem sabia o porquê kkkk recebi uma
+                  portada na cara e lágrimas porque eu ia te dar aula. Mas
+                  enfim, dizem que tudo acontece em um tempo determinado e
+                  certo... se isso for verdade, então valeu cada dia até te
+                  encontrar, valeu cada minuto te esperando e cada segundo
+                  contado até o dia 2 de setembro.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-item">
+            <div class="memory-date">
+              <span class="date-day">--</span>
+              <span class="date-month">Dia</span>
+              <span class="date-year">Especial</span>
+            </div>
+            <div class="memory-content">
+              <div class="memory-image">
+                <img src="assets/segunda.jpeg" alt="Dia na praia" />
+              </div>
+              <div class="memory-text">
+                <h3>Nosso Dia na Praia</h3>
+                <p>
+                  Nesse dia, passamos boa parte da tarde na praia e foi
+                  simplesmente mágico... A brisa do mar, o som das ondas, tudo
+                  parecia perfeito. Desde então, comecei a amar ainda mais as
+                  praias, pois cada vez que estou lá, me sinto envolvida por uma
+                  sensação gostosa de paz.
+                </p>
+                <p>
+                  Essa blusa do Nirvana, que antes eu usava apenas em ocasiões
+                  especiais, ganhou um significado totalmente novo pra mim. Cada
+                  vez que coloco ela, me vem à mente os momentos incríveis que
+                  passamos juntos.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-item">
+            <div class="memory-date">
+              <span class="date-day">--</span>
+              <span class="date-month">Noite</span>
+              <span class="date-year">Memorável</span>
+            </div>
+            <div class="memory-content">
+              <div class="memory-image">
+                <img src="assets/terceira.jpeg" alt="Formatura" />
+              </div>
+              <div class="memory-text">
+                <h3>Formatura Especial</h3>
+                <p>
+                  A formatura do meu primo foi simplesmente maravilhosa, mas o
+                  que tornou tudo ainda mais incrível foi estar ao seu lado,
+                  compartilhando cada momento tão especial. Cada sorriso, cada
+                  olhar trocado, tudo parecia perfeito com você ali.
+                </p>
+                <p>
+                  Eu olhava para todos aqueles rostos cheios de alegria e não
+                  conseguia deixar de imaginar como será o nosso futuro. Como
+                  será quando nossos filhos estiverem se formando, celebrando
+                  suas conquistas e suas vitórias?
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feelings Section -->
+    <section class="feelings">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">
+            Como Me Senti no Nosso Primeiro Encontro
+          </h2>
+          <p class="section-subtitle">
+            Emoções que marcaram aquele dia especial
+          </p>
+        </div>
+
+        <div class="feelings-grid">
+          <div class="feeling-card">
+            <div class="feeling-icon">😰</div>
+            <h3>Ansiedade</h3>
+            <div class="feeling-meter">
+              <div class="meter-bar">
+                <div class="meter-fill" style="width: 80%"></div>
+              </div>
+              <span class="meter-value">8/10</span>
+            </div>
+          </div>
+
+          <div class="feeling-card">
+            <div class="feeling-icon">😬</div>
+            <h3>Nervosismo</h3>
+            <div class="feeling-meter">
+              <div class="meter-bar">
+                <div class="meter-fill" style="width: 95%"></div>
+              </div>
+              <span class="meter-value">9.5/10</span>
+            </div>
+          </div>
+
+          <div class="feeling-card">
+            <div class="feeling-icon">😨</div>
+            <h3>Medo</h3>
+            <div class="feeling-meter">
+              <div class="meter-bar">
+                <div class="meter-fill" style="width: 70%"></div>
+              </div>
+              <span class="meter-value">7/10</span>
+            </div>
+          </div>
+
+          <div class="feeling-card">
+            <div class="feeling-icon">😌</div>
+            <h3>Tranquilidade</h3>
+            <div class="feeling-meter">
+              <div class="meter-bar">
+                <div class="meter-fill" style="width: 40%"></div>
+              </div>
+              <span class="meter-value">4/10</span>
+            </div>
+          </div>
+
+          <div class="feeling-card">
+            <div class="feeling-icon">😊</div>
+            <h3>Confiança</h3>
+            <div class="feeling-meter">
+              <div class="meter-bar">
+                <div class="meter-fill" style="width: 75%"></div>
+              </div>
+              <span class="meter-value">7.5/10</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feelings-form">
+          <h3>E como você estava se sentindo?</h3>
+          <form id="feelingsForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="ansiedade">😰 Ansiedade</label>
+                <input type="range" id="ansiedade" min="0" max="10" value="5" />
+                <span class="range-value">5</span>/10
+              </div>
+              <div class="form-group">
+                <label for="nervosismo">😬 Nervosismo</label>
+                <input
+                  type="range"
+                  id="nervosismo"
+                  min="0"
+                  max="10"
+                  value="5"
+                />
+                <span class="range-value">5</span>/10
+              </div>
+              <div class="form-group">
+                <label for="medo">😨 Medo</label>
+                <input type="range" id="medo" min="0" max="10" value="5" />
+                <span class="range-value">5</span>/10
+              </div>
+              <div class="form-group">
+                <label for="tranquilidade">😌 Tranquilidade</label>
+                <input
+                  type="range"
+                  id="tranquilidade"
+                  min="0"
+                  max="10"
+                  value="5"
+                />
+                <span class="range-value">5</span>/10
+              </div>
+              <div class="form-group">
+                <label for="confianca">😊 Confiança</label>
+                <input type="range" id="confianca" min="0" max="10" value="5" />
+                <span class="range-value">5</span>/10
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Salvar Meus Sentimentos
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Qualities Section -->
+    <section class="qualities">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Tudo o Que Me Faz Amar Você</h2>
+          <p class="section-subtitle">
+            As pequenas coisas que tornam você única
+          </p>
+        </div>
+
+        <div class="qualities-grid">
+          <div class="quality-item">💕 Você (Óbvio)</div>
+          <div class="quality-item">🎵 Sua voz</div>
+          <div class="quality-item">🚶‍♀️ Seu jeito de andar</div>
+          <div class="quality-item">😊 Seu jeito de sorrir</div>
+          <div class="quality-item">👀 Seu jeito de olhar</div>
+          <div class="quality-item">😂 Sua risada</div>
+          <div class="quality-item">🤔 A forma como você me julgava</div>
+          <div class="quality-item">📚 Seu esforço nas minhas aulas</div>
+          <div class="quality-item">🔮 Como você pensa no futuro</div>
+          <div class="quality-item">💁‍♀️ Seus cabelos longos</div>
+          <div class="quality-item">✂️ Seus cabelos curtos</div>
+          <div class="quality-item">❌ Seu jeito de falar não</div>
+          <div class="quality-item">🥰 Seu jeito fofo de falar</div>
+          <div class="quality-item">💖 Seu jeito</div>
+        </div>
+
+        <div class="qualities-note">
+          <p>
+            💕 E essa é apenas uma pequena parte de tudo o que me faz amar
+            você... Se eu fosse listar tudo, nunca terminaria este site! 💕
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Love Section -->
+    <section id="love" class="final-love">
+      <div class="container">
+        <div class="love-content">
+          <h2 class="love-title">EU TE AMO COM TODO MEU CORAÇÃO!</h2>
+          <p class="love-message">
+            Cada dia ao seu lado é um presente, cada momento uma bênção. Você é
+            minha inspiração, minha alegria, minha vida. Obrigado por existir e
+            por fazer parte da minha história.
+          </p>
+          <div class="love-hearts">
+            <span>💕</span>
+            <span>💖</span>
+            <span>💝</span>
+            <span>💕</span>
+            <span>💖</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p>&copy; 2024 - Nossa História de Amor 💕</p>
+          <p>Feito com muito amor e carinho para você</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
