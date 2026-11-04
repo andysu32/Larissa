@@ -1,9 +1,9 @@
 // Script básico e limpo para Nossa História de Amor
 document.addEventListener('DOMContentLoaded', () => {
-    // Apenas funcionalidades essenciais sem interferir no CSS
     initBasicNavigation();
     initBasicFeelingsForm();
     initBasicVideoPlayers();
+    initQuietReveals();
 });
 
 // Navegação básica sem interferir no CSS
@@ -169,3 +169,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function initQuietReveals() {
+    const nodes = document.querySelectorAll('.reveal');
+    if (!nodes.length) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) {
+        nodes.forEach((node) => node.classList.add('is-in'));
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-in');
+                observer.unobserve(entry.target);
+            });
+        },
+        { threshold: 0.22, rootMargin: '0px 0px -8% 0px' }
+    );
+
+    nodes.forEach((node, index) => {
+        node.style.transitionDelay = `${Math.min(index * 90, 420)}ms`;
+        observer.observe(node);
+    });
+}

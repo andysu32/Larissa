@@ -3,16 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>💕 Nossa História de Amor 💕</title>
+    <title>Nossa História</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="CSS/style.css" />
+    <script>document.documentElement.classList.add('js');</script>
 
     <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -22,7 +23,7 @@
       <nav class="nav">
         <div class="nav-container">
           <a href="#home" class="nav-logo">
-            <span class="logo-heart">💕</span>
+            <span class="logo-mark">L</span>
             <span class="logo-text">Nossa História</span>
           </a>
 
@@ -32,6 +33,7 @@
             <a href="#videos" class="nav-link">Vídeos</a>
             <a href="#gallery" class="nav-link">Galeria</a>
             <a href="#love" class="nav-link">Amor</a>
+            <a href="#futuro" class="nav-link">Fim</a>
           </div>
 
           <button class="nav-toggle" id="navToggle" aria-label="Menu">
@@ -60,10 +62,11 @@
           </div>
         </div>
         <div class="hero-visual">
-          <div class="floating-elements">
-            <div class="floating-heart">💕</div>
-            <div class="floating-heart">💖</div>
-            <div class="floating-heart">💝</div>
+          <div class="hero-orb" aria-hidden="true">
+            <span class="hero-orb-ring"></span>
+            <p class="hero-orb-kicker">para sempre foi pouco</p>
+            <p class="hero-orb-name">Larissa</p>
+            <p class="hero-orb-small">e o tempo que foi nosso</p>
           </div>
         </div>
       </div>
@@ -452,8 +455,9 @@
 
         <div class="qualities-note">
           <p>
-            💕 E essa é apenas uma pequena parte de tudo o que me faz amar
-            você... Se eu fosse listar tudo, nunca terminaria este site! 💕
+            Era só uma parte pequena de tudo o que me fazia ficar.
+            Se eu escrevesse o resto, a página não acabava.
+            O nós, acabou.
           </p>
         </div>
       </div>
@@ -463,20 +467,69 @@
     <section id="love" class="final-love">
       <div class="container">
         <div class="love-content">
-          <h2 class="love-title">EU TE AMO COM TODO MEU CORAÇÃO!</h2>
+          <p class="love-kicker">o que ainda dói</p>
+          <h2 class="love-title">Eu te amo.<br />E mesmo assim, acabou.</h2>
           <p class="love-message">
-            Cada dia ao seu lado é um presente, cada momento uma bênção. Você é
-            minha inspiração, minha alegria, minha vida. Obrigado por existir e
-            por fazer parte da minha história.
+            Você seguiu. Está feliz, leve, com outra pessoa ao lado,
+            como se o mundo tivesse te devolvido o chão.
+            Eu fiquei no lugar onde a gente parou.
+            Sem raiva que dê conta disso. Só a falta.
           </p>
-          <div class="love-hearts">
-            <span>💕</span>
-            <span>💖</span>
-            <span>💝</span>
-            <span>💕</span>
-            <span>💖</span>
-          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- O futuro que não veio -->
+    <section id="futuro" class="unlived" aria-labelledby="unlived-title">
+      <div class="unlived-veil" aria-hidden="true"></div>
+      <div class="container unlived-inner">
+        <p class="unlived-kicker reveal">o último capítulo</p>
+        <h2 id="unlived-title" class="unlived-title reveal">
+          agora o futuro que nunca aconteceu
+        </h2>
+
+        <p class="unlived-lead reveal">
+          Os nossos filhos, Ethan, Katarina e Benjamin.
+        </p>
+
+        <ol class="unlived-names">
+          <li class="reveal">
+            <span class="name">Ethan</span>
+            <span class="never">nunca nasceu</span>
+          </li>
+          <li class="reveal">
+            <span class="name">Katarina</span>
+            <span class="never">nunca nasceu</span>
+          </li>
+          <li class="reveal">
+            <span class="name">Benjamin</span>
+            <span class="never">nunca nasceu</span>
+          </li>
+        </ol>
+
+        <div class="unlived-copy">
+          <p class="reveal">
+            Eu já os via. Na formatura que um dia escrevi aqui,
+            na praia, nos domingos que ainda não tinham data.
+            Tinham nome antes de terem vida. Eram nossos.
+            Iam ter a sua risada e o meu jeito de ficar quieto.
+          </p>
+          <p class="reveal">
+            O relacionamento acabou. Você está bem.
+            Seguiu em frente, feliz, e há outra pessoa
+            ocupando o lado que eu achei que era meu.
+            A vida te coube de novo.
+          </p>
+          <p class="reveal">
+            A minha ficou aqui, apagada, repetindo três nomes
+            que ninguém vai chamar no corredor de uma casa.
+            Não houve um futuro. Houve um fim.
+            E, com o fim, morreu uma família inteira
+            que só existiu dentro de mim.
+          </p>
+        </div>
+
+        <p class="unlived-end reveal">agora o futuro que nunca aconteceu</p>
       </div>
     </section>
 
@@ -484,8 +537,8 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
-          <p>&copy; 2024 - Nossa História de Amor 💕</p>
-          <p>Feito com muito amor e carinho para você</p>
+          <p>Para Larissa, e para o que a gente não foi.</p>
+          <p>Ethan · Katarina · Benjamin</p>
         </div>
       </div>
     </footer>
