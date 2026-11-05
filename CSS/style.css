@@ -1140,122 +1140,402 @@ body {
     }
 }
 
-/* O futuro que nunca aconteceu */
+/* O futuro que nunca aconteceu
+   Uma sequência só, disparada ao entrar na tela. */
 .unlived {
+    --letter-begin: 0.6s;
+    --letter-step: 0.095s;
+    --image-delay: 5.6s;
+    --fade-duration: 4.5s;
+    --develop-duration: 12.5s;
+    --name-begin: 10.6s;
+    --name-step: 1.5s;
+    --close-delay: 17.9s;
+    --close-names-delay: 19.4s;
     position: relative;
     min-height: 100vh;
-    padding: 7.5rem 0 6.5rem;
-    background:
-        radial-gradient(ellipse 70% 42% at 50% 0%, rgba(122, 62, 78, 0.28), transparent 62%),
-        radial-gradient(ellipse 50% 36% at 50% 100%, rgba(48, 62, 96, 0.18), transparent 60%),
-        #09080c;
-    color: var(--moon);
+    padding: 6.75rem 0 5rem;
+    background: #0B0B0C;
+    color: #EDE6DA;
     text-align: center;
-    overflow: hidden;
-}
-
-.unlived-veil {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.22;
-    background-image:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.16) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 70% 60%, rgba(255,255,255,0.12) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.1) 0 1px, transparent 1.5px);
-    background-size: 180px 180px, 240px 240px, 320px 320px;
 }
 
 .unlived-inner {
     position: relative;
     z-index: 1;
-    max-width: 860px;
-}
-
-.unlived-kicker {
-    letter-spacing: 0.42em;
-    text-transform: uppercase;
-    font-size: 0.72rem;
-    color: rgba(239, 232, 225, 0.5);
+    max-width: 980px;
 }
 
 .unlived-title {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
     font-style: italic;
-    font-size: clamp(2.8rem, 7.4vw, 6.1rem);
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    max-width: 12ch;
-    margin: 1.35rem auto 0;
-    color: #f6f1eb;
+    font-size: clamp(2.2rem, 5.8vw, 4.55rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 auto;
+    color: #EDE6DA;
 }
 
-.unlived-lead {
-    margin: 2.4rem auto 0;
-    max-width: 28rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.35rem, 2.4vw, 1.7rem);
-    font-style: italic;
-    color: rgba(239, 232, 225, 0.78);
+.unlived-line {
+    display: block;
+}
+
+.unlived-word {
+    display: inline-block;
+    white-space: nowrap;
+    padding-right: 0.08em;
+}
+
+.unlived-word + .unlived-word {
+    margin-left: 0.28em;
+}
+
+.unlived-letter {
+    display: inline-block;
+    --i: 0;
+}
+
+.unlived-portrait {
+    margin: 2.5rem 0 0;
+    padding: 0;
+}
+
+.unlived-frame {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    line-height: 0;
+    overflow: hidden;
+    background: #0B0B0C;
+    isolation: isolate;
+    -webkit-mask-image: radial-gradient(ellipse 86% 82% at 50% 46%, #000 58%, transparent 100%);
+    mask-image: radial-gradient(ellipse 86% 82% at 50% 46%, #000 58%, transparent 100%);
+}
+
+.unlived-zoom {
+    display: block;
+    transform-origin: center center;
+}
+
+.unlived-photo {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: min(960px, 100%);
+    max-height: min(50vh, 540px);
+    margin: 0 auto;
+    transform-origin: center center;
+    opacity: 0.85;
+    filter: saturate(0.6);
+}
+
+.unlived-grain,
+.unlived-vignette {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.unlived-grain {
+    opacity: 0.34;
+    mix-blend-mode: overlay;
+}
+
+.unlived-vignette {
+    background:
+        radial-gradient(ellipse 78% 74% at 50% 46%, transparent 42%, rgba(11, 11, 12, 0.22) 74%, rgba(11, 11, 12, 0.9) 100%),
+        linear-gradient(180deg, rgba(11, 11, 12, 0.2) 0%, transparent 16%, transparent 74%, rgba(11, 11, 12, 0.72) 100%),
+        linear-gradient(90deg, #0B0B0C 0%, rgba(11, 11, 12, 0.35) 5%, rgba(11, 11, 12, 0) 18%, rgba(11, 11, 12, 0) 82%, rgba(11, 11, 12, 0.35) 95%, #0B0B0C 100%);
 }
 
 .unlived-names {
     list-style: none;
-    margin: 3.6rem auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(1.75rem, 5vw, 4.75rem);
+    margin: 2.15rem auto 0;
     padding: 0;
-    max-width: 640px;
 }
 
 .unlived-names li {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1.5rem;
-    padding: 1.35rem 0.2rem;
-    border-top: 1px solid rgba(239, 232, 225, 0.16);
-    text-align: left;
-}
-
-.unlived-names li:last-child {
-    border-bottom: 1px solid rgba(239, 232, 225, 0.16);
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .unlived-names .name {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
-    font-size: clamp(2.3rem, 5vw, 3.8rem);
-    letter-spacing: 0.01em;
+    font-style: normal;
+    font-size: clamp(2.05rem, 4vw, 3.15rem);
+    letter-spacing: 0.015em;
     line-height: 1;
+    color: #EDE6DA;
 }
 
 .unlived-names .never {
-    flex: 0 0 auto;
-    font-size: 0.68rem;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    color: rgba(239, 232, 225, 0.42);
-}
-
-.unlived-copy {
-    max-width: 38rem;
-    margin: 3.4rem auto 0;
-}
-
-.unlived-copy p {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.22rem, 2vw, 1.5rem);
-    line-height: 1.65;
-    color: rgba(239, 232, 225, 0.84);
-    margin: 0 0 1.35rem;
-}
-
-.unlived-end {
-    margin: 3.2rem 0 0;
-    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
     font-style: italic;
-    font-size: clamp(1.45rem, 3vw, 2.05rem);
-    color: rgba(239, 232, 225, 0.48);
+    font-size: clamp(0.98rem, 1.6vw, 1.12rem);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    color: #EDE6DA;
+    opacity: 0.5;
+}
+
+.unlived-closing {
+    margin: 2.6rem auto 0;
+    max-width: 22em;
+}
+
+.unlived-for,
+.unlived-for-names {
+    font-family: 'Cormorant Garamond', serif;
+    color: #EDE6DA;
+}
+
+.unlived-for {
+    font-weight: 300;
+    font-style: normal;
+    font-size: clamp(1.45rem, 2.8vw, 2.05rem);
+    line-height: 1.35;
+    text-wrap: balance;
+}
+
+.unlived-for-names {
+    margin-top: 0.8rem;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(1.12rem, 2vw, 1.4rem);
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+}
+
+.js .unlived:not(.is-static) .unlived-letter,
+.js .unlived:not(.is-static) .unlived-names li,
+.js .unlived:not(.is-static) .unlived-for,
+.js .unlived:not(.is-static) .unlived-for-names {
+    opacity: 0;
+}
+
+.js .unlived:not(.is-static) .unlived-photo {
+    opacity: 0;
+    filter: blur(20px) grayscale(1) saturate(0);
+}
+
+.js .unlived:not(.is-static) .unlived-zoom {
+    transform: scale(1);
+}
+
+.js .unlived:not(.is-static) .unlived-grain,
+.js .unlived:not(.is-static) .unlived-vignette {
+    opacity: 0;
+}
+
+.js .unlived.is-playing .unlived-letter {
+    animation: unlived-letter 1s ease both;
+    animation-delay: calc(var(--letter-begin) + var(--i) * var(--letter-step));
+}
+
+.js .unlived.is-playing .unlived-photo {
+    animation: unlived-develop var(--develop-duration) linear var(--image-delay) both;
+}
+
+.js .unlived.is-playing .unlived-zoom {
+    animation: unlived-kenburns 20s linear var(--image-delay) both;
+}
+
+.js .unlived.is-playing .unlived-vignette {
+    animation: unlived-overlay-in var(--fade-duration) ease var(--image-delay) both;
+}
+
+.js .unlived.is-playing .unlived-grain {
+    animation: unlived-grain-in var(--fade-duration) ease var(--image-delay) both;
+}
+
+.js .unlived.is-playing .unlived-names li {
+    animation: unlived-rise 1.15s cubic-bezier(0.16, 0.84, 0.32, 1) both;
+}
+
+.js .unlived.is-playing .unlived-names li:nth-child(1) {
+    animation-delay: var(--name-begin);
+}
+
+.js .unlived.is-playing .unlived-names li:nth-child(2) {
+    animation-delay: calc(var(--name-begin) + var(--name-step));
+}
+
+.js .unlived.is-playing .unlived-names li:nth-child(3) {
+    animation-delay: calc(var(--name-begin) + var(--name-step) * 2);
+}
+
+.js .unlived.is-playing .unlived-for {
+    animation: unlived-rise 1.8s cubic-bezier(0.16, 0.84, 0.32, 1) var(--close-delay) both;
+}
+
+.js .unlived.is-playing .unlived-for-names {
+    animation: unlived-rise 1.8s cubic-bezier(0.16, 0.84, 0.32, 1) var(--close-names-delay) both;
+}
+
+@keyframes unlived-letter {
+    from {
+        opacity: 0;
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes unlived-develop {
+    0% {
+        opacity: 0;
+        filter: blur(20px) grayscale(1) saturate(0);
+    }
+    12% {
+        opacity: 0.28;
+        filter: blur(16px) grayscale(1) saturate(0);
+    }
+    24% {
+        opacity: 0.72;
+        filter: blur(8px) grayscale(0.55) saturate(0.35);
+    }
+    36% {
+        opacity: 1;
+        filter: blur(0) grayscale(0) saturate(1);
+    }
+    77.6% {
+        opacity: 1;
+        filter: blur(0) grayscale(0) saturate(1);
+    }
+    100% {
+        opacity: 0.85;
+        filter: blur(0) grayscale(0) saturate(0.6);
+    }
+}
+
+@keyframes unlived-kenburns {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+@keyframes unlived-overlay-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes unlived-grain-in {
+    from { opacity: 0; }
+    to { opacity: 0.34; }
+}
+
+@keyframes unlived-rise {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 700px) {
+    .unlived {
+        padding: 6.25rem 0 3.75rem;
+    }
+
+    .unlived .unlived-inner {
+        max-width: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .unlived-title,
+    .unlived-names,
+    .unlived-closing {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
+    }
+
+    .unlived-portrait {
+        margin-top: 1.85rem;
+    }
+
+    .unlived-frame {
+        display: block;
+        width: 100%;
+    }
+
+    .unlived-photo {
+        width: 100%;
+        max-width: none;
+        max-height: none;
+    }
+
+    .unlived-names {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.85rem;
+        margin-top: 1.85rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js .unlived:not(.is-static) .unlived-letter,
+    .js .unlived.is-playing .unlived-letter {
+        opacity: 1 !important;
+        filter: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .js .unlived:not(.is-static) .unlived-photo,
+    .js .unlived.is-playing .unlived-photo {
+        opacity: 0.85 !important;
+        filter: saturate(0.6) !important;
+        animation: none !important;
+    }
+
+    .js .unlived:not(.is-static) .unlived-zoom,
+    .js .unlived.is-playing .unlived-zoom {
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .js .unlived:not(.is-static) .unlived-vignette,
+    .js .unlived.is-playing .unlived-vignette {
+        opacity: 1 !important;
+        animation: none !important;
+    }
+
+    .js .unlived:not(.is-static) .unlived-grain,
+    .js .unlived.is-playing .unlived-grain {
+        opacity: 0.34 !important;
+        animation: none !important;
+    }
+
+    .js .unlived:not(.is-static) .unlived-names li,
+    .js .unlived.is-playing .unlived-names li,
+    .js .unlived:not(.is-static) .unlived-for,
+    .js .unlived.is-playing .unlived-for,
+    .js .unlived:not(.is-static) .unlived-for-names,
+    .js .unlived.is-playing .unlived-for-names {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+
+    .unlived-names .never {
+        opacity: 0.5 !important;
+    }
 }
 
 .js .reveal {
@@ -1270,15 +1550,96 @@ body {
 }
 
 @media (max-width: 640px) {
-    .unlived-names li {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.45rem;
-    }
-
     .hero-orb-kicker,
     .hero-orb-small {
         letter-spacing: 0.16em;
         font-size: 0.62rem;
+    }
+}
+
+/* A carta que ela nunca recebeu */
+.unsent {
+    padding: 6.5rem 0 6.75rem;
+    background: linear-gradient(180deg, #141117 0%, #100e12 42%, #0B0B0C 100%);
+    color: #EDE6DA;
+    text-align: center;
+}
+
+.unsent-kicker,
+.unsent-after-kicker {
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: rgba(237, 230, 218, 0.55);
+}
+
+.unsent-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(2.3rem, 5.6vw, 4.1rem);
+    line-height: 1.02;
+    margin: 0.9rem auto 0;
+    max-width: 12em;
+    color: #EDE6DA;
+}
+
+.letter {
+    max-width: 40rem;
+    margin: 2.8rem auto 0;
+    padding: 2.9rem 2.7rem 2.5rem;
+    text-align: left;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 18%),
+        #f4ecdf;
+    color: #2a221c;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.38);
+}
+
+.letter p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.22rem, 2vw, 1.46rem);
+    line-height: 1.68;
+    margin: 0 0 1.15rem;
+}
+
+.letter .letter-open {
+    font-style: italic;
+    font-size: clamp(1.45rem, 2.4vw, 1.75rem);
+    margin-bottom: 1.4rem;
+}
+
+.letter .letter-sign {
+    margin-top: 1.6rem;
+    margin-bottom: 0;
+    font-style: italic;
+}
+
+.unsent-after {
+    max-width: 36rem;
+    margin: 3rem auto 0;
+}
+
+.unsent-after p:last-child,
+.unsent-after p:nth-child(2) {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.18rem, 2vw, 1.4rem);
+    line-height: 1.7;
+    color: rgba(237, 230, 218, 0.78);
+    margin: 1.15rem 0 0;
+}
+
+.unsent-after-kicker {
+    margin-bottom: 0.2rem;
+}
+
+@media (max-width: 700px) {
+    .unsent {
+        padding: 4.5rem 0 4.75rem;
+    }
+
+    .letter {
+        padding: 1.7rem 1.25rem 1.5rem;
     }
 }

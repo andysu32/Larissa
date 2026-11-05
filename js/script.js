@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initBasicFeelingsForm();
     initBasicVideoPlayers();
     initQuietReveals();
+    initUnlivedMemory();
 });
 
 // Navegação básica sem interferir no CSS
@@ -194,5 +195,62 @@ function initQuietReveals() {
     nodes.forEach((node, index) => {
         node.style.transitionDelay = `${Math.min(index * 90, 420)}ms`;
         observer.observe(node);
+    });
+}
+
+function initUnlivedMemory() {
+    const section = document.getElementById('futuro');
+    if (!section) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canObserve = 'IntersectionObserver' in window;
+
+    if (reduce || !canObserve) {
+        section.classList.add('is-static');
+    }
+
+    if (!canObserve) return;
+
+    let started = false;
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting || started) return;
+                started = true;
+                if (!reduce) section.classList.add('is-playing');
+                softenSoundtrack();
+                observer.unobserve(section);
+            });
+        },
+        { threshold: 0, rootMargin: '0px 0px -25% 0px' }
+    );
+
+    observer.observe(section);
+}
+
+function softenSoundtrack() {
+    document.querySelectorAll('audio').forEach((audio) => {
+        let start;
+        try {
+            start = audio.volume;
+        } catch (e) {
+            return;
+        }
+        const target = 0.3;
+        if (!(start > target)) return;
+
+        const duration = 1700;
+        const t0 = performance.now();
+        const step = (now) => {
+            const p = Math.min(1, (now - t0) / duration);
+            const eased = p * p * (3 - 2 * p);
+            try {
+                audio.volume = start + (target - start) * eased;
+            } catch (err) {
+                return;
+            }
+            if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
     });
 }
