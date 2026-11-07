@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estudos de medicina, anatomia e fonoaudiologia</title>
+    <meta
+      name="description"
+      content="Página para revisar anatomia, fisiologia, corpo humano e fonoaudiologia, com atlas, fichas, cartões e simulados. Os livros e cursos indicados são gratuitos."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="CSS/medicina.css" />
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+    <header class="topbar">
+      <a class="brand" href="#topo">
+        <strong>Estudos</strong>
+        <span>Medicina</span>
+      </a>
+      <nav class="top-links" aria-label="Nesta página">
+        <a href="#mapa">Mapa</a>
+        <a href="#atlas">Atlas</a>
+        <a href="#revisao">Revisão</a>
+        <a href="#fono">Fonoaudiologia</a>
+        <a href="#biblioteca">Biblioteca</a>
+        <a href="#simulados">Simulados</a>
+        <a href="#cartas">Cartões</a>
+        <a class="back" href="index.html">Voltar</a>
+      </nav>
+    </header>
+
+    <main id="conteudo">
+      <div class="wrap hero" id="topo">
+        <div>
+          <p class="kicker">Novo tema · revisão livre</p>
+          <h1>Medicina, anatomia e fonoaudiologia.</h1>
+          <p class="lede">
+            Uma mesa de estudo para revisar o corpo humano, treinar memória e
+            saber onde ler de graça. As fichas são um roteiro. Os livros,
+            atlas e cursos linkados são o material completo.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#simulados">Fazer um simulado</a>
+            <a class="btn ghost" href="#biblioteca">Abrir a biblioteca</a>
+            <a class="btn ghost" href="#fono">Ir para fonoaudiologia</a>
+          </div>
+          <p class="note">
+            Isto é material de estudo, não consulta, diagnóstico ou conduta.
+            Não substitui graduação, preceptor, diretriz ou exame. Rouquidão,
+            falta de ar, dor no peito, engasgo frequente ou perda súbita de
+            fala pedem avaliação profissional. Em emergência, SAMU 192.
+          </p>
+        </div>
+        <figure class="hero-plate">
+          <img
+            src="assets/medicina/esqueleto.svg"
+            alt="Esqueleto humano visto de frente, com os nomes dos ossos em inglês."
+          />
+          <figcaption>
+            Esqueleto em vista anterior. Mariana Ruiz Villarreal (LadyofHats),
+            domínio público,
+            <a href="https://commons.wikimedia.org/wiki/File:Human_skeleton_front_en.svg">Wikimedia Commons</a>.
+            Os rótulos estão em inglês: skull é crânio, clavicle é clavícula,
+            sternum é esterno, ribs são costelas, humerus é úmero, pelvis é
+            pelve, femur é fêmur, patella é patela, tibia é tíbia e fibula é fíbula.
+          </figcaption>
+        </figure>
+      </div>
+
+      <section class="band" id="metodo">
+        <div class="wrap">
+          <h2>Como usar esta página</h2>
+          <p class="section-intro">
+            Ler uma vez não gruda. O caminho que funciona é curto: tente
+            lembrar antes de reler, erre no simulado, volte só no trecho que
+            falhou e repita no dia seguinte.
+          </p>
+          <div class="grid">
+            <article class="card" data-find="metodo recall memoria">
+              <h3>Recupere antes de reler</h3>
+              <p>
+                Feche a ficha e escreva o circuito do sangue ou os doze nervos
+                cranianos de cabeça. A dificuldade de puxar a resposta é o
+                estudo, não um sinal de que você não sabe nada.
+              </p>
+            </article>
+            <article class="card" data-find="metodo desenho anatomia">
+              <h3>Desenhe feio</h3>
+              <p>
+                Um coração com quatro câmaras, setas e o nome das valvas ensina
+                mais do que grifar um atlas. Compare o desenho com a prancha
+                depois, não durante.
+              </p>
+            </article>
+            <article class="card" data-find="metodo espacamento revisao anki">
+              <h3>Espace a revisão</h3>
+              <p>
+                Volte amanhã, em três dias e na semana seguinte. O
+                <a href="https://apps.ankiweb.net/">Anki</a> faz isso de graça.
+                Os cartões desta página servem para a primeira leva.
+              </p>
+            </article>
+            <article class="card" data-find="metodo simulado prova">
+              <h3>Simule sem consulta</h3>
+              <p>
+                Faça o simulado inteiro antes de abrir a ficha. No fim, a
+                página lista o que você errou e a explicação. A melhor marca
+                fica salva neste navegador.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="mapa">
+        <div class="wrap">
+          <h2>Mapa do que estudar</h2>
+          <p class="section-intro">
+            A graduação da saúde gira em torno dos sistemas. A fonoaudiologia
+            mora sobretudo na cabeça, no pescoço, na audição, na linguagem e
+            na deglutição, mas precisa do corpo inteiro para fazer sentido.
+          </p>
+          <form class="search" role="search">
+            <label for="busca">Buscar um tema, um osso, uma área ou um livro</label>
+            <input id="busca" type="search" data-search placeholder="Ex.: laringe, disfagia, OpenStax, rim" />
+            <span data-search-status>A busca olha sistemas, fichas, áreas da fono e a biblioteca.</span>
+          </form>
+          <div class="grid">
+            <a class="card" href="#linguagem" data-find="planos anatomicos posicao cavidades">
+              <small>Base</small>
+              <h3>Linguagem do corpo</h3>
+              <p>Posição anatômica, planos, eixos e cavidades.</p>
+            </a>
+            <a class="card" href="#ossos" data-find="esqueleto ossos coluna cranio femur">
+              <small>Anatomia</small>
+              <h3>Esqueleto</h3>
+              <p>Axial, apendicular, coluna e os ossos que caem em prova.</p>
+            </a>
+            <a class="card" href="#musculos" data-find="musculo diafragma mastigacao">
+              <small>Anatomia</small>
+              <h3>Músculos</h3>
+              <p>Tipos de tecido muscular, diafragma e mastigação.</p>
+            </a>
+            <a class="card" href="#coracao" data-find="coracao valva circulacao sangue">
+              <small>Fisiologia</small>
+              <h3>Coração e sangue</h3>
+              <p>Quatro câmaras, valvas, marcapasso e o que artéria realmente significa.</p>
+            </a>
+            <a class="card" href="#respiracao" data-find="pulmao alveolo respiracao laringe">
+              <small>Fisiologia</small>
+              <h3>Respiração e laringe</h3>
+              <p>Vias aéreas, alvéolos, pregas vocais e nervos da voz.</p>
+            </a>
+            <a class="card" href="#ouvido" data-find="orelha audicao coclea weber rinne">
+              <small>Sentidos</small>
+              <h3>Orelha</h3>
+              <p>Ouvido externo, médio e interno, tuba auditiva e diapasão.</p>
+            </a>
+            <a class="card" href="#nervoso" data-find="cerebro nervos cranianos afasia broca wernicke">
+              <small>Neuro</small>
+              <h3>Sistema nervoso</h3>
+              <p>Meninges, doze pares cranianos e o modelo clássico das afasias.</p>
+            </a>
+            <a class="card" href="#digestao" data-find="figado pancreas rim nefron endocrino insulina">
+              <small>Vísceras</small>
+              <h3>Digestão, rins e hormônios</h3>
+              <p>Bile, néfron, insulina e o que não confundir entre os órgãos.</p>
+            </a>
+            <a class="card" href="#fono" data-find="fonoaudiologia voz disfagia linguagem fluencia motricidade">
+              <small>Fonoaudiologia</small>
+              <h3>Comunicação e deglutição</h3>
+              <p>Audiologia, linguagem, voz, motricidade, disfagia e fluência.</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="atlas">
+        <div class="wrap">
+          <h2>Atlas para olhar devagar</h2>
+          <p class="section-intro">
+            As pranchas abaixo são de domínio público ou de licença livre.
+            Clique para ampliar. Várias legendas originais estão em inglês:
+            a legenda em português diz o que procurar.
+          </p>
+          <div class="atlas">
+            <figure class="plate">
+              <img src="assets/medicina/cranio.svg" alt="Vista lateral da cabeça com a relação de superfície dos ossos do crânio." />
+              <h3>Crânio de perfil</h3>
+              <figcaption>
+                Henry Vandyke Carter, para Henry Gray, <em>Anatomy of the Human Body</em> (1918), prancha 1193. Domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Gray1193.svg">Wikimedia Commons</a>.
+                Procure a relação entre os ossos da abóbada e a face. No vivo, esses relevos guiam a palpação.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/coracao.svg" alt="Diagrama do coração e do fluxo sanguíneo. Caminhos azuis são sangue sem oxigênio e caminhos vermelhos são sangue oxigenado. Rótulos em inglês." />
+              <h3>Fluxo no coração</h3>
+              <figcaption>
+                ZooFari, 2010, licença
+                <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.
+                <a href="https://commons.wikimedia.org/wiki/File:Heart_diagram_blood_flow_en.svg">Wikimedia Commons</a>.
+                Azul: sangue pobre em oxigênio. Vermelho: sangue oxigenado. Right atrium é átrio direito; left ventricle é ventrículo esquerdo; lungs são os pulmões.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/coracao-gray.png" alt="Vista anterior do interior do coração, gravura clássica de anatomia." />
+              <h3>Coração aberto</h3>
+              <figcaption>
+                Henry Vandyke Carter, Gray (1918), prancha 493. Domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Gray493.png">Wikimedia Commons</a>.
+                Compare com o diagrama colorido: aqui a tarefa é achar câmaras, valvas e grandes vasos sem a cor ajudar.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/respiratorio.svg" alt="Esquema do sistema respiratório completo, com rótulos em inglês." />
+              <h3>Vias aéreas</h3>
+              <figcaption>
+                LadyofHats e Jmarchn, domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Respiratory_system_complete_en.svg">Wikimedia Commons</a>.
+                Siga o ar: cavidade nasal, faringe, laringe, traqueia, brônquios e pulmões. O diafragma fecha o tórax por baixo.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/cerebro.png" alt="Vista lateral do cérebro sem rótulos. O lobo frontal está em azul, o parietal em amarelo, o temporal em verde e o occipital em rosa." />
+              <h3>Lobos do cérebro</h3>
+              <figcaption>
+                Derivada da prancha 728 de Gray (1918), domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Brain_diagram_without_text.svg">Wikimedia Commons</a>.
+                A frente da cabeça está à esquerda. Azul: lobo frontal. Amarelo: parietal. Verde: temporal. Rosa: occipital. O cerebelo é o traço claro, embaixo e atrás.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/medula.png" alt="Corte transversal da medula espinhal e das meninges, com legendas em português." />
+              <h3>Medula e meninges</h3>
+              <figcaption>
+                Henry Vandyke Carter, Gray (1918), prancha 770, versão com legendas em português. Domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Gray770-pt.svg">Wikimedia Commons</a>.
+                De fora para dentro: dura-máter, aracnoide e pia-máter. O liquor está no espaço subaracnóideo. A substância cinzenta desenha o H no centro.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/laringe-cartilagens.png" alt="Cartilagens da laringe vistas por trás: epiglote, tireóidea, aritenóideas e cricóidea." />
+              <h3>Cartilagens da laringe</h3>
+              <figcaption>
+                Henry Vandyke Carter, Gray (1918), prancha 950. Domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Gray950.png">Wikimedia Commons</a>.
+                Vista posterior. Epiglottis é a epiglote, thyroid é a cartilagem tireóidea, arytenoid são as aritenóideas e cricoid é a cricóidea. As pregas vocais verdadeiras se inserem nas aritenóideas.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/laringe-interior.png" alt="Visão laringoscópica do interior da laringe, com as pregas vocais." />
+              <h3>Interior da laringe</h3>
+              <figcaption>
+                Henry Vandyke Carter, Gray (1918), prancha 956. Domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Gray956.png">Wikimedia Commons</a>.
+                É a vista de quem olha de cima. As pregas vestibulares ficam acima das pregas vocais verdadeiras.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/orelha.png" alt="Diagrama anatômico da orelha humana, com ouvido externo, médio e interno." />
+              <h3>Orelha</h3>
+              <figcaption>
+                Henry Vandyke Carter, Gray (1918), prancha 904. Domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Gray904.png">Wikimedia Commons</a>.
+                Separe três andares: externo até o tímpano, médio com os ossículos, interno com cóclea e canais semicirculares.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/rins.png" alt="Face anterior dos rins e as áreas de contato com as vísceras vizinhas." />
+              <h3>Rins</h3>
+              <figcaption>
+                Henry Vandyke Carter, Gray (1918), prancha 1122. Domínio público.
+                <a href="https://commons.wikimedia.org/wiki/File:Gray1122.png">Wikimedia Commons</a>.
+                Os rins não flutuam sozinhos. A prancha mostra quem encosta neles: fígado, intestino, estômago e baço, conforme o lado.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/esqueleto.svg" alt="Esqueleto humano de frente com legenda dos ossos em inglês." />
+              <h3>Esqueleto inteiro</h3>
+              <figcaption>
+                A mesma prancha do início, para comparar axial e apendicular.
+                Axial: crânio, coluna, costelas e esterno. Apendicular: cinturas e membros.
+                LadyofHats, domínio público.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="revisao">
+        <div class="wrap">
+          <h2>Fichas de revisão</h2>
+          <p class="section-intro">
+            Texto curto, escrito para lembrar. Quando a ficha acabar, abra o
+            livro gratuito do mesmo sistema. A profundidade mora lá, não aqui.
+          </p>
+          <div class="study">
+            <article class="lesson" id="linguagem" data-find="posicao anatomica planos sagital coronal transversal cavidades">
+              <h3>Linguagem anatômica</h3>
+              <p>
+                Toda descrição parte da posição anatômica: pessoa em pé, face e
+                olhar para a frente, braços ao lado do corpo, palmas voltadas
+                para a frente, pés juntos e paralelos. Sem esse acordo, medial
+                e lateral trocam de lugar no antebraço.
+              </p>
+              <p>
+                O plano sagital separa direita e esquerda. O sagital mediano
+                passa no meio. O plano coronal, ou frontal, separa anterior e
+                posterior. O plano transversal, ou axial, separa superior e
+                inferior. Anterior também se chama ventral. Posterior também se
+                chama dorsal. Proximal fica perto da raiz do membro. Distal
+                fica longe.
+              </p>
+              <ul class="remember">
+                <li>Cavidade dorsal: craniana e vertebral.</li>
+                <li>Cavidade ventral: torácica e abdominopélvica.</li>
+                <li>O tórax tem duas cavidades pleurais e o mediastino, onde está o coração.</li>
+                <li>O diafragma separa tórax e abdome.</li>
+              </ul>
+            </article>
+
+            <article class="lesson" id="ossos" data-find="ossos esqueleto coluna cranio hioide femur estribo">
+              <h3>Esqueleto</h3>
+              <p>
+                O adulto tem cerca de 206 ossos. O número não é uma lei da
+                natureza: sesamoides e ossos extras da sutura mudam a conta. O
+                esqueleto axial é crânio, coluna, costelas e esterno. O
+                apendicular é cinturas escapular e pélvica mais os membros.
+              </p>
+              <p>
+                A coluna móvel tem 7 vértebras cervicais, 12 torácicas e 5
+                lombares. O sacro funde cinco peças. O cóccix funde de três a
+                cinco. Há doze pares de costelas. Os sete primeiros são as
+                verdadeiras e se ligam ao esterno por cartilagem própria. O
+                fêmur é o osso mais longo. O estribo é o menor. O hioide é o
+                osso que não se articula com outro osso e serve de referência
+                para língua, faringe e laringe.
+              </p>
+              <ul class="remember">
+                <li>Osso longo, curto, plano, irregular e sesamoide. A patela é o sesamoide mais famoso.</li>
+                <li>Osso compacto por fora, osso esponjoso por dentro, medula no centro dos longos.</li>
+                <li>No adulto, a medula vermelha que produz sangue fica sobretudo no axial e nas epífises.</li>
+                <li>No crânio, separe neurocrânio, que protege o encéfalo, e viscerocrânio, que arma a face.</li>
+              </ul>
+            </article>
+
+            <article class="lesson" id="musculos" data-find="musculo diafragma masseter temporal pterigoideo">
+              <h3>Músculos e movimento</h3>
+              <p>
+                Há três músculos de verdade no corpo: esquelético, que é
+                voluntário e estriado; cardíaco, estriado e involuntário; e
+                liso, involuntário, na parede das vísceras e dos vasos. No
+                esquelético, a origem é a extremidade mais fixa, a inserção é
+                a que se desloca, e o tendão liga o ventre ao osso.
+              </p>
+              <p>
+                Agonista faz o movimento. Antagonista faz o contrário.
+                Sinergista ajuda. Fixador estabiliza a origem. O diafragma é o
+                músculo que mais vale a pena gravar primeiro: é o principal da
+                inspiração em repouso e o nervo frênico, de C3 a C5, o comanda.
+                Na mastigação, masseter, temporal e pterigóideos são do ramo
+                mandibular do trigêmeo, não do facial.
+              </p>
+            </article>
+
+            <article class="lesson" id="coracao" data-find="coracao valva mitral tricuspide aorta pulmonar sinoatrial hemoglobina plaqueta">
+              <h3>Coração, circulação e sangue</h3>
+              <p>
+                O coração tem dois átrios e dois ventrículos. O lado direito
+                recebe o sangue do corpo e manda aos pulmões. O lado esquerdo
+                recebe o sangue dos pulmões e manda ao corpo. Artéria é vaso
+                que sai de um ventrículo. Veia é vaso que chega a um átrio.
+                Por isso a artéria pulmonar leva sangue pobre em oxigênio, e
+                as veias pulmonares trazem sangue oxigenado.
+              </p>
+              <ol class="flow">
+                <li>Corpo</li>
+                <li>Veias cavas</li>
+                <li>Átrio direito</li>
+                <li>Valva tricúspide</li>
+                <li>Ventrículo direito</li>
+                <li>Valva pulmonar</li>
+                <li>Pulmões</li>
+                <li>Veias pulmonares</li>
+                <li>Átrio esquerdo</li>
+                <li>Valva mitral</li>
+                <li>Ventrículo esquerdo</li>
+                <li>Valva aórtica</li>
+                <li>Aorta</li>
+              </ol>
+              <p>
+                Sístole ventricular é contração e ejeção. Diástole é
+                enchimento. O nó sinoatrial, no átrio direito, é o marcapasso.
+                O estímulo segue ao nó atrioventricular, ao feixe de His, aos
+                ramos e às fibras de Purkinje. As artérias coronárias nascem
+                da aorta e alimentam o próprio coração.
+              </p>
+              <p>
+                O sangue tem plasma e elementos figurados. Hemácias carregam
+                oxigênio pela hemoglobina. Leucócitos defendem. Plaquetas
+                começam a hemostasia. Grupo ABO e fator Rh são a base da
+                transfusão, e a compatibilidade não se decide de memória numa
+                emergência.
+              </p>
+            </article>
+
+            <article class="lesson" id="respiracao" data-find="pulmao alveolo surfactante laringe prega vocal recorrente cricotireoideo">
+              <h3>Respiração e laringe</h3>
+              <p>
+                O ar entra pelo nariz ou pela boca, cruza a faringe, passa
+                pela laringe, desce a traqueia e chega aos brônquios,
+                bronquíolos e alvéolos. Até os bronquíolos terminais o caminho
+                é de condução. A troca acontece nos alvéolos, por difusão,
+                através de uma parede finíssima. Os pneumócitos tipo II
+                fabricam surfactante, que reduz a tensão superficial. Os tipo
+                I formam essa parede de troca.
+              </p>
+              <p>
+                Na inspiração em repouso o diafragma desce, o volume do tórax
+                sobe e a pressão dentro do pulmão cai. O ar entra porque a
+                pressão de fora ficou maior. A pleura visceral reveste o
+                pulmão. A parietal reveste a parede. Entre elas há um filme
+                líquido, e a pressão pleural negativa ajuda o pulmão a
+                permanecer expandido.
+              </p>
+              <p>
+                A laringe protege a via aérea, conduz o ar, produz a voz e
+                fecha para o esforço. As cartilagens grandes são tireóidea,
+                cricóidea e aritenóideas, mais a epiglote. Corniculadas e
+                cuneiformes completam o conjunto. As pregas vestibulares são
+                as falsas. As pregas vocais verdadeiras ficam abaixo e vibram
+                na fonação.
+              </p>
+              <div class="table-wrap">
+                <table>
+                  <caption>Músculos intrínsecos que mais caem em prova</caption>
+                  <thead>
+                    <tr><th>Músculo</th><th>Ação</th><th>Nervo</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Cricoaritenóideo posterior</td><td>Abre as pregas. É o único abdutor.</td><td>Laríngeo recorrente</td></tr>
+                    <tr><td>Cricoaritenóideo lateral, tireoaritenóideo e interaritenóideo</td><td>Fecham a glote.</td><td>Laríngeo recorrente</td></tr>
+                    <tr><td>Cricotireóideo</td><td>Alonga e tensiona a prega. Sobe o tom.</td><td>Laríngeo superior, ramo externo</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                O recorrente esquerdo contorna o arco da aorta. O direito
+                contorna a artéria subclávia. Cirurgia de tireoide e de tórax
+                importa para a voz por causa desse caminho. O ramo interno do
+                laríngeo superior leva a sensibilidade da laringe acima das
+                pregas.
+              </p>
+            </article>
+
+            <article class="lesson" id="ouvido" data-find="orelha ouvido coclea tuba auditiva weber rinne martelo bigorna estribo">
+              <h3>Orelha e audição</h3>
+              <p>
+                Orelha é o nome anatômico. Ouvido é o nome de todo dia. A
+                externa vai do pavilhão à membrana timpânica. A média guarda
+                martelo, bigorna e estribo, e a tuba auditiva a liga à
+                rinofaringe para igualar a pressão. A interna tem a cóclea,
+                que ouve, e o vestíbulo com os canais semicirculares, que
+                informam equilíbrio. Os dois seguem pelo nervo vestibulococlear.
+              </p>
+              <p>
+                O som faz o tímpano vibrar, os ossículos ampliam o movimento
+                até a janela oval, a perilinfa se desloca e o órgão de Corti
+                transforma isso em sinal neural. Perda condutiva é problema
+                de ouvido externo ou médio. Perda neurossensorial é da cóclea
+                ou do nervo. Perda mista junta as duas.
+              </p>
+              <ul class="remember">
+                <li>Weber no meio da cabeça. Condutiva unilateral: o som vai para o lado doente. Neurossensorial unilateral: vai para o lado melhor.</li>
+                <li>Rinne compara osso e ar. Positivo, ar melhor que osso, é o normal e também o padrão da perda neurossensorial.</li>
+                <li>Rinne negativo, osso melhor que ar, sugere perda condutiva.</li>
+                <li>Diapasão é triagem. Audiometria tonal, vocal e imitanciometria é que medem.</li>
+              </ul>
+            </article>
+
+            <article class="lesson" id="nervoso" data-find="meninges nervos cranianos broca wernicke hipoglosso vago facial trigemeo">
+              <h3>Sistema nervoso</h3>
+              <p>
+                O sistema nervoso central é encéfalo e medula. O periférico é
+                feito dos nervos cranianos e espinais. O autônomo se divide em
+                simpático e parassimpático. As meninges, de fora para dentro,
+                são dura-máter, aracnoide e pia-máter. O liquor fica no espaço
+                subaracnóideo.
+              </p>
+              <p>
+                Há 12 pares de nervos cranianos e 31 pares de nervos espinais:
+                8 cervicais, 12 torácicos, 5 lombares, 5 sacrais e 1 coccígeo.
+                Para a fala, a deglutição e a audição, grave sobretudo o V, o
+                VII, o VIII, o IX, o X e o XII.
+              </p>
+              <div class="table-wrap">
+                <table>
+                  <caption>Os doze pares, com a função que vale memorizar</caption>
+                  <thead>
+                    <tr><th>Par</th><th>Nome</th><th>Para gravar</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>I</td><td>Olfatório</td><td>Olfação. Sensitivo.</td></tr>
+                    <tr><td>II</td><td>Óptico</td><td>Visão. Sensitivo.</td></tr>
+                    <tr><td>III</td><td>Oculomotor</td><td>Maioria dos músculos do olho, pálpebra e pupila.</td></tr>
+                    <tr><td>IV</td><td>Troclear</td><td>Músculo oblíquo superior.</td></tr>
+                    <tr><td>V</td><td>Trigêmeo</td><td>Sensibilidade da face e mastigação, pelo V3.</td></tr>
+                    <tr><td>VI</td><td>Abducente</td><td>Músculo reto lateral do olho.</td></tr>
+                    <tr><td>VII</td><td>Facial</td><td>Mímica, lágrima, gosto nos dois terços anteriores da língua e estapédio.</td></tr>
+                    <tr><td>VIII</td><td>Vestibulococlear</td><td>Audição e equilíbrio.</td></tr>
+                    <tr><td>IX</td><td>Glossofaríngeo</td><td>Gosto no terço posterior, sensibilidade da faringe, aferência do reflexo de vômito.</td></tr>
+                    <tr><td>X</td><td>Vago</td><td>Palato, faringe, laringe e vísceras torácicas e abdominais.</td></tr>
+                    <tr><td>XI</td><td>Acessório</td><td>Esternocleidomastóideo e trapézio.</td></tr>
+                    <tr><td>XII</td><td>Hipoglosso</td><td>Músculos da língua. Na lesão, a língua desvia para o lado fraco.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                No modelo clássico, a área de Broca fica no lobo frontal
+                inferior do hemisfério dominante: a fala sai pouco fluente e a
+                compreensão está relativamente melhor. A área de Wernicke fica
+                no temporal: a fala é fluente, o sentido se perde e a
+                compreensão piora. Disartria é falha motora da fala.
+                Afasia é falha de linguagem. Apraxia de fala é falha de
+                planejamento motor, com a linguagem em si mais preservada. O
+                cérebro real é uma rede, e o modelo de duas caixas existe para
+                a revisão não se perder.
+              </p>
+            </article>
+
+            <article class="lesson" id="digestao" data-find="digestao figado vesicula pancreas rim nefron insulina glucagon">
+              <h3>Digestão, rins e endócrino</h3>
+              <p>
+                O tubo digestório vai da boca ao ânus: boca, faringe, esôfago,
+                estômago, intestino delgado e intestino grosso. As glândulas
+                anexas são salivares, fígado, vesícula e pâncreas. O fígado
+                produz a bile. A vesícula a armazena e a concentra. A bile
+                emulsifica gordura. O pâncreas exócrino manda enzimas ao
+                duodeno. O pâncreas endócrino, nas ilhotas, faz insulina nas
+                células beta e glucagon nas células alfa.
+              </p>
+              <p>
+                O rim filtra o plasma, reabsorve o que o corpo quer guardar e
+                secreta o que precisa sair. A unidade desse trabalho é o
+                néfron, com corpúsculo e túbulos. Ureter conduz urina à
+                bexiga. Uretra a conduz para fora. O baço não é órgão
+                digestório: filtra sangue e participa da imunidade.
+              </p>
+              <ul class="remember">
+                <li>Hipófise, tireoide, paratireoides, suprarrenais, pâncreas endócrino e gônadas são o núcleo do endócrino de revisão.</li>
+                <li>Hormônio viaja no sangue. Nervo manda sinal elétrico. Os dois se encontram no hipotálamo e na hipófise.</li>
+                <li>Insulina reduz a glicemia ao facilitar a entrada de glicose nas células e o armazenamento.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="fono" id="fono">
+        <div class="wrap">
+          <h2>Fonoaudiologia</h2>
+          <p class="section-intro">
+            A fonoaudiologia estuda comunicação humana e funções orais:
+            audição, linguagem oral e escrita, fala, voz, fluência, motricidade
+            orofacial e deglutição, da maternidade ao envelhecimento, na escola,
+            no consultório e no hospital. O recorte abaixo segue as áreas que
+            a graduação e os periódicos da área de fato separam.
+          </p>
+          <div class="grid">
+            <article class="area" data-find="audiologia orelhinha emissao otoacustica peate aasi implante">
+              <h3>Audiologia</h3>
+              <p>
+                Estuda detecção, reconhecimento e compreensão do som, e também
+                o equilíbrio periférico. A triagem do recém-nascido, o teste
+                da orelhinha, é obrigatória nas maternidades brasileiras. O
+                exame de entrada costuma ser a emissão otoacústica. Se a
+                conduta pede mais, entra o potencial evocado auditivo de
+                tronco encefálico. Falha não é diagnóstico: é porta para
+                reteste.
+              </p>
+              <p>
+                Na revisão: audiometria tonal e vocal, imitanciometria,
+                mascaramento, perda condutiva, neurossensorial e mista,
+                aparelho de amplificação e a ideia do implante coclear, que
+                tem indicação especializada e não é um aparelho mais forte.
+              </p>
+            </article>
+            <article class="area" data-find="linguagem aquisicao fonologia afasia leitura escrita">
+              <h3>Linguagem</h3>
+              <p>
+                Linguagem não é só lista de palavras. Há fonologia, vocabulário,
+                morfossintaxe, discurso e pragmática, na fala e na escrita.
+                Balbucio, primeiras palavras por volta de um ano e combinações
+                no segundo ano são marcos de estudo, não um cronômetro. A
+                variação entre crianças é grande. Atraso pede avaliação, não
+                comparação de vídeo.
+              </p>
+              <p>
+                No adulto, afasia, demência e traumatismo mudam a linguagem de
+                outro jeito. Não chame de afasia uma disartria, nem de atraso
+                uma diferença de dialeto ou de língua de exposição.
+              </p>
+            </article>
+            <article class="area" data-find="voz grbas rasati rouquidao prega vocal higiene vocal">
+              <h3>Voz</h3>
+              <p>
+                Voz é qualidade, tom, intensidade e ressonância produzidos na
+                laringe e moldados no trato vocal. Rouquidão, soprosidade,
+                aspereza e tensão são descrições, não diagnósticos. A escala
+                GRBAS marca grau, rugosidade, soprosidade, astenia e tensão.
+                A RASATI, muito usada no Brasil, acrescenta a instabilidade.
+              </p>
+              <p>
+                Hidratação e menos grito ajudam a cuidar da voz saudável.
+                Rouquidão que passa de cerca de duas semanas, sobretudo com
+                dor, fumo ou dificuldade de engolir, precisa de avaliação, em
+                geral com exame da laringe. Sussurro tenso não é descanso.
+              </p>
+            </article>
+            <article class="area" data-find="motricidade orofacial respirador oral frenulo atm mastigacao">
+              <h3>Motricidade orofacial</h3>
+              <p>
+                Olha lábios, língua, bochechas, palato, articulação
+                temporomandibular, respiração, sucção, mastigação e fala. A
+                respiração oral pode ser hábito ou consequência de nariz
+                entupido, adenoide ou rinite. A causa muda a conduta, e a
+                fono não substitui o otorrinolaringologista.
+              </p>
+              <p>
+                Frênulo lingual se avalia pela função: elevação, protrusão,
+                sucção, fala e alimentação. O formato do freio sozinho não
+                conta a história. A
+                <a href="https://www.sbfa.org.br/">Sociedade Brasileira de Fonoaudiologia</a>
+                publica materiais abertos sobre respiração oral e motricidade.
+              </p>
+            </article>
+            <article class="area" data-find="disfagia degluticao aspiracao penetracao iddsi fase faringea">
+              <h3>Disfagia</h3>
+              <p>
+                Deglutição segura e eficiente tem fases de estudo: antecipatória,
+                oral preparatória, oral de propulsão, faríngea e esofágica. A
+                faríngea é reflexa. O véu sobe, a laringe sobe e fecha, e o
+                bolo desce. Penetração é entrada no vestíbulo da laringe sem
+                passar das pregas. Aspiração passa das pregas. Aspiração
+                silenciosa não tosse.
+              </p>
+              <p>
+                Videofluoroscopia e videoendoscopia da deglutição são exames,
+                não técnicas de casa. Texturas de dieta seguem um padrão
+                internacional, o <a href="https://iddsi.org/">IDDSI</a>. Não
+                invente consistência: use o quadro oficial quando for a hora
+                de estudá-lo a fundo.
+              </p>
+            </article>
+            <article class="area" data-find="gagueira fluencia taquifemia bloqueio">
+              <h3>Fluência</h3>
+              <p>
+                Gagueira do desenvolvimento traz repetições, prolongamentos e
+                bloqueios, muitas vezes com tensão e esquiva de palavras. A
+                taquifemia é outra alteração da fluência: a fala fica rápida,
+                irregular e com trechos pouco inteligíveis, e a pessoa pode
+                perceber menos o próprio padrão.
+              </p>
+              <p>
+                Na conversa, não complete a frase, não mande respirar no meio
+                do bloqueio e não transforme o turno num teste. Tempo e
+                contato visual comum já são uma boa base. O
+                <a href="https://gagueira.org.br/">Instituto Brasileiro de Fluência</a>
+                tem materiais abertos para família e escola.
+              </p>
+            </article>
+            <article class="area" data-find="fono educacional saude coletiva escola sus">
+              <h3>Escola e saúde coletiva</h3>
+              <p>
+                Na escola, a fono entra em linguagem, leitura, escrita, voz do
+                professor, ruído e inclusão. Na saúde coletiva, entra triagem,
+                território, creche, cuidado de quem usa a voz para trabalhar e
+                o desenho do cuidado no SUS. Não é uma versão menor da clínica:
+                muda a pergunta, do indivíduo isolado para o grupo e o serviço.
+              </p>
+            </article>
+            <article class="area" data-find="fono hospitalar neonatal disfagia uti leite humano">
+              <h3>Hospital e neonatologia</h3>
+              <p>
+                No hospital, a fono encontra disfagia, voz depois de intubação,
+                traqueostomia, comunicação alternativa e o recém-nascido que
+                ainda não consegue mamar com segurança. A Fiocruz tem formação
+                aberta sobre alterações sensório-motoras orais e disfagia no
+                recém-nascido e no lactente, pensada para o trabalho em equipe
+                na UTI neonatal.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="biblioteca">
+        <div class="wrap">
+          <h2>Biblioteca gratuita</h2>
+          <p class="section-intro">
+            Tudo abaixo abre sem pagamento. Alguns pedem conta grátis. Curso
+            com vaga fecha e reabre: se a turma não estiver aberta, o portal
+            continua sendo o lugar certo. Livro clássico pago, como Netter e
+            Moore, não está aqui.
+          </p>
+          <div class="grid">
+            <article class="resource" data-find="openstax anatomia fisiologia livro ingles">
+              <small>Livro · anatomia e fisiologia</small>
+              <h3><a href="https://openstax.org/details/books/anatomy-and-physiology-2e">OpenStax Anatomy and Physiology 2e</a></h3>
+              <p>Livro completo, revisado, online e em PDF. É o melhor texto gratuito de anatomia e fisiologia por sistemas. Está em inglês.</p>
+            </article>
+            <article class="resource" data-find="oregon state anatomia fisiologia livro">
+              <small>Livro · anatomia e fisiologia</small>
+              <h3><a href="https://open.oregonstate.education/aandp/">Anatomy &amp; Physiology, Oregon State</a></h3>
+              <p>Outro livro aberto, também por sistemas, com leitura direta no navegador. Inglês.</p>
+            </article>
+            <article class="resource" data-find="libretexts medicina anatomia">
+              <small>Estante de livros</small>
+              <h3><a href="https://med.libretexts.org/">LibreTexts Medicine</a></h3>
+              <p>Prateleira aberta com anatomia, fisiologia, clínica e áreas vizinhas. Bom para cruzar um capítulo com outro.</p>
+            </article>
+            <article class="resource" data-find="univasf anatomia humana portugues ebook">
+              <small>Livro · português</small>
+              <h3><a href="https://portais.univasf.edu.br/noticias/professor-da-univasf-lanca-e-book-de-anatomia-humana-basica/copy2_of_ebook_Anatomia_Humana_Sistematica_Basica.pdf">Anatomia Humana Sistemática Básica</a></h3>
+              <p>E-book de Braz José do Nascimento Júnior, UNIVASF, 2020, em acesso aberto para estudo. Linguagem direta, útil para cursos da saúde. PDF.</p>
+            </article>
+            <article class="resource" data-find="gray anatomia 1918 dominio publico">
+              <small>Clássico · domínio público</small>
+              <h3><a href="https://archive.org/details/anatomyofhumanbo1918gray">Gray's Anatomy, edição de 1918</a></h3>
+              <p>O texto e as pranchas de Henry Gray e Henry Vandyke Carter no Internet Archive. É anatomia histórica, não a edição moderna paga. Ainda ensina forma e relação.</p>
+            </article>
+            <article class="resource" data-find="openstax microbiologia biologia">
+              <small>Livros vizinhos</small>
+              <h3><a href="https://openstax.org/details/books/microbiology">OpenStax Microbiology</a> e <a href="https://openstax.org/details/books/biology-2e">Biology 2e</a></h3>
+              <p>Microbiologia para infecção e defesa. Biologia para célula, genética e a base que a fisiologia usa o tempo todo.</p>
+            </article>
+            <article class="resource" data-find="ncbi bookshelf statpearls pubmed pmc">
+              <small>Biblioteca biomédica</small>
+              <h3><a href="https://www.ncbi.nlm.nih.gov/books/">NCBI Bookshelf</a></h3>
+              <p>Livros e documentos gratuitos do NIH, inclusive StatPearls. Para artigos, use o <a href="https://pubmed.ncbi.nlm.nih.gov/">PubMed</a> e o texto completo do <a href="https://www.ncbi.nlm.nih.gov/pmc/">PubMed Central</a>.</p>
+            </article>
+            <article class="resource" data-find="scielo livros doab oapen portugues">
+              <small>Livros acadêmicos abertos</small>
+              <h3><a href="https://books.scielo.org/">SciELO Livros</a></h3>
+              <p>Catálogo com milhares de títulos, muitos em acesso aberto e em português. Também vale procurar no <a href="https://doabooks.org/">DOAB</a> e na <a href="https://www.oapen.org/">OAPEN</a>.</p>
+            </article>
+            <article class="resource" data-find="msd manual profissional portugues clinica">
+              <small>Referência clínica</small>
+              <h3><a href="https://www.msdmanuals.com/pt/profissional">Manuais MSD, versão profissional</a></h3>
+              <p>Referência gratuita em português, por especialidade, com figuras e testes. A <a href="https://www.msdmanuals.com/pt">versão para casa</a> explica o mesmo território em linguagem de paciente.</p>
+            </article>
+            <article class="resource" data-find="medlineplus decs mesh vocabulario">
+              <small>Consulta rápida</small>
+              <h3><a href="https://medlineplus.gov/">MedlinePlus</a> e <a href="https://decs.bvsalud.org/">DeCS</a></h3>
+              <p>MedlinePlus é a enciclopédia de saúde da Biblioteca Nacional de Medicina dos Estados Unidos. DeCS é o vocabulário em português para achar o termo certo de busca.</p>
+            </article>
+            <article class="resource" data-find="zygote biodigital innerbody atlas 3d">
+              <small>Atlas 3D gratuito, com limite</small>
+              <h3><a href="https://www.zygotebody.com/">Zygote Body</a></h3>
+              <p>Corpo masculino e feminino no navegador, com busca. A versão livre tem anúncio. <a href="https://human.biodigital.com/">BioDigital</a> e <a href="https://www.innerbody.com/">Innerbody</a> também abrem modelos sem pagar, com cota de uso.</p>
+            </article>
+            <article class="resource" data-find="teachmeanatomy radiopaedia getbodysmart kenhub">
+              <small>Aulas e imagem</small>
+              <h3><a href="https://teachmeanatomy.info/">TeachMeAnatomy</a> e <a href="https://radiopaedia.org/">Radiopaedia</a></h3>
+              <p>TeachMeAnatomy tem artigos e questões; o plano gratuito é limitado. Radiopaedia é o lugar para aprender anatomia do jeito que a tomografia mostra. <a href="https://www.getbodysmart.com/">GetBodySmart</a> tem tutoriais curtos de sistema.</p>
+            </article>
+            <article class="resource" data-find="wikimedia commons gray pranchas">
+              <small>Imagens livres</small>
+              <h3><a href="https://commons.wikimedia.org/wiki/Category:Gray%27s_Anatomy_plates">Pranchas de Gray no Wikimedia Commons</a></h3>
+              <p>Centenas de desenhos de 1918 em domínio público. É daqui que vieram as figuras desta página. Dá para estudar osso por osso.</p>
+            </article>
+            <article class="resource" data-find="codas cefac scielo fonoaudiologia periodico">
+              <small>Fonoaudiologia · periódicos</small>
+              <h3><a href="https://www.scielo.br/j/codas/">CoDAS</a> e <a href="https://www.scielo.br/j/rcefac/">Revista CEFAC</a></h3>
+              <p>CoDAS é o periódico da Sociedade Brasileira de Fonoaudiologia: linguagem, audiologia, voz, motricidade, disfagia e saúde coletiva. CEFAC publica fonoaudiologia e motricidade orofacial. Os dois estão abertos no SciELO.</p>
+            </article>
+            <article class="resource" data-find="sbfa cffa fonoaudiologia conselho sociedade">
+              <small>Fonoaudiologia · instituições</small>
+              <h3><a href="https://www.sbfa.org.br/">SBFa</a> e <a href="https://www.fonoaudiologia.org.br/">CFFa</a></h3>
+              <p>A Sociedade Brasileira de Fonoaudiologia reúne departamentos e materiais. O Conselho Federal regulamenta a profissão. Dois cadernos abertos da SBFa: <a href="https://www.sbfa.org.br/portal2017/pdf/respirador-oral-motricidade-orofacial.pdf">respirador oral</a> e <a href="https://www.sbfa.org.br/portal2017/pdf/taquifemia.pdf">taquifemia</a>.</p>
+            </article>
+            <article class="resource" data-find="lilacs bvs aps sus literatura">
+              <small>Literatura em saúde</small>
+              <h3><a href="https://lilacs.bvsalud.org/">LILACS</a> e <a href="https://aps.bvs.br/">APS na BVS</a></h3>
+              <p>LILACS cobre a literatura em saúde da América Latina. A biblioteca de atenção primária junta protocolos e textos do cuidado no SUS. A <a href="https://www.cochranelibrary.com/">Cochrane Library</a> reúne revisões sistemáticas, com resumos abertos.</p>
+            </article>
+            <article class="resource" data-find="ministerio saude bvsms publicacoes pcdt">
+              <small>Brasil · políticas e manuais</small>
+              <h3><a href="https://bvsms.saude.gov.br/">Biblioteca do Ministério da Saúde</a></h3>
+              <p>Publicações oficiais, cadernos e protocolos. O portal do <a href="https://www.gov.br/saude/pt-br">Ministério da Saúde</a> é a porta de entrada. Diretriz muda: confira a data do documento.</p>
+            </article>
+            <article class="resource" data-find="educapes bdtd teses dissertacoes">
+              <small>Trabalhos acadêmicos</small>
+              <h3><a href="https://educapes.capes.gov.br/">EduCAPES</a> e <a href="https://bdtd.ibict.br/">BDTD</a></h3>
+              <p>EduCAPES guarda recursos educacionais abertos. A Biblioteca Digital de Teses e Dissertações encontra pesquisas brasileiras de fono, anatomia e saúde.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="cursos">
+        <div class="wrap">
+          <h2>Cursos e videoaulas sem mensalidade</h2>
+          <p class="section-intro">
+            Prefira o que tem instituição por trás. Vaga de curso livre abre e
+            fecha. Se o botão de inscrição não estiver ativo, entre na busca
+            do portal e filtre por fonoaudiologia, anatomia ou atenção básica.
+          </p>
+          <div class="grid">
+            <article class="resource" data-find="unasus curso gratuito sus">
+              <small>Brasil · SUS</small>
+              <h3><a href="https://www.unasus.gov.br/cursos/busca">UNA-SUS</a></h3>
+              <p>Universidade Aberta do SUS. Cursos gratuitos e a distância para quem trabalha ou estuda saúde. O <a href="https://www.unasus.gov.br/">portal</a> também tem acervo aberto.</p>
+            </article>
+            <article class="resource" data-find="avasus ufrn modulo radiografia deficiencia auditiva">
+              <small>Brasil · módulos curtos</small>
+              <h3><a href="https://avasus.ufrn.br/">AVASUS</a></h3>
+              <p>Ambiente virtual do SUS, da UFRN e do Ministério da Saúde. Há módulos de radiografia de tórax, suporte básico de vida e identificação precoce da deficiência auditiva, entre muitos outros.</p>
+            </article>
+            <article class="resource" data-find="fiocruz campus virtual educare fono disfagia neonatal">
+              <small>Brasil · Fiocruz</small>
+              <h3><a href="https://fiocruz.br/campus-virtual-fiocruz">Campus Virtual Fiocruz</a></h3>
+              <p>Cursos abertos de saúde, entre eles formação em fonoaudiologia neonatal e disfagia. Os recursos avulsos estão no <a href="https://educare.fiocruz.br/">Educare</a>.</p>
+            </article>
+            <article class="resource" data-find="khan academy saude medicina portugues">
+              <small>Vídeo · fisiologia</small>
+              <h3><a href="https://pt.khanacademy.org/science/health-and-medicine">Khan Academy, Saúde e medicina</a></h3>
+              <p>Aulas curtas de sistemas, em português. A <a href="https://www.khanacademy.org/science/health-and-medicine">edição em inglês</a> é maior e cobre mais fisiologia.</p>
+            </article>
+            <article class="resource" data-find="openwho oms opas saude publica">
+              <small>Saúde pública</small>
+              <h3><a href="https://openwho.org/">OpenWHO</a></h3>
+              <p>Cursos da Organização Mundial da Saúde. Para o contexto brasileiro e latino-americano, cruze com a <a href="https://www.paho.org/pt">OPAS</a> e com o portal da <a href="https://www.who.int/">OMS</a>.</p>
+            </article>
+            <article class="resource" data-find="anki cartao repeticao espacada">
+              <small>Ferramenta</small>
+              <h3><a href="https://apps.ankiweb.net/">Anki</a></h3>
+              <p>Programa gratuito de cartões com repetição espaçada. Use para nervos cranianos, valvas, músculos da laringe e fases da deglutição. O programa não traz o conteúdo: você escreve, ou estuda um baralho de fonte confiável.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="trilha">
+        <div class="wrap">
+          <div class="lab-head">
+            <div>
+              <h2>Trilha de seis semanas</h2>
+              <p class="section-intro">
+                Uma volta completa, sem pressa de residência médica. Marque o
+                que já reviu. A marca fica só neste navegador.
+              </p>
+            </div>
+            <button class="btn ghost" type="button" data-reset-checks>Limpar marcas</button>
+          </div>
+          <p data-progress-label>Nenhum item marcado ainda.</p>
+          <div class="progress" aria-hidden="true"><span data-progress></span></div>
+          <div class="checks">
+            <label class="check"><input type="checkbox" data-check="s1" /> <span><strong>Semana 1.</strong> Linguagem anatômica, esqueleto e a prancha do crânio. Feche desenhando a coluna: 7, 12 e 5.</span></label>
+            <label class="check"><input type="checkbox" data-check="s2" /> <span><strong>Semana 2.</strong> Músculos, diafragma e mastigação. Leia o capítulo correspondente no OpenStax ou no e-book da UNIVASF.</span></label>
+            <label class="check"><input type="checkbox" data-check="s3" /> <span><strong>Semana 3.</strong> Coração e sangue. Recite o circuito com as valvas, sem olhar. Faça o simulado 2.</span></label>
+            <label class="check"><input type="checkbox" data-check="s4" /> <span><strong>Semana 4.</strong> Respiração, laringe e orelha. Grave o único abdutor e a diferença entre recorrente e laríngeo superior.</span></label>
+            <label class="check"><input type="checkbox" data-check="s5" /> <span><strong>Semana 5.</strong> Nervos cranianos, Broca, Wernicke, digestão, néfron e insulina. Faça o simulado 3.</span></label>
+            <label class="check"><input type="checkbox" data-check="s6" /> <span><strong>Semana 6.</strong> Fonoaudiologia: audiologia, linguagem, voz, motricidade, disfagia e fluência. Faça o simulado 4 e leia um artigo da CoDAS sobre o tema que errou.</span></label>
+            <label class="check"><input type="checkbox" data-check="h1" /> <span>Desenhei o coração e o caminho do sangue de memória.</span></label>
+            <label class="check"><input type="checkbox" data-check="h2" /> <span>Listei os doze nervos cranianos sem consulta.</span></label>
+            <label class="check"><input type="checkbox" data-check="h3" /> <span>Expliquei penetração e aspiração em voz alta, com um exemplo.</span></label>
+            <label class="check"><input type="checkbox" data-check="h4" /> <span>Abri um atlas 3D e localizei laringe, cóclea, diafragma e rins.</span></label>
+            <label class="check"><input type="checkbox" data-check="h5" /> <span>Li um capítulo inteiro de livro aberto, não só esta ficha.</span></label>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="simulados">
+        <div class="wrap">
+          <h2>Simulados</h2>
+          <p class="section-intro">
+            Quarenta questões originais, em cinco provas. Escolha uma, responda
+            sem voltar ao texto e leia a explicação antes de seguir. O
+            resultado mostra o que errar de novo amanhã.
+          </p>
+          <div data-quiz>
+            <div class="grid exams" data-exams></div>
+            <div class="quiz is-hidden" data-stage tabindex="-1" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cartas">
+        <div class="wrap">
+          <h2>Cartões de memória</h2>
+          <p class="section-intro">
+            Clique no cartão para virar. Diga a resposta em voz alta antes.
+            “Sei” e “ainda erro” só contam esta sessão, para você sentir o
+            tamanho da pilha.
+          </p>
+          <div class="flash" data-flash>
+            <div class="quiz-top">
+              <span data-card-count></span>
+              <span data-card-tally></span>
+            </div>
+            <div class="flash-scene" data-scene tabindex="0" role="button" aria-label="Virar cartão">
+              <div class="flash-inner" data-inner>
+                <div class="face" data-front></div>
+                <div class="face back" data-back></div>
+              </div>
+            </div>
+            <div class="flash-nav lab-tools">
+              <button class="btn ghost" type="button" data-prev>Anterior</button>
+              <button class="btn ghost" type="button" data-again>Ainda erro</button>
+              <button class="btn" type="button" data-know>Sei</button>
+              <button class="btn ghost" type="button" data-next>Próximo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="glossario">
+        <div class="wrap">
+          <h2>Glossário mínimo</h2>
+          <div class="grid">
+            <article class="term" data-find="hematose"><h3>Hematose</h3><p>Troca gasosa nos alvéolos: o sangue ganha oxigênio e perde gás carbônico.</p></article>
+            <article class="term" data-find="homeostase"><h3>Homeostase</h3><p>Manutenção do meio interno. Temperatura, pH, glicose e água são os exemplos de abertura.</p></article>
+            <article class="term" data-find="ipsilateral contralateral"><h3>Ipsilateral</h3><p>Do mesmo lado. Contralateral é do lado oposto.</p></article>
+            <article class="term" data-find="disartria"><h3>Disartria</h3><p>Fala alterada por fraqueza, coordenação ou tônus. A linguagem pode estar intacta.</p></article>
+            <article class="term" data-find="disfonia"><h3>Disfonia</h3><p>Alteração da voz. Não diz, sozinha, qual é a lesão na laringe.</p></article>
+            <article class="term" data-find="disfagia"><h3>Disfagia</h3><p>Dificuldade de deglutir com segurança ou eficiência.</p></article>
+            <article class="term" data-find="hipernasalidade"><h3>Hipernasalidade</h3><p>Escape de ar para o nariz na fala, quando o véu não fecha bem a rinofaringe.</p></article>
+            <article class="term" data-find="presbifonia"><h3>Presbifonia</h3><p>Mudanças da voz ligadas ao envelhecimento da laringe. É descrição de estudo, não um rótulo para toda voz idosa.</p></article>
+            <article class="term" data-find="presbiacusia"><h3>Presbiacusia</h3><p>Perda auditiva ligada ao envelhecimento, em geral neurossensorial e de sons agudos.</p></article>
+            <article class="term" data-find="afasia"><h3>Afasia</h3><p>Alteração de linguagem adquirida, em geral por lesão no hemisfério dominante.</p></article>
+            <article class="term" data-find="pragmatica"><h3>Pragmática</h3><p>Uso da linguagem no contexto: turno, ironia, pedido e o que não está dito.</p></article>
+            <article class="term" data-find="imitanciometria"><h3>Imitanciometria</h3><p>Mede a mobilidade do tímpano e os reflexos do ouvido médio. Não substitui a audiometria.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="fontes">
+        <div class="wrap">
+          <h2>De onde veio o material</h2>
+          <p>
+            As fichas e as questões foram escritas para esta página como
+            revisão. Elas não copiam livro. Quando o assunto apertar, o texto
+            de referência é o link, não o resumo.
+          </p>
+          <ul class="remember">
+            <li>Anatomia e fisiologia de base: <a href="https://openstax.org/details/books/anatomy-and-physiology-2e">OpenStax Anatomy and Physiology 2e</a> e <a href="https://open.oregonstate.education/aandp/">Oregon State</a>.</li>
+            <li>Anatomia em português, acesso aberto: <a href="https://portais.univasf.edu.br/noticias/professor-da-univasf-lanca-e-book-de-anatomia-humana-basica/copy2_of_ebook_Anatomia_Humana_Sistematica_Basica.pdf">Anatomia Humana Sistemática Básica</a>, UNIVASF, 2020.</li>
+            <li>Pranchas: Henry Vandyke Carter, Gray, 1918, domínio público; esqueleto e vias aéreas de LadyofHats, domínio público; coração em cores de ZooFari, CC BY-SA 3.0. Todas via Wikimedia Commons.</li>
+            <li>Clínica em português: <a href="https://www.msdmanuals.com/pt/profissional">Manuais MSD</a>.</li>
+            <li>Fonoaudiologia: <a href="https://www.scielo.br/j/codas/">CoDAS</a>, <a href="https://www.scielo.br/j/rcefac/">CEFAC</a>, <a href="https://www.sbfa.org.br/">SBFa</a> e <a href="https://iddsi.org/">IDDSI</a>.</li>
+            <li>Cursos: <a href="https://www.unasus.gov.br/">UNA-SUS</a>, <a href="https://avasus.ufrn.br/">AVASUS</a> e <a href="https://fiocruz.br/campus-virtual-fiocruz">Campus Virtual Fiocruz</a>.</li>
+          </ul>
+          <p class="note">
+            Terminologia anatômica muda devagar, e diretriz clínica muda mais
+            depressa. Se uma ficha e um protocolo oficial discordarem, fique
+            com o protocolo e com o livro atual. Esta página foi reunida em
+            novembro de 2026.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p><a href="index.html">Voltar para a página anterior</a></p>
+        <p>Estudo de medicina, anatomia, corpo humano e fonoaudiologia. As marcas e as notas dos simulados ficam apenas neste navegador.</p>
+      </div>
+    </footer>
+
+    <dialog data-lightbox>
+      <button class="btn ghost" type="button" data-close>Fechar</button>
+      <img alt="" />
+      <p></p>
+    </dialog>
+    <script src="js/medicina.js"></script>
+  </body>
+</html>
