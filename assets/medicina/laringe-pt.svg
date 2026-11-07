@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" role="img" aria-labelledby="tituloLaringe">
+  <title id="tituloLaringe">Via aérea e laringe, em português</title>
+  <rect width="640" height="460" fill="#fbfaf6"/>
+  <text x="28" y="36" fill="#172421" font-family="Georgia, serif" font-size="26">Da boca à traqueia</text>
+  <g font-family="Arial, sans-serif" font-size="15" fill="#172421">
+    <rect x="40" y="70" width="150" height="42" rx="12" fill="#fff" stroke="#0f4f4a"/>
+    <text x="115" y="96" text-anchor="middle">Cavidade nasal</text>
+    <rect x="40" y="140" width="150" height="42" rx="12" fill="#fff" stroke="#0f4f4a"/>
+    <text x="115" y="166" text-anchor="middle">Boca</text>
+    <rect x="250" y="110" width="150" height="48" rx="12" fill="#e7f0ee" stroke="#0f4f4a"/>
+    <text x="325" y="140" text-anchor="middle">Faringe</text>
+    <path d="M190 91 H230 M190 161 H230 M230 110 V150 H250" fill="none" stroke="#8d6b3f" stroke-width="2"/>
+    <rect x="250" y="190" width="170" height="44" rx="12" fill="#f7e7c8" stroke="#8d6b3f"/>
+    <text x="335" y="217" text-anchor="middle">Epiglote</text>
+    <rect x="250" y="250" width="170" height="52" rx="12" fill="#f3d6d2" stroke="#9c3d4a"/>
+    <text x="335" y="272" text-anchor="middle">Pregas vestibulares</text>
+    <text x="335" y="292" text-anchor="middle">Pregas vocais</text>
+    <rect x="250" y="322" width="150" height="44" rx="12" fill="#e7f1f8" stroke="#2a6f97"/>
+    <text x="325" y="349" text-anchor="middle">Traqueia</text>
+    <rect x="450" y="250" width="150" height="116" rx="12" fill="#fff" stroke="#5b6763"/>
+    <text x="525" y="300" text-anchor="middle">Esôfago</text>
+    <text x="525" y="322" text-anchor="middle">fica atrás</text>
+    <path d="M420 276 H450" fill="none" stroke="#5b6763" stroke-width="2"/>
+  </g>
+  <text x="28" y="410" fill="#5b6763" font-family="Arial, sans-serif" font-size="14">A epiglote ajuda a desviar o alimento para o esôfago. As pregas vocais fecham a via aérea e produzem a voz.</text>
+  <text x="28" y="436" fill="#5b6763" font-family="Arial, sans-serif" font-size="14">Diagrama original desta página. Rótulos em português.</text>
+</svg>

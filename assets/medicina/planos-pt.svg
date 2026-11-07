@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 360" role="img" aria-labelledby="tituloPlanos">
+  <title id="tituloPlanos">Planos anatômicos em português</title>
+  <rect width="840" height="360" fill="#fbfaf6"/>
+  <text x="24" y="34" fill="#172421" font-family="Georgia, serif" font-size="26">Planos do corpo</text>
+  <g font-family="Arial, sans-serif" fill="#172421">
+    <rect x="24" y="58" width="250" height="250" rx="18" fill="#fff" stroke="#d9d3c8"/>
+    <text x="149" y="86" text-anchor="middle" font-size="16" font-weight="700">Sagital</text>
+    <line x1="149" y1="108" x2="149" y2="250" stroke="#0f4f4a" stroke-width="3"/>
+    <circle cx="149" cy="128" r="22" fill="none" stroke="#172421" stroke-width="2"/>
+    <path d="M149 150 v28 h-28 v40 h-16 v36 h88 v-36 h-16 v-40 h-28z" fill="none" stroke="#172421" stroke-width="2"/>
+    <text x="78" y="280" text-anchor="middle" font-size="14">direita</text>
+    <text x="220" y="280" text-anchor="middle" font-size="14">esquerda</text>
+    <rect x="294" y="58" width="250" height="250" rx="18" fill="#fff" stroke="#d9d3c8"/>
+    <text x="419" y="86" text-anchor="middle" font-size="16" font-weight="700">Coronal</text>
+    <line x1="360" y1="150" x2="478" y2="150" stroke="#8d6b3f" stroke-width="3"/>
+    <circle cx="419" cy="132" r="18" fill="none" stroke="#172421" stroke-width="2"/>
+    <path d="M400 150 h38 v70 h22 v40 h-82 v-40 h22z" fill="none" stroke="#172421" stroke-width="2"/>
+    <text x="419" y="128" text-anchor="middle" font-size="13">anterior</text>
+    <text x="419" y="250" text-anchor="middle" font-size="14">posterior fica atrás do corte</text>
+    <rect x="564" y="58" width="250" height="250" rx="18" fill="#fff" stroke="#d9d3c8"/>
+    <text x="689" y="86" text-anchor="middle" font-size="16" font-weight="700">Transversal</text>
+    <ellipse cx="689" cy="168" rx="70" ry="28" fill="none" stroke="#9c3d4a" stroke-width="3"/>
+    <text x="689" y="140" text-anchor="middle" font-size="14">superior</text>
+    <text x="689" y="230" text-anchor="middle" font-size="14">inferior</text>
+    <text x="689" y="270" text-anchor="middle" font-size="13">o corte é horizontal</text>
+  </g>
+  <text x="24" y="340" fill="#5b6763" font-family="Arial, sans-serif" font-size="14">Posição anatômica: em pé, olhar à frente, palmas à frente. Diagrama original desta página.</text>
+</svg>

@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetElement = document.querySelector(targetId);
             
             if (targetElement) {
-                const offsetTop = targetElement.offsetTop - 130;
+                const offsetTop = targetElement.offsetTop - 150;
                 
                 window.scrollTo({
                     top: offsetTop,
@@ -282,7 +282,7 @@ function eraseWhatNoLongerExists(originEl) {
     });
 
     if (reduce) {
-        document.querySelectorAll('header, section, footer, .erasure, .tema-launch').forEach((el) => {
+        document.querySelectorAll('header, section, footer, .erasure, .tema-bar, .tema-launch').forEach((el) => {
             el.style.visibility = 'hidden';
         });
         document.body.classList.add('is-erased');

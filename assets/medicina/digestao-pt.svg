@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 640" role="img" aria-labelledby="tituloDigestao">
+  <title id="tituloDigestao">Tubo digestório em português</title>
+  <rect width="420" height="640" fill="#fbfaf6"/>
+  <text x="24" y="36" fill="#172421" font-family="Georgia, serif" font-size="26">Caminho do alimento</text>
+  <g font-family="Arial, sans-serif" font-size="16" fill="#172421" text-anchor="middle">
+    <rect x="110" y="58" width="200" height="40" rx="20" fill="#fff" stroke="#0f4f4a"/>
+    <text x="210" y="84">Boca</text>
+    <rect x="110" y="118" width="200" height="40" rx="20" fill="#fff" stroke="#0f4f4a"/>
+    <text x="210" y="144">Faringe</text>
+    <rect x="110" y="178" width="200" height="40" rx="20" fill="#fff" stroke="#0f4f4a"/>
+    <text x="210" y="204">Esôfago</text>
+    <rect x="110" y="238" width="200" height="40" rx="20" fill="#e7f0ee" stroke="#0f4f4a"/>
+    <text x="210" y="264">Estômago</text>
+    <rect x="110" y="298" width="200" height="40" rx="20" fill="#e7f0ee" stroke="#0f4f4a"/>
+    <text x="210" y="324">Intestino delgado</text>
+    <rect x="110" y="358" width="200" height="40" rx="20" fill="#e7f0ee" stroke="#0f4f4a"/>
+    <text x="210" y="384">Intestino grosso</text>
+    <text x="210" y="430" font-size="14" fill="#5b6763">glândulas que ajudam</text>
+    <rect x="24" y="450" width="170" height="64" rx="14" fill="#f7e7c8" stroke="#8d6b3f"/>
+    <text x="109" y="476">Fígado</text>
+    <text x="109" y="496" font-size="13">faz a bile</text>
+    <rect x="226" y="450" width="170" height="64" rx="14" fill="#f3d6d2" stroke="#9c3d4a"/>
+    <text x="311" y="476">Pâncreas</text>
+    <text x="311" y="496" font-size="13">enzimas e insulina</text>
+    <text x="210" y="560" font-size="14" fill="#5b6763">A vesícula guarda a bile.</text>
+    <text x="210" y="586" font-size="14" fill="#5b6763">O baço não é órgão digestório.</text>
+    <text x="210" y="620" font-size="13" fill="#5b6763">Diagrama original. Rótulos em português.</text>
+  </g>
+</svg>

@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Estudos de medicina, anatomia e fonoaudiologia</title>
+    <title>Estudos de medicina — do 1º período à residência</title>
     <meta
       name="description"
-      content="Página para revisar anatomia, fisiologia, corpo humano e fonoaudiologia, com atlas, fichas, cartões e simulados. Os livros e cursos indicados são gratuitos."
+      content="Hub de estudo para qualquer período da medicina: atlas 3D, fichas, casos do internato, escalas (Glasgow, Apgar, qSOFA, CURB-65), simulados, Enamed, Revalida e Enare. Fontes oficiais e livros gratuitos."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,40 +15,49 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="CSS/medicina.css" />
+    <script type="module" src="js/vendor/model-viewer.min.js"></script>
   </head>
   <body>
     <a class="skip" href="#conteudo">Ir para o conteúdo</a>
     <header class="topbar">
+      <span class="readbar" data-readbar></span>
       <a class="brand" href="#topo">
         <strong>Estudos</strong>
         <span>Medicina</span>
       </a>
-      <nav class="top-links" aria-label="Nesta página">
-        <a href="#mapa">Mapa</a>
-        <a href="#atlas">Atlas</a>
-        <a href="#revisao">Revisão</a>
-        <a href="#fono">Fonoaudiologia</a>
-        <a href="#biblioteca">Biblioteca</a>
+      <nav class="top-links" aria-label="Nesta página" data-toplinks>
+        <a href="#comece">Comece</a>
+        <a href="#periodos">Períodos</a>
+        <a href="#areas">Áreas</a>
+        <a href="#tresd">3D</a>
+        <a href="#grade">Curso</a>
+        <a href="#revisao">Fichas</a>
+        <a href="#fono">Fono</a>
+        <a href="#casos">Casos</a>
+        <a href="#ferramentas">Escalas</a>
         <a href="#simulados">Simulados</a>
-        <a href="#cartas">Cartões</a>
+        <a href="#carreira">Provas</a>
+        <a href="#fontes">Fontes</a>
         <a class="back" href="index.html">Voltar</a>
       </nav>
     </header>
 
     <main id="conteudo">
-      <div class="wrap hero" id="topo">
+      <div class="studio" id="topo">
+      <div class="wrap hero">
         <div>
           <p class="kicker">Novo tema · revisão livre</p>
-          <h1>Medicina, anatomia e fonoaudiologia.</h1>
+          <h1>Tudo o que se estuda em medicina.</h1>
           <p class="lede">
-            Uma mesa de estudo para revisar o corpo humano, treinar memória e
-            saber onde ler de graça. As fichas são um roteiro. Os livros,
-            atlas e cursos linkados são o material completo.
+            Do primeiro período à residência. Anatomia em 3D, o curso inteiro,
+            casos do internato, escalas da prática, fonoaudiologia, simulados
+            e as provas nacionais. Cada número entre colchetes abre a fonte
+            original: DCN, Inep, CFM, Ministério da Saúde, JAMA, Thorax.
           </p>
           <div class="hero-actions">
-            <a class="btn" href="#simulados">Fazer um simulado</a>
-            <a class="btn ghost" href="#biblioteca">Abrir a biblioteca</a>
-            <a class="btn ghost" href="#fono">Ir para fonoaudiologia</a>
+            <a class="btn" href="#periodos">Escolher meu período</a>
+            <a class="btn ghost" href="#areas">Estudar por área</a>
+            <a class="btn ghost" href="#casos">Resolver um caso</a>
           </div>
           <p class="note">
             Isto é material de estudo, não consulta, diagnóstico ou conduta.
@@ -57,61 +66,394 @@
             fala pedem avaliação profissional. Em emergência, SAMU 192.
           </p>
         </div>
-        <figure class="hero-plate">
-          <img
-            src="assets/medicina/esqueleto.svg"
-            alt="Esqueleto humano visto de frente, com os nomes dos ossos em inglês."
-          />
-          <figcaption>
-            Esqueleto em vista anterior. Mariana Ruiz Villarreal (LadyofHats),
-            domínio público,
-            <a href="https://commons.wikimedia.org/wiki/File:Human_skeleton_front_en.svg">Wikimedia Commons</a>.
-            Os rótulos estão em inglês: skull é crânio, clavicle é clavícula,
-            sternum é esterno, ribs são costelas, humerus é úmero, pelvis é
-            pelve, femur é fêmur, patella é patela, tibia é tíbia e fibula é fíbula.
-          </figcaption>
-        </figure>
+        <div class="body-lab">
+          <svg class="body-svg" viewBox="0 0 220 520" role="group" aria-label="Mapa do corpo. Escolha uma região para estudar.">
+            <g class="zone" data-zone="cabeca" tabindex="0" role="button" aria-label="Cabeça">
+              <ellipse cx="110" cy="54" rx="34" ry="40"/>
+            </g>
+            <g class="zone" data-zone="pescoco" tabindex="0" role="button" aria-label="Pescoço">
+              <rect x="94" y="92" width="32" height="30" rx="10"/>
+            </g>
+            <g class="zone" data-zone="torax" tabindex="0" role="button" aria-label="Tórax">
+              <path d="M78 126h64c6 18 8 70 2 108H76c-6-38-4-90 2-108z"/>
+            </g>
+            <g class="zone" data-zone="abdome" tabindex="0" role="button" aria-label="Abdome">
+              <path d="M76 236h68c8 22 6 52-2 78-6 6-58 6-64 0-8-26-10-56-2-78z"/>
+            </g>
+            <g class="zone" data-zone="membro" tabindex="0" role="button" aria-label="Membros">
+              <path d="M62 140c-18 8-30 36-28 78 8 6 16 4 18-8 4-20 8-36 16-46z"/>
+              <path d="M158 140c18 8 30 36 28 78-8 6-16 4-18-8-4-20-8-36-16-46z"/>
+              <path d="M86 344c-6 36-4 78 2 120 6 4 14 2 14-8 0-36 2-70 6-104z"/>
+              <path d="M134 344c6 36 4 78-2 120-6 4-14 2-14-8 0-36-2-70-6-104z"/>
+            </g>
+          </svg>
+          <div class="body-card" aria-live="polite">
+            <p class="kicker" data-body-kicker>Mapa vivo</p>
+            <h2 data-body-title>Toque o corpo</h2>
+            <p data-body-copy>Cada região abre o que vale estudar ali: coração, laringe, nervos, ossos.</p>
+            <a class="btn" data-body-link href="#mapa">Ver o mapa escrito</a>
+          </div>
+        </div>
+      </div>
       </div>
 
-      <section class="band" id="metodo">
+      <section id="comece">
         <div class="wrap">
-          <h2>Como usar esta página</h2>
+          <h2>Por onde começar</h2>
           <p class="section-intro">
-            Ler uma vez não gruda. O caminho que funciona é curto: tente
-            lembrar antes de reler, erre no simulado, volte só no trecho que
-            falhou e repita no dia seguinte.
+            Sete portas. Cada uma leva ao pedaço certo da página. Não precisa
+            ler de cima a baixo.
+          </p>
+          <div class="paths">
+            <a class="path" href="#periodos">
+              <strong>Meu período</strong>
+              <span>Do 1º ao 12º: o que costuma vir em cada fase e o que treinar aqui.</span>
+            </a>
+            <a class="path" href="#revisao">
+              <strong>Revisar o corpo</strong>
+              <span>Fichas dos sistemas e o atlas 3D com 513 estruturas reais.</span>
+            </a>
+            <a class="path" href="#areas">
+              <strong>Estudar por área</strong>
+              <span>Internato, especialidades e ciclo básico: pule direto para o seu rodízio.</span>
+            </a>
+            <a class="path" href="#casos">
+              <strong>Casos e escalas</strong>
+              <span>Doze casos passo a passo, Glasgow, Apgar, qSOFA, CURB-65, IMC e valor preditivo.</span>
+            </a>
+            <a class="path" href="#simulados">
+              <strong>Quero treinar</strong>
+              <span><span data-conta="resumo">Simulados e cartões</span>. Erre primeiro, leia a explicação depois.</span>
+            </a>
+            <a class="path" href="#fono">
+              <strong>Fonoaudiologia</strong>
+              <span>Audição, linguagem, voz, motricidade, disfagia e fluência.</span>
+            </a>
+            <a class="path" href="#carreira">
+              <strong>Provas e residência</strong>
+              <span>Enamed, Revalida, Enare e as 55 especialidades oficiais.</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="periodos">
+        <div class="wrap">
+          <h2>Em que período você está?</h2>
+          <p class="section-intro">
+            Escolha o seu ano. O quadro mostra o que costuma ser estudado
+            nessa fase, o que treinar nesta página e o marco oficial que vem
+            pela frente. A ordem das disciplinas muda de faculdade para
+            faculdade: quem manda é o projeto pedagógico do seu curso.
+          </p>
+          <div class="year-picker" role="group" aria-label="Ano do curso" data-anos></div>
+          <article class="year-card" aria-live="polite">
+            <p class="kicker" data-ano-kicker></p>
+            <h3 data-ano-titulo></h3>
+            <p data-ano-resumo></p>
+            <div class="year-cols">
+              <div>
+                <h4>O que costuma vir</h4>
+                <ul class="remember" data-ano-materias></ul>
+              </div>
+              <div>
+                <h4>Treine aqui</h4>
+                <ul class="remember" data-ano-treino></ul>
+              </div>
+            </div>
+            <p class="year-mark" data-ano-marco></p>
+          </article>
+          <p class="note">
+            Regra nacional: o curso é presencial e tem no mínimo 7.200 horas.
+            A DCN de 2025 dá até quatro anos para ser implantada por inteiro,
+            então turmas mais antigas podem seguir o desenho de 2014
+            <a href="#ref-dcn" class="cite">[R]</a>.
+          </p>
+        </div>
+      </section>
+
+      <section id="areas">
+        <div class="wrap">
+          <h2>Estude pela área em que você está</h2>
+          <p class="section-intro">
+            Qualquer período, qualquer especialidade. Cada cartão leva ao
+            pedaço desta página que conversa com aquele rodízio: ficha, 3D,
+            caso, escala ou livro aberto. A ordem abaixo segue o internato da
+            DCN e, depois, as especialidades e o ciclo básico
+            <a href="#ref-dcn" class="cite">[R]</a>.
+          </p>
+          <p class="group-label">Internato e as sete áreas do Enamed</p>
+          <div class="area-map">
+            <a href="#casos" data-find="clinica medica internato enamed">
+              <small>Internato · Enamed</small>
+              <strong>Clínica médica</strong>
+              <span>Dor no peito, sepse, pneumonia, HAS e as escalas.</span>
+            </a>
+            <a href="#caso-apendicite" data-find="cirurgia internato abdome agudo">
+              <small>Internato · Enamed</small>
+              <strong>Cirurgia</strong>
+              <span>Abdome agudo, apendicite e o 3D do intestino.</span>
+            </a>
+            <a href="#caso-pe" data-find="ginecologia obstetricia pre-eclampsia internato">
+              <small>Internato · Enamed</small>
+              <strong>Ginecologia e obstetrícia</strong>
+              <span>Pré-eclâmpsia, Apgar e o manual de alto risco.</span>
+            </a>
+            <a href="#caso-apgar" data-find="pediatria neonatologia internato orelhinha">
+              <small>Internato · Enamed</small>
+              <strong>Pediatria</strong>
+              <span>Primeiro minuto, Apgar, orelhinha e corpo estranho.</span>
+            </a>
+            <a href="#caso-has" data-find="medicina familia comunidade atencao primaria hipertensao">
+              <small>Internato · Enamed</small>
+              <strong>Medicina de família</strong>
+              <span>HAS na APS, CURB-65 no posto e o PCDT.</span>
+            </a>
+            <a href="#caso-suicidio" data-find="saude mental psiquiatria suicidio internato">
+              <small>Internato · Enamed</small>
+              <strong>Saúde mental</strong>
+              <span>Risco de suicídio, escuta e a linha de cuidado.</span>
+            </a>
+            <a href="#saude-coletiva" data-find="saude coletiva epidemiologia sus">
+              <small>Internato · Enamed</small>
+              <strong>Saúde coletiva</strong>
+              <span>SUS, testes diagnósticos, valor preditivo e UNA-SUS.</span>
+            </a>
+            <a href="#caso-sepse" data-find="urgencia emergencia sepse qsofa internato">
+              <small>Internato · DCN</small>
+              <strong>Urgência e emergência</strong>
+              <span>30% do internato, junto com MFC. Sepse, AVC, trauma.</span>
+            </a>
+          </div>
+          <p class="group-label">Especialidades e o corpo</p>
+          <div class="area-map">
+            <a href="#tresd" data-find="anatomia atlas 3d orgaos">
+              <small>1º e 2º anos</small>
+              <strong>Anatomia 3D</strong>
+              <span>12 órgãos reais, 513 estruturas tocáveis.</span>
+            </a>
+            <a href="#coracao" data-find="cardiologia coracao ecg infarto">
+              <small>Clínica</small>
+              <strong>Cardiologia</strong>
+              <span>Circuito, valvas, ECG de 10 minutos e o papilar.</span>
+            </a>
+            <a href="#respiracao" data-find="pneumologia pulmao curb pneumonia">
+              <small>Clínica</small>
+              <strong>Pneumologia</strong>
+              <span>Segmentos, CURB-65 e o brônquio direito.</span>
+            </a>
+            <a href="#caso-avc" data-find="neurologia avc broca glasgow">
+              <small>Clínica</small>
+              <strong>Neurologia</strong>
+              <span>Broca, Glasgow, medula e o cérebro de 283 regiões.</span>
+            </a>
+            <a href="#ouvido" data-find="otorrinolaringologia orelha weber rinne">
+              <small>Clínica</small>
+              <strong>Otorrino e fono</strong>
+              <span>Orelha, laringe, Weber, Rinne e disfagia.</span>
+            </a>
+            <a href="#tresd" data-find="oftalmologia olho visao">
+              <small>Clínica</small>
+              <strong>Oftalmologia</strong>
+              <span>O olho em 3D: córnea, cristalino e retina.</span>
+            </a>
+            <a href="#digestao" data-find="gastroenterologia figado couinaud">
+              <small>Clínica</small>
+              <strong>Gastroenterologia</strong>
+              <span>Couinaud, bile e o modelo do fígado.</span>
+            </a>
+            <a href="#digestao" data-find="nefrologia rim nefron">
+              <small>Clínica</small>
+              <strong>Nefrologia</strong>
+              <span>Néfron, rim em 3D e a ficha do sistema urinário.</span>
+            </a>
+            <a href="#digestao" data-find="endocrinologia insulina pancreas">
+              <small>Clínica</small>
+              <strong>Endocrinologia</strong>
+              <span>Insulina, ilhotas e o pâncreas em 3D.</span>
+            </a>
+            <a href="#tresd" data-find="ortopedia joelho fratura">
+              <small>Clínica</small>
+              <strong>Ortopedia</strong>
+              <span>Joelho em 3D e a linguagem da fratura.</span>
+            </a>
+            <a href="#grade" data-find="dermatologia pele lesao">
+              <small>Clínica</small>
+              <strong>Dermatologia</strong>
+              <span>Mácula, pápula, vesícula: descreva antes de nomear.</span>
+            </a>
+            <a href="#fono" data-find="fonoaudiologia voz linguagem degluticao">
+              <small>Interprofissional</small>
+              <strong>Fonoaudiologia</strong>
+              <span>Audição, linguagem, voz, motricidade e disfagia.</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="tresd">
+        <div class="wrap">
+          <h2>Atlas 3D</h2>
+          <p class="section-intro">
+            Doze órgãos reconstruídos de corpos reais, com 513 estruturas que
+            você pode tocar. Coração, pulmões com laringe, rim, fígado com os
+            segmentos de Couinaud, olho, joelho e os outros vêm do Visible
+            Human, da Biblioteca Nacional de Medicina dos Estados Unidos. O
+            cérebro, com 283 regiões, vem do atlas do Allen Institute,
+            ajustado a esse mesmo corpo.
+          </p>
+          <ol class="how3d">
+            <li><strong>Escolha o órgão.</strong> Arraste para girar. Use a roda do mouse ou dois dedos para chegar perto.</li>
+            <li><strong>Toque uma parte.</strong> Aparecem o nome, o grupo e o que costuma cair em prova.</li>
+            <li><strong>Veja por dentro e treine.</strong> O raio-x tira as camadas de fora, isolar separa uma peça, e o Me teste pede que você ache cada estrutura.</li>
+          </ol>
+          <div class="organ-picker" data-organs role="group" aria-label="Escolha o órgão"></div>
+          <div class="stage3d">
+            <div class="stage-view">
+              <model-viewer
+                id="orgao3d"
+                src="assets/medicina/3d/coracao.glb"
+                loading="lazy"
+                camera-controls
+                touch-action="pan-y"
+                shadow-intensity="0.9"
+                exposure="1.05"
+                interaction-prompt="auto"
+                interpolation-decay="110"
+                camera-orbit="0deg 75deg 105%"
+                min-camera-orbit="auto 1deg auto"
+                max-camera-orbit="auto 179deg auto"
+                alt="Modelo tridimensional do coração, reconstruído de um corpo real"
+              ></model-viewer>
+              <p class="hover-tag" data-3d-hover hidden></p>
+              <div class="stage-tools" role="group" aria-label="Ferramentas do modelo">
+                <button type="button" data-3d-xray aria-pressed="false">Raio-x</button>
+                <button type="button" data-3d-isolate aria-pressed="false">Isolar</button>
+                <button type="button" data-3d-reset>Recentrar</button>
+                <button type="button" data-3d-spin aria-pressed="false">Girar</button>
+              </div>
+              <p class="stage-status" data-3d-status aria-live="polite">O primeiro órgão carrega quando esta parte aparece na tela.</p>
+            </div>
+            <div class="stage-copy">
+              <p class="kicker" data-3d-kicker>Coração</p>
+              <h3 data-3d-title>Quatro câmaras, quatro valvas</h3>
+              <p data-3d-copy>Gire o modelo e procure o ápice.</p>
+              <p class="view-label">Olhar de <span>Direita e esquerda são do paciente, como em todo atlas.</span></p>
+              <div class="view-row" data-views role="group" aria-label="Ângulo da câmera"></div>
+              <div class="part-card" aria-live="polite">
+                <small data-part-group>Nenhuma estrutura escolhida</small>
+                <strong data-part-name>Toque o modelo</strong>
+                <p data-part-info>Clique numa parte do órgão ou escolha na lista abaixo.</p>
+              </div>
+              <div class="quiz3d">
+                <button type="button" class="btn" data-quiz3d-start>Me teste neste órgão</button>
+                <p class="quiz3d-ask" data-quiz3d-ask aria-live="assertive" hidden></p>
+                <p class="quiz3d-score" data-quiz3d-score hidden></p>
+                <div class="row" data-quiz3d-actions hidden>
+                  <button type="button" class="btn" data-quiz3d-next hidden>Próxima</button>
+                  <button type="button" class="btn ghost" data-quiz3d-skip>Mostrar onde fica</button>
+                  <button type="button" class="btn ghost" data-quiz3d-stop>Parar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="parts-panel">
+            <div class="parts-head">
+              <h3>Estruturas deste modelo <span data-parts-count></span></h3>
+              <label class="parts-filter">
+                <span class="sr-only">Filtrar estruturas</span>
+                <input type="search" data-parts-filter placeholder="Filtrar: valva, giro, segmento…" />
+              </label>
+            </div>
+            <div class="parts-list" data-parts></div>
+          </div>
+          <p class="note">
+            Modelos da HuBMAP CCF 3D Reference Library, licença
+            <a href="https://creativecommons.org/licenses/by/4.0/deed.pt-br">CC BY 4.0</a>,
+            feitos a partir do <a href="https://www.nlm.nih.gov/research/visible/visible_human.html">Visible Human Project</a>
+            (National Library of Medicine) e, no cérebro, do atlas do Allen
+            Institute for Brain Science.
+            <a href="https://hubmapconsortium.github.io/ccf/pages/ccf-3d-reference-library.html">Biblioteca de referência</a>
+            <a href="#ref-hubmap" class="cite">[R]</a>.
+            Alterações feitas nesta página: cores para separar as estruturas,
+            nomes e explicações em português e malha simplificada para
+            carregar mais rápido. As cores não são as do tecido vivo. Os
+            músculos-chave da medula seguem a ficha ISNCSCI de 2026
+            <a href="#ref-isncsci" class="cite">[R]</a>, e o fim da medula
+            perto de L1–L2 segue o StatPearls <a href="#ref-medula" class="cite">[R]</a>.
+          </p>
+        </div>
+      </section>
+
+      <section id="metodo">
+        <div class="wrap">
+          <h2>Como estudar, com evidência</h2>
+          <p class="section-intro">
+            Ler uma vez não gruda. As revisões de psicologia cognitiva
+            concordam em dois pontos: testar a memória e espaçar a revisão
+            rendem mais do que reler e grifar
+            <a href="#ref-dunlosky" class="cite">[R]</a>. A página foi
+            montada em cima disso: simulados, cartões, casos e o quiz do 3D.
           </p>
           <div class="grid">
-            <article class="card" data-find="metodo recall memoria">
-              <h3>Recupere antes de reler</h3>
+            <article class="card" data-find="metodo recall memoria teste">
+              <small>Alta utilidade</small>
+              <h3>Teste antes de reler</h3>
               <p>
-                Feche a ficha e escreva o circuito do sangue ou os doze nervos
-                cranianos de cabeça. A dificuldade de puxar a resposta é o
-                estudo, não um sinal de que você não sabe nada.
-              </p>
-            </article>
-            <article class="card" data-find="metodo desenho anatomia">
-              <h3>Desenhe feio</h3>
-              <p>
-                Um coração com quatro câmaras, setas e o nome das valvas ensina
-                mais do que grifar um atlas. Compare o desenho com a prancha
-                depois, não durante.
+                Feche a ficha e escreva os doze nervos cranianos. Quem se
+                testou lembrou mais uma semana depois do que quem releu
+                <a href="#ref-roediger" class="cite">[R]</a>. Em residentes
+                de pediatria e emergência, provas repetidas ganharam do
+                estudo repetido seis meses depois
+                <a href="#ref-larsen" class="cite">[R]</a>.
               </p>
             </article>
             <article class="card" data-find="metodo espacamento revisao anki">
+              <small>Alta utilidade</small>
               <h3>Espace a revisão</h3>
               <p>
-                Volte amanhã, em três dias e na semana seguinte. O
-                <a href="https://apps.ankiweb.net/">Anki</a> faz isso de graça.
-                Os cartões desta página servem para a primeira leva.
+                Volte amanhã, em três dias e na semana seguinte. Uma síntese de
+                317 experimentos mostrou que espaçar rende mais do que
+                concentrar <a href="#ref-cepeda" class="cite">[R]</a>. O
+                <a href="https://apps.ankiweb.net/">Anki</a> faz a agenda de graça.
               </p>
             </article>
-            <article class="card" data-find="metodo simulado prova">
-              <h3>Simule sem consulta</h3>
+            <article class="card" data-find="metodo intercalar misturar ecg">
+              <small>Utilidade moderada</small>
+              <h3>Misture os temas</h3>
               <p>
-                Faça o simulado inteiro antes de abrir a ficha. No fim, a
-                página lista o que você errou e a explicação. A melhor marca
-                fica salva neste navegador.
+                Estudantes que treinaram ECG com diagnósticos misturados
+                acertaram 46% dos traçados novos. Quem treinou em blocos de um
+                tipo só, 30% <a href="#ref-hatala" class="cite">[R]</a>. O
+                simulado misto e os cartões fazem esse sorteio.
+              </p>
+            </article>
+            <article class="card" data-find="metodo autoexplicacao raciocinio clinico">
+              <small>Utilidade moderada</small>
+              <h3>Explique para você</h3>
+              <p>
+                Estudantes do 3º ano que explicaram o próprio raciocínio em
+                casos clínicos diagnosticaram melhor uma semana depois, nos
+                temas menos familiares <a href="#ref-chamberland" class="cite">[R]</a>.
+                Nos casos desta página, responda em voz alta antes de abrir.
+              </p>
+            </article>
+            <article class="card" data-find="metodo desenho anatomia 3d">
+              <small>Prática de sala</small>
+              <h3>Desenhe e localize</h3>
+              <p>
+                Um coração com quatro câmaras, setas e o nome das valvas obriga
+                a lembrar. Depois confira no 3D: gire, isole a estrutura e
+                faça o quiz de localização.
+              </p>
+            </article>
+            <article class="card" data-find="metodo grifar reler resumo">
+              <small>Baixa utilidade</small>
+              <h3>O que rende pouco</h3>
+              <p>
+                Grifar, reler e resumir ficaram entre as técnicas de baixa
+                utilidade na mesma revisão <a href="#ref-dunlosky" class="cite">[R]</a>.
+                Não fazem mal, mas não substituem o teste.
               </p>
             </article>
           </div>
@@ -128,8 +470,8 @@
           </p>
           <form class="search" role="search">
             <label for="busca">Buscar um tema, um osso, uma área ou um livro</label>
-            <input id="busca" type="search" data-search placeholder="Ex.: laringe, disfagia, OpenStax, rim" />
-            <span data-search-status>A busca olha sistemas, fichas, áreas da fono e a biblioteca.</span>
+            <input id="busca" type="search" data-search placeholder="Ex.: sepse, pré-eclâmpsia, CURB-65, laringe, Enamed" />
+            <span data-search-status>A busca olha períodos, áreas, fichas, casos, escalas, fono, provas e a biblioteca.</span>
           </form>
           <div class="grid">
             <a class="card" href="#linguagem" data-find="planos anatomicos posicao cavidades">
@@ -185,11 +527,69 @@
         <div class="wrap">
           <h2>Atlas para olhar devagar</h2>
           <p class="section-intro">
-            As pranchas abaixo são de domínio público ou de licença livre.
-            Clique para ampliar. Várias legendas originais estão em inglês:
-            a legenda em português diz o que procurar.
+            As primeiras pranchas estão em português. As seguintes vêm de
+            atlas clássicos, às vezes com rótulo em inglês: a legenda traduz
+            o que importa. Clique para ampliar.
           </p>
           <div class="atlas">
+            <figure class="plate">
+              <img src="assets/medicina/planos-pt.svg" alt="Três planos anatômicos com os nomes em português: sagital, coronal e transversal." />
+              <h3>Planos, em português</h3>
+              <figcaption>
+                Diagrama desta página. Sagital separa direita e esquerda.
+                Coronal separa anterior e posterior. Transversal separa
+                superior e inferior.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/coracao-pt.svg" alt="Esquema do fluxo sanguíneo com átrio direito, ventrículo direito, átrio esquerdo e ventrículo esquerdo, em português." />
+              <h3>Coração, em português</h3>
+              <figcaption>
+                Diagrama desta página. Azul: sangue com pouco oxigênio, lado
+                direito. Vermelho: sangue oxigenado, lado esquerdo. A mitral
+                fica à esquerda. A tricúspide fica à direita.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/laringe-pt.svg" alt="Esquema em português da cavidade nasal, boca, faringe, epiglote, pregas vocais, traqueia e esôfago." />
+              <h3>Laringe, em português</h3>
+              <figcaption>
+                Diagrama desta página. O ar desce pela traqueia. O alimento
+                desce pelo esôfago, atrás. A epiglote e as pregas vocais ficam
+                no meio desse cruzamento.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/orelha-pt.svg" alt="Anatomia da orelha em português: pavilhão, meato, tímpano, martelo, bigorna, estribo, cóclea e canais semicirculares." />
+              <h3>Orelha, em português</h3>
+              <figcaption>
+                Tradução de Ruryk a partir do desenho de Mike.lifeguard. Licença
+                <a href="https://creativecommons.org/licenses/by/2.5/">CC BY 2.5</a>.
+                <a href="https://commons.wikimedia.org/wiki/File:Anatomy_of_the_Human_Ear_pt.svg">Wikimedia Commons</a>.
+                Pavilhão, meato, tímpano, martelo, bigorna, estribo, cóclea,
+                canais semicirculares e trompa de Eustáquio.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/digestao-pt.svg" alt="Caminho do alimento em português: boca, faringe, esôfago, estômago, intestinos, fígado e pâncreas." />
+              <h3>Digestão, em português</h3>
+              <figcaption>
+                Diagrama desta página. A bile nasce no fígado e fica na
+                vesícula. O pâncreas junta enzimas e insulina. O baço não entra
+                nessa fila.
+              </figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/medicina/superficie-pt.png" alt="Corpo feminino e corpo masculino de frente, com os nomes das regiões em português: cabeça, pescoço, tronco, braço, pernas, mão e pé." />
+              <h3>Superfície do corpo, em português</h3>
+              <figcaption>
+                Anatomia de superfície, com os nomes das regiões em português.
+                CC0.
+                <a href="https://commons.wikimedia.org/wiki/File:Anatomia_humana.svg">Wikimedia Commons</a>.
+                A figura mostra o corpo sem roupa para nomear pele, tronco e
+                membros. É estudo de superfície, não um atlas de órgãos internos.
+              </figcaption>
+            </figure>
             <figure class="plate">
               <img src="assets/medicina/cranio.svg" alt="Vista lateral da cabeça com a relação de superfície dos ossos do crânio." />
               <h3>Crânio de perfil</h3>
@@ -285,11 +685,510 @@
               <img src="assets/medicina/esqueleto.svg" alt="Esqueleto humano de frente com legenda dos ossos em inglês." />
               <h3>Esqueleto inteiro</h3>
               <figcaption>
-                A mesma prancha do início, para comparar axial e apendicular.
+                Compare o esqueleto axial com o apendicular.
                 Axial: crânio, coluna, costelas e esterno. Apendicular: cinturas e membros.
                 LadyofHats, domínio público.
               </figcaption>
             </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="grade">
+        <div class="wrap">
+          <h2>O curso inteiro</h2>
+          <p class="section-intro">
+            Abra só a disciplina que você vai estudar hoje. Cada bloco diz o
+            que a matéria é, o que gravar primeiro e onde ler de graça.
+          </p>
+          <div class="filters" role="group" aria-label="Filtrar o curso">
+            <button type="button" class="is-on" data-filter="tudo">Tudo</button>
+            <button type="button" data-filter="basico">Ciclo básico</button>
+            <button type="button" data-filter="clinico">Clínica e saúde</button>
+            <button type="button" data-filter="internato">Internato</button>
+          </div>
+          <p class="group-label" data-group="basico">Ciclo básico</p>
+          <div class="topics" data-track="basico">
+            <details class="topic" data-find="celula biologia molecular nucleo mitocondria" open>
+              <summary><h3>Biologia celular</h3><em>abrir</em></summary>
+              <p>
+                A célula é a unidade da vida. O núcleo guarda o DNA. Os
+                ribossomos leem o RNA e montam proteínas. A mitocôndria produz
+                a maior parte do ATP. A membrana decide o que entra e o que sai.
+                Lisossomos digerem. O complexo de Golgi empacota e endereça.
+              </p>
+              <ul class="remember">
+                <li>Mitose gera duas células iguais. Meiose gera gametas, com metade dos cromossomos.</li>
+                <li>Transcrição é DNA para RNA, no núcleo. Tradução é RNA para proteína, no ribossomo.</li>
+                <li>Leia o começo de <a href="https://openstax.org/details/books/biology-2e">Biology 2e</a>, da OpenStax.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="bioquimica atp enzima ph glicose">
+              <summary><h3>Bioquímica</h3><em>abrir</em></summary>
+              <p>
+                Bioquímica explica a vida em moléculas. Carboidrato é energia
+                rápida. Lipídio guarda energia e forma membrana. Proteína faz
+                o trabalho: enzima, transporte, defesa, estrutura. Ácido
+                nucleico guarda informação. A água e o pH sustentam tudo isso.
+              </p>
+              <ul class="remember">
+                <li>ATP é a moeda de energia. Glicólise, ciclo de Krebs e cadeia respiratória são o caminho clássico da glicose até o ATP.</li>
+                <li>Enzima acelera reação e é específica. pH e temperatura fora da faixa a desligam.</li>
+                <li>O sangue arterial fica em torno de 7,35 a 7,45. Abaixo disso é acidose. Acima, alcalose.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="histologia tecido epitelio conjuntivo musculo nervoso">
+              <summary><h3>Histologia</h3><em>abrir</em></summary>
+              <p>
+                Quatro tecidos básicos: epitelial, conjuntivo, muscular e
+                nervoso. O epitélio reveste e secreta. O conjuntivo une,
+                sustenta e inclui sangue, osso, cartilagem e gordura. O
+                muscular contrai. O nervoso conduz sinal.
+              </p>
+              <ul class="remember">
+                <li>Epitélio não tem vaso próprio. Come pela membrana basal.</li>
+                <li>No microscópio, primeiro diga o tecido. Depois a camada. Depois a célula.</li>
+                <li>Treine com lâminas reais: a <a href="https://histology.medicine.umich.edu/">Michigan Histology</a> tem centenas de lâminas virtuais e um manual gratuito. O <a href="https://med.libretexts.org/">LibreTexts Medicine</a> tem o texto.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="embriologia germinativa ectoderma mesoderma endoderma">
+              <summary><h3>Embriologia</h3><em>abrir</em></summary>
+              <p>
+                Da fecundação ao corpo. O zigoto vira mórula, blastocisto e
+                então três folhetos. Ectoderma faz pele e sistema nervoso.
+                Mesoderma faz músculo, osso, coração, rins e sangue. Endoderma
+                faz o revestimento do tubo digestório e do respiratório.
+              </p>
+              <ul class="remember">
+                <li>A notocorda induz o tubo neural. Falha nesse fechamento está na base dos defeitos do tubo neural.</li>
+                <li>A placenta troca gás, nutriente e dejeto. Não é um pulmão, mas faz o papel de troca para o feto.</li>
+                <li>Grave os três folhetos antes de qualquer malformação.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="imunologia anticorpo vacina inflamacao">
+              <summary><h3>Imunologia</h3><em>abrir</em></summary>
+              <p>
+                A imunidade inata responde na hora: pele, mucosa, fagócito,
+                complemento e inflamação. A adaptativa aprende: linfócito B
+                faz anticorpo, linfócito T coordena ou mata célula infectada.
+                Vacina é imunização ativa. Soro pronto é imunização passiva.
+              </p>
+              <ul class="remember">
+                <li>Os quatro sinais clássicos da inflamação: calor, rubor, tumor e dor. A perda da função entrou depois.</li>
+                <li>Anticorpo marca. Célula executa. Não troque os dois.</li>
+                <li>Alergia, autoimunidade e imunodeficiência são três perguntas diferentes.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="microbiologia bacteria virus fungo antibiotico">
+              <summary><h3>Microbiologia</h3><em>abrir</em></summary>
+              <p>
+                Bactéria é célula sem núcleo organizado. Vírus não é célula:
+                precisa de outra célula para se copiar. Fungo tem núcleo e
+                parede de quitina. Protozoário é eucarioto unicelular. O
+                antibiótico age em bactéria. Não trata vírus.
+              </p>
+              <ul class="remember">
+                <li>Gram-positiva tem parede grossa de peptideoglicano e fica roxa. Gram-negativa tem membrana externa e fica rosa.</li>
+                <li>Esterilização mata tudo, inclusive esporo. Desinfecção reduz micróbio em superfície. Antissepsia faz isso em tecido vivo.</li>
+                <li>O livro gratuito é o <a href="https://openstax.org/details/books/microbiology">OpenStax Microbiology</a>.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="parasitologia protozoario helminto vetor">
+              <summary><h3>Parasitologia</h3><em>abrir</em></summary>
+              <p>
+                No Brasil, parasito não é detalhe. Protozoários como o da
+                malária, da doença de Chagas e da leishmaniose, e helmintos
+                como áscaris, ancilóstomo e esquistossomo, ainda organizam
+                prova e posto de saúde. O ciclo tem hospedeiro e, muitas
+                vezes, um vetor.
+              </p>
+              <ul class="remember">
+                <li>Grave o vetor antes do nome do parasito: barbeiro, flebótomo, mosquito, caramujo.</li>
+                <li>Separe o que entra pela boca, o que entra pela pele e o que o inseto inocula.</li>
+                <li>A <a href="https://bvsms.saude.gov.br/">biblioteca do Ministério da Saúde</a> tem guias abertos dessas doenças.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="patologia lesao adaptacao neoplasia inflamacao">
+              <summary><h3>Patologia geral</h3><em>abrir</em></summary>
+              <p>
+                Patologia estuda a lesão. A célula pode se adaptar: hipertrofia,
+                hiperplasia, atrofia e metaplasia. Se a agressão passa do
+                limite, há lesão reversível ou morte: necrose e apoptose.
+                Inflamação é a resposta. Reparo pode ser regeneração ou cicatriz.
+                Neoplasia é crescimento novo, benigno ou maligno.
+              </p>
+              <ul class="remember">
+                <li>Benigno fica local e costuma ser bem delimitado. Maligno invade e pode metastatizar.</li>
+                <li>Carcinoma vem de epitélio. Sarcoma vem de mesênquima. São pontos de partida, não o nome da pessoa.</li>
+                <li>Toda ficha clínica desta página fica mais fácil depois desta linguagem.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="farmacologia agonista antagonista dose via">
+              <summary><h3>Farmacologia</h3><em>abrir</em></summary>
+              <p>
+                Farmacologia estuda o que o fármaco faz no corpo e o que o
+                corpo faz com o fármaco. Agonista liga e ativa o receptor.
+                Antagonista liga e impede. Absorção, distribuição, metabolismo
+                e excreção formam a farmacocinética. O efeito é a farmacodinâmica.
+              </p>
+              <ul class="remember">
+                <li>Via oral passa pelo fígado antes de chegar ao corpo inteiro. Isso é o primeiro passo hepático.</li>
+                <li>Meia-vida é o tempo para a quantidade cair pela metade. Não é o tempo do efeito, embora os dois conversem.</li>
+                <li>Não decore dose daqui. Dose muda com idade, rim, fígado e diretriz. Use o <a href="https://www.msdmanuals.com/pt/profissional">Manual MSD</a> para o mecanismo.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="genetica cromossomo hereditariedade mendel">
+              <summary><h3>Genética médica</h3><em>abrir</em></summary>
+              <p>
+                O humano tem 46 cromossomos, 23 pares. Gene é um trecho de DNA
+                com instrução. Alelo é uma versão desse gene. Dominante aparece
+                com uma cópia. Recessivo pede as duas, no modelo clássico.
+                Cromossomo a mais ou a menos é aneuploidia. Mutação pode ser
+                herdada ou nova.
+              </p>
+              <ul class="remember">
+                <li>Monte um heredograma antes de chutar o padrão.</li>
+                <li>Mitocondrial vem da mãe. Ligado ao X tem regra própria para homem e mulher.</li>
+                <li>Aconselhamento genético explica risco. Não é uma ordem de ter ou não ter filho.</li>
+              </ul>
+            </details>
+          </div>
+          <p class="group-label" data-group="clinico">Ciclo clínico e saúde</p>
+          <div class="topics" data-track="clinico">
+            <details class="topic" data-find="semiologia anamnese exame fisico inspecao ausculta">
+              <summary><h3>Semiologia</h3><em>abrir</em></summary>
+              <p>
+                Semiologia é a arte de colher a história e examinar. A anamnese
+                vem antes do estetoscópio: queixa, tempo, o que piora, o que
+                alivia, antecedentes e o que a pessoa acha que está acontecendo.
+                O exame clássico segue inspeção, palpação, percussão e ausculta.
+              </p>
+              <ul class="remember">
+                <li>Sinal é o que você observa. Sintoma é o que a pessoa relata.</li>
+                <li>Uma hipótese nasce da história. O exame testa a hipótese. O exame complementar confirma ou derruba.</li>
+                <li>Não colete dado que você não sabe interpretar. Aprenda o gesto junto com o sentido.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="clinica medica raciocinio diagnostico">
+              <summary><h3>Clínica médica</h3><em>abrir</em></summary>
+              <p>
+                Clínica médica junta os sistemas no adulto. O estudo útil não
+                é uma lista de doenças. É um jeito de pensar: o que é comum,
+                o que é grave, o que não pode esperar. Dor torácica, falta de
+                ar, febre e alteração da consciência abrem mais portas do que
+                qualquer nome raro.
+              </p>
+              <ul class="remember">
+                <li>Para cada queixa, escreva três causas frequentes e uma que mata se passar batido.</li>
+                <li>Separe síndrome de doença. Insuficiência cardíaca é síndrome. A causa pode ser várias.</li>
+                <li>O MSD profissional, em português, é a referência gratuita para cruzar com a ficha.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="pediatria crescimento vacina recem nascido apgar">
+              <summary><h3>Pediatria</h3><em>abrir</em></summary>
+              <p>
+                A criança não é um adulto pequeno. Dose, água do corpo, via
+                aérea e o que é normal mudam com a idade. Crescimento,
+                desenvolvimento, aleitamento, vacina e a triagem do
+                recém-nascido organizam o começo. Febre no lactente pequeno
+                não se trata como febre de escolar.
+              </p>
+              <ul class="remember">
+                <li>Marcos de linguagem e motor são faixas, não um cronômetro. Fugir da média é motivo de olhar com atenção, não de rótulo imediato.</li>
+                <li>O teste da orelhinha, o coraçãozinho, o pezinho e o olhinho são triagens. Falha pede confirmação.</li>
+                <li>Calendário de vacina muda. Confira a versão atual do Ministério da Saúde.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="ginecologia obstetricia ciclo menstrual gravidez parto">
+              <summary><h3>Ginecologia e obstetrícia</h3><em>abrir</em></summary>
+              <p>
+                Ginecologia estuda o ciclo menstrual, o colo, o útero, os
+                ovários, a mama e a saúde sexual. Obstetrícia acompanha a
+                gestação, o parto e o puerpério. Pré-natal existe para achar
+                cedo o que dá para cuidar: pressão, anemia, infecção, crescimento
+                do feto e o risco de parto prematuro.
+              </p>
+              <ul class="remember">
+                <li>Data da última menstruação ainda abre a conta da idade gestacional, corrigida pelo ultrassom quando preciso.</li>
+                <li>Sangramento na gestação e pressão alta com sintomas não são assunto de espera.</li>
+                <li>Ciclo menstrual: o eixo hipotálamo, hipófise e ovário comanda. Estrogênio e progesterona são os dois nomes de abertura.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="cirurgia assepsia centro cirurgico ferida">
+              <summary><h3>Cirurgia</h3><em>abrir</em></summary>
+              <p>
+                Cirurgia é indicação, preparo, técnica e o que acontece depois.
+                Antes de qualquer nome de operação, estude assepsia, antissepsia,
+                a cicatrização e o porquê de operar ou não operar. Abdome agudo
+                é um clássico: dor, defesa, parada de gases e o tempo importam.
+              </p>
+              <ul class="remember">
+                <li>Ferida limpa, limpa-contaminada, contaminada e suja mudam o risco de infecção.</li>
+                <li>Jejum, alergia, coagulação e a via aérea são pergunta de pré-operatório, não detalhe.</li>
+                <li>Anatomia aqui deixa de ser nome e vira caminho: o que você pode lesar ao lado.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="ortopedia fratura articulacao osso">
+              <summary><h3>Ortopedia</h3><em>abrir</em></summary>
+              <p>
+                Osso, articulação, músculo e nervo periférico no trauma e na
+                doença. Fratura se descreve pelo osso, pelo traço, se está
+                exposta e se desviou. Luxação é perda do contato articular.
+                Entorse é lesão de ligamento com a articulação no lugar.
+              </p>
+              <ul class="remember">
+                <li>Antes do osso, olhe pulso, cor, movimento e sensibilidade distais.</li>
+                <li>Exposta é urgência de infecção, não só de raio-x.</li>
+                <li>Volte à ficha de esqueleto antes de decorar classificação.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="dermatologia pele lesao primaria">
+              <summary><h3>Dermatologia</h3><em>abrir</em></summary>
+              <p>
+                A pele se descreve antes de se nomear. Mácula é plana.
+                Pápula é elevada e pequena. Vesícula tem líquido claro.
+                Pústula tem pus. Nódulo é mais fundo. Úlcera perde pele.
+                A distribuição, a cor e o tempo contam tanto quanto o nome.
+              </p>
+              <ul class="remember">
+                <li>Descreva a lesão como quem não vai ver a foto.</li>
+                <li>Coceira, dor e febre mudam a lista de causas.</li>
+                <li>A histologia da pele, epiderme e derme, segura essa linguagem.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="oftalmologia olho visao retina">
+              <summary><h3>Oftalmologia</h3><em>abrir</em></summary>
+              <p>
+                O olho recebe a luz na córnea, ajusta na pupila, foca no
+                cristalino e forma a imagem na retina. O nervo óptico leva ao
+                cérebro. Vermelhidão, dor e queda súbita da visão não são a
+                mesma consulta. Glaucoma, catarata e retinopatia são três
+                mecanismos diferentes.
+              </p>
+              <ul class="remember">
+                <li>Córnea, humor aquoso, cristalino, vítreo, retina. Nessa ordem a luz viaja.</li>
+                <li>O II par é visão. O III, o IV e o VI movem o olho. O facial fecha a pálpebra.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="otorrinolaringologia nariz ouvido garganta">
+              <summary><h3>Otorrinolaringologia</h3><em>abrir</em></summary>
+              <p>
+                Nariz, orelha, faringe e laringe. É a ponte direta com a
+                fonoaudiologia: otite, adenoide, desvio de septo, rouquidão e
+                a tuba auditiva. A fono cuida da função. A otorrino cuida da
+                estrutura e de boa parte da doença.
+              </p>
+              <ul class="remember">
+                <li>Respiração oral pede os dois olhares.</li>
+                <li>Rouquidão que não melhora em 4 semanas pede exame da laringe. Com sinal de alarme, como fumo, dor, dificuldade de engolir ou cirurgia recente no pescoço, antes disso <a href="#ref-disfonia" class="cite">[R]</a>.</li>
+                <li>Use a ficha da orelha e a da laringe como base, não como atalho para pular o exame.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="neurologia avc convulsao meningite">
+              <summary><h3>Neurologia</h3><em>abrir</em></summary>
+              <p>
+                Neurologia localiza a lesão e depois pergunta a causa. Cérebro,
+                tronco, medula, raiz, plexo, nervo, junção e músculo dão quadros
+                diferentes. Deficit súbito de fala, força ou visão é tempo de
+                emergência, não de revisão calma. Convulsão, cefaleia em
+                trovoada e rigidez de nuca com febre também.
+              </p>
+              <ul class="remember">
+                <li>Primeiro o lugar. Depois a causa: vascular, inflamatória, infecciosa, traumática, metabólica, neoplásica.</li>
+                <li>Afasia é linguagem. Disartria é motor da fala. As duas podem aparecer juntas e ainda assim não são a mesma coisa.</li>
+                <li>A ficha dos doze nervos cranianos é pré-requisito.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="psiquiatria humor psicose ansiedade">
+              <summary><h3>Psiquiatria</h3><em>abrir</em></summary>
+              <p>
+                Psiquiatria estuda sofrimento mental com história, exame do
+                estado mental e contexto. Humor, pensamento, percepção, sono,
+                apetite e função contam. Tristeza não é diagnóstico de
+                depressão. Ouvir voz não fecha, sozinho, um nome. Risco de
+                suicídio se pergunta com clareza, não se evita.
+              </p>
+              <ul class="remember">
+                <li>Separe doença, reação a uma perda e efeito de substância ou de outra doença do corpo.</li>
+                <li>O exame psíquico descreve. Não julga o caráter.</li>
+                <li>Em crise aguda, a prioridade é segurança, não o nome fino do quadro.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="infectologia febre antibiotico sindrome">
+              <summary><h3>Infectologia</h3><em>abrir</em></summary>
+              <p>
+                Infectologia cruza o micróbio, a porta de entrada e a defesa
+                da pessoa. Febre é um sinal, não uma doença. Síndrome
+                gripal, diarreia, infecção urinária, pneumonia e meningite
+                pedem raciocínios diferentes. Antibiótico cedo demais, ou no
+                vírus, seleciona resistência e não cura.
+              </p>
+              <ul class="remember">
+                <li>Pergunte: onde entrou, que órgão sofre, a pessoa é imunocomprometida?</li>
+                <li>Notificação de doença de vigilância é parte do estudo no Brasil, não burocracia à toa.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="radiologia raio x tomografia ressonancia">
+              <summary><h3>Imagem</h3><em>abrir</em></summary>
+              <p>
+                Radiografia, ultrassom, tomografia e ressonância mostram
+                anatomia de outro jeito. Antes de achar a doença, reconheça o
+                normal. No tórax, trace traqueia, mediastino, diafragma e os
+                campos pulmonares. No abdome, saiba o que é osso, gás e
+                partes moles. A <a href="https://radiopaedia.org/">Radiopaedia</a>
+                é o atlas gratuito desse olhar.
+              </p>
+            </details>
+            <details class="topic" id="saude-coletiva" data-find="saude coletiva sus epidemiologia incidencia prevalencia">
+              <summary><h3>Saúde coletiva</h3><em>abrir</em></summary>
+              <p>
+                Saúde coletiva olha a população, não só a consulta. O SUS se
+                apoia em universalidade, integralidade e equidade. Atenção
+                primária ordena o cuidado. Vigilância acompanha o que adoece
+                a cidade. Epidemiologia mede.
+              </p>
+              <ul class="remember">
+                <li>Incidência é caso novo num tempo. Prevalência é quem tem a condição agora.</li>
+                <li>Sensibilidade é a proporção de doentes que o teste acusa. Especificidade é a proporção de sadios que ele dá como negativos. Mudar o ponto de corte costuma ganhar uma e perder a outra.</li>
+                <li>Valor preditivo depende da prevalência. O mesmo teste erra mais positivos numa população em que a doença é rara.</li>
+                <li>Estude pelos cursos da <a href="https://www.unasus.gov.br/cursos/busca">UNA-SUS</a> e pelo <a href="https://aps.bvs.br/">portal da atenção primária</a>.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="etica bioetica autonomia beneficencia consentimento">
+              <summary><h3>Ética e bioética</h3><em>abrir</em></summary>
+              <p>
+                Quatro princípios organizam a revisão: autonomia, beneficência,
+                não maleficência e justiça. Autonomia pede informação que a
+                pessoa entenda, não um papel assinado no escuro. Sigilo tem
+                limite quando há risco concreto a terceiro ou dever legal.
+                Pesquisa com gente pede consentimento e um comitê.
+              </p>
+              <ul class="remember">
+                <li>Capacidade de decidir pode faltar de modo transitório. Isso não apaga a pessoa.</li>
+                <li>O que é legal e o que é ético conversam e às vezes não coincidem. Saiba os dois.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="emergencia samu suporte basico reconhecimento">
+              <summary><h3>Urgência, no nível do estudo</h3><em>abrir</em></summary>
+              <p>
+                O primeiro aprendizado de urgência é reconhecer e pedir ajuda.
+                Dor no peito, falta de ar grave, convulsão, sangramento que
+                não para, rebaixamento da consciência e deficit neurológico
+                súbito são motivos de SAMU 192, não de terminar a ficha.
+                Suporte básico de vida se aprende em curso prático, com
+                manequim e instrutor. O <a href="https://avasus.ufrn.br/">AVASUS</a>
+                tem módulo aberto sobre o tema.
+              </p>
+            </details>
+          </div>
+          <p class="group-label" data-group="internato">Internato, o que a DCN pede</p>
+          <div class="topics" data-track="internato">
+            <details class="topic" data-find="internato dcn 35 por cento dois anos mfc urgencia">
+              <summary><h3>Como o internato está desenhado</h3><em>abrir</em></summary>
+              <p>
+                Estágio curricular obrigatório em serviço, com supervisão
+                docente. Pela DCN de 2025, dura no mínimo dois anos e soma
+                pelo menos 35% da carga horária do curso. Plantões de até
+                12 horas, sem passar de 40 horas na semana
+                <a href="#ref-dcn" class="cite">[R]</a>.
+              </p>
+              <ul class="remember">
+                <li>Pelo menos 30% do internato em medicina de família e em urgência e emergência do SUS, com distribuição proporcional entre as duas.</li>
+                <li>Os outros 70% em clínica médica, cirurgia, ginecologia e obstetrícia, pediatria e saúde mental, com saúde coletiva, medicina intensiva e traumato-ortopedia atravessando os rodízios.</li>
+                <li>Antes de começar, a DCN pede ao menos uma avaliação somativa abrangente, para ver se há competência mínima para o serviço.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="medicina familia comunidade atencao primaria hipertensao diabetes">
+              <summary><h3>Medicina de família e comunidade</h3><em>abrir</em></summary>
+              <p>
+                A atenção primária coordena o cuidado e ordena a rede. O
+                estudo útil aqui é o da pessoa ao longo do tempo: hipertensão,
+                diabetes, saúde da criança, pré-natal de risco habitual,
+                saúde mental comum e o que dá para resolver no território
+                antes de encaminhar.
+              </p>
+              <ul class="remember">
+                <li>Hipertensão no adulto: PA de consultório ≥ 140/90 mmHg, confirmada em outra ocasião, salvo crise ou lesão de órgão-alvo <a href="#ref-has" class="cite">[R]</a>.</li>
+                <li>Uma medida isolada não fecha diagnóstico. Hipertensão do avental branco e hipertensão mascarada existem.</li>
+                <li>O PCDT de hipertensão e os cadernos da APS são o texto de trabalho no SUS, não o resumo desta ficha.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="sepse qsofa sofa infeccao disfuncao organica uti">
+              <summary><h3>Sepse, a definição de estudo</h3><em>abrir</em></summary>
+              <p>
+                Sepse é disfunção orgânica ameaçadora da vida causada por
+                resposta desregulada à infecção. Operacionalmente, isso é um
+                aumento de 2 pontos ou mais no SOFA
+                <a href="#ref-sepsis3" class="cite">[R]</a>. Choque séptico
+                junta vasopressor para manter PAM ≥ 65 mmHg e lactato > 2
+                mmol/L, sem hipovolemia.
+              </p>
+              <ul class="remember">
+                <li>qSOFA não diagnostica sepse. É um aviso à beira do leito, fora da UTI: FR ≥ 22, alteração mental, PA sistólica ≤ 100. Dois ou três pontos pedem olhar de perto.</li>
+                <li>Na suspeita, a Surviving Sepsis pede lactato, culturas antes do antibiótico se isso não atrasar, e antibiótico imediato no choque, dentro da primeira hora <a href="#ref-ssc" class="cite">[R]</a>.</li>
+                <li>SIRS não some da conversa, mas não define mais sepse.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="pneumonia comunitaria curb-65 crb-65 sbpt">
+              <summary><h3>Pneumonia adquirida na comunidade</h3><em>abrir</em></summary>
+              <p>
+                Tosse, febre e condensação. O CURB-65 ajuda a pensar o local
+                de tratamento: confusão, ureia alta, FR > 30, pressão baixa e
+                idade ≥ 65. Zero ou um ponto, ambulatorial entra na conversa.
+                Três ou mais, hospital
+                <a href="#ref-curb" class="cite">[R]</a>
+                <a href="#ref-sbpt" class="cite">[R]</a>.
+              </p>
+              <ul class="remember">
+                <li>A conta não dispensa oxigenação, comorbidade, ingestão oral e o contexto social.</li>
+                <li>Sem ureia no posto, use CRB-65.</li>
+                <li>No 3D, ache o lobo e o segmento que a radiografia aponta.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="pre-eclampsia hipertensao gestacional proteinúria eclampsia">
+              <summary><h3>Síndromes hipertensivas na gestação</h3><em>abrir</em></summary>
+              <p>
+                Depois da 20ª semana, PA ≥ 140/90 em quem era normotensa. Se
+                vier com proteinúria significativa, é pré-eclâmpsia. Sem
+                proteinúria, ainda é pré-eclâmpsia se houver disfunção de
+                órgão-alvo ou sofrimento placentário
+                <a href="#ref-pe" class="cite">[R]</a>.
+              </p>
+              <ul class="remember">
+                <li>Proteinúria significativa: ≥ 300 mg/24 h, ou relação proteína/creatinina ≥ 0,3, ou pelo menos uma cruz na fita.</li>
+                <li>Cefaleia occipital, escotomas, epigastralgia e PA ≥ 160/110 são urgência obstétrica, não espera de ambulatório.</li>
+                <li>Eclâmpsia é convulsão no espectro da pré-eclâmpsia. O sulfato de magnésio entra como profilaxia no protocolo, não como detalhe desta ficha.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="abdome agudo apendicite mcburney peritonite cirurgia">
+              <summary><h3>Abdome agudo e apendicite</h3><em>abrir</em></summary>
+              <p>
+                Dor que muda de lugar, ânimo que cai, febre que sobe. Na
+                apendicite clássica a dor começa periumbilical, visceral, e
+                depois finca no ponto de McBurney, parietal. Defesa e
+                descompressão dolorosa sugerem peritônio irritado.
+              </p>
+              <ul class="remember">
+                <li>McBurney fica a cerca de um terço da distância da espinha ilíaca ântero-superior direita até o umbigo.</li>
+                <li>Rovsing, psoas e obturador são sinais, não prova. Apendicite atípica existe, sobretudo em criança, gestante e idoso.</li>
+                <li>Abra o intestino no 3D para ver o território, não para operar.</li>
+              </ul>
+            </details>
+            <details class="topic" data-find="suicidio depressao saude mental escuta cvv 188">
+              <summary><h3>Risco de suicídio, no nível do estudo</h3><em>abrir</em></summary>
+              <p>
+                Perguntar não aumenta o risco. O Ministério da Saúde pede
+                que o tema seja investigado em toda consulta de depressão, com
+                escuta, sem julgamento
+                <a href="#ref-suicidio" class="cite">[R]</a>. Crise aguda é
+                segurança primeiro, nome fino do quadro depois.
+              </p>
+              <ul class="remember">
+                <li>Identificar, avaliar, manejar e encaminhar com certeza de atendimento.</li>
+                <li>Violência autoprovocada é notificação compulsória no Brasil.</li>
+                <li>CVV 188 é apoio emocional voluntário, 24 horas, em todo o país. SAMU 192 em emergência.</li>
+              </ul>
+            </details>
           </div>
         </div>
       </section>
@@ -354,7 +1253,7 @@
             <article class="lesson" id="musculos" data-find="musculo diafragma masseter temporal pterigoideo">
               <h3>Músculos e movimento</h3>
               <p>
-                Há três músculos de verdade no corpo: esquelético, que é
+                Há três tipos de tecido muscular: esquelético, que é
                 voluntário e estriado; cardíaco, estriado e involuntário; e
                 liso, involuntário, na parede das vísceras e dos vasos. No
                 esquelético, a origem é a extremidade mais fixa, a inserção é
@@ -619,9 +1518,12 @@
               </p>
               <p>
                 Hidratação e menos grito ajudam a cuidar da voz saudável.
-                Rouquidão que passa de cerca de duas semanas, sobretudo com
-                dor, fumo ou dificuldade de engolir, precisa de avaliação, em
-                geral com exame da laringe. Sussurro tenso não é descanso.
+                A diretriz da academia americana de otorrinolaringologia pede
+                exame da laringe quando a rouquidão não melhora em 4 semanas, e
+                antes disso se houver suspeita de causa grave, como fumo, dor,
+                dificuldade de engolir ou cirurgia recente no pescoço. Também
+                pede ver a laringe antes de começar terapia de voz
+                <a href="#ref-disfonia" class="cite">[R]</a>. Sussurro tenso não é descanso.
               </p>
             </article>
             <article class="area" data-find="motricidade orofacial respirador oral frenulo atm mastigacao">
@@ -658,6 +1560,28 @@
                 invente consistência: use o quadro oficial quando for a hora
                 de estudá-lo a fundo.
               </p>
+              <div class="table-wrap">
+                <table>
+                  <caption>Escala de penetração e aspiração, de Rosenbek e colegas, em tradução livre <a href="#ref-pas" class="cite">[R]</a></caption>
+                  <thead>
+                    <tr><th>Nível</th><th>O que o exame mostra</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1</td><td>O material não entra na via aérea.</td></tr>
+                    <tr><td>2</td><td>Entra, fica acima das pregas vocais e é expelido.</td></tr>
+                    <tr><td>3</td><td>Entra, fica acima das pregas vocais e não é expelido.</td></tr>
+                    <tr><td>4</td><td>Entra, toca as pregas vocais e é expelido.</td></tr>
+                    <tr><td>5</td><td>Entra, toca as pregas vocais e não é expelido.</td></tr>
+                    <tr><td>6</td><td>Passa abaixo das pregas e é expelido para a laringe ou para fora.</td></tr>
+                    <tr><td>7</td><td>Passa abaixo das pregas e não sai da traqueia, apesar do esforço.</td></tr>
+                    <tr><td>8</td><td>Passa abaixo das pregas e não há esforço para expelir: aspiração silenciosa.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                Do 2 ao 5 é penetração. Do 6 ao 8 é aspiração. Cada deglutição
+                observada no exame recebe a sua nota.
+              </p>
             </article>
             <article class="area" data-find="gagueira fluencia taquifemia bloqueio">
               <h3>Fluência</h3>
@@ -691,12 +1615,885 @@
               <p>
                 No hospital, a fono encontra disfagia, voz depois de intubação,
                 traqueostomia, comunicação alternativa e o recém-nascido que
-                ainda não consegue mamar com segurança. A Fiocruz tem formação
-                aberta sobre alterações sensório-motoras orais e disfagia no
-                recém-nascido e no lactente, pensada para o trabalho em equipe
-                na UTI neonatal.
+                ainda não consegue mamar com segurança. Depois de um AVC, a
+                diretriz americana pede triagem de deglutição antes de qualquer
+                comida, bebida ou remédio pela boca, e aceita que um
+                fonoaudiólogo treinado a faça <a href="#ref-avc" class="cite">[R]</a>.
+                Para o recém-nascido, procure no
+                <a href="https://fiocruz.br/campus-virtual-fiocruz">Campus Virtual Fiocruz</a>
+                os cursos abertos de disfagia e alimentação na UTI neonatal.
               </p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="casos">
+        <div class="wrap">
+          <h2>Casos clínicos passo a passo</h2>
+          <p class="section-intro">
+            Doze casos das áreas do internato e do Enamed. Leia a situação,
+            responda em voz alta e só depois abra a resposta. O passo seguinte
+            aparece quando você abre o anterior. São casos de estudo: não
+            trazem dose e não substituem o protocolo do serviço.
+          </p>
+          <div class="filters chips" role="group" aria-label="Filtrar casos" data-caso-filtros>
+            <button type="button" data-caso-filtro="tudo" aria-pressed="true">Todos</button>
+            <button type="button" data-caso-filtro="internato" aria-pressed="false">Internato</button>
+            <button type="button" data-caso-filtro="cm" aria-pressed="false">Clínica</button>
+            <button type="button" data-caso-filtro="cirurgia" aria-pressed="false">Cirurgia</button>
+            <button type="button" data-caso-filtro="go" aria-pressed="false">GO</button>
+            <button type="button" data-caso-filtro="ped" aria-pressed="false">Pediatria</button>
+            <button type="button" data-caso-filtro="mfc" aria-pressed="false">MFC</button>
+            <button type="button" data-caso-filtro="mental" aria-pressed="false">Saúde mental</button>
+            <button type="button" data-caso-filtro="urgencia" aria-pressed="false">Urgência</button>
+          </div>
+          <p class="spec-status" data-caso-status></p>
+          <div class="cases" data-casos>
+            <article class="case" id="caso-sca" data-caso="cm internato urgencia" data-find="caso dor toracica infarto ecg papilar mitral cardiologia sca">
+              <p class="kicker">Clínica médica · cardiologia</p>
+              <h3>Dor no peito no pronto atendimento</h3>
+              <p class="case-lead">
+                Homem de 58 anos, hipertenso e fumante, chega com dor em aperto
+                no peito há 40 minutos, suor frio e náusea.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Qual exame vem primeiro, e em quanto tempo?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      ECG de 12 derivações, feito e lido em até 10 minutos do
+                      primeiro contato médico. A troponina é colhida, mas não
+                      atrasa o ECG
+                      <a href="#ref-sca" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>O ECG mostra supradesnivelamento do ST em DII, DIII e aVF. Que parede é essa?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Parede inferior. Na maioria das pessoas ela depende da
+                      coronária direita e, em parte delas, da circunflexa. A
+                      diretriz pede derivações direitas, como V4R, para olhar o
+                      ventrículo direito <a href="#ref-sca" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>No terceiro dia surgem sopro sistólico novo no foco mitral e falta de ar súbita. O que pode ter rompido?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      O músculo papilar posteromedial do ventrículo esquerdo.
+                      Ele costuma ter uma só artéria, a descendente posterior,
+                      e por isso sofre mais no infarto inferior. A ruptura dá
+                      insuficiência mitral aguda, que é emergência cirúrgica.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#tresd" data-ver3d="coracao:papillary_muscle_of_heart_posteromedial">Ver o papilar posteromedial no 3D</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-avc" data-caso="cm internato urgencia" data-find="caso avc acidente vascular broca afasia disfagia triagem neurologia fono">
+              <p class="kicker">Neurologia · fonoaudiologia</p>
+              <h3>A fala mudou no café da manhã</h3>
+              <p class="case-lead">
+                Mulher de 67 anos, destra. Às 9h30, durante o café, a fala de
+                repente sai difícil e pouco fluente, e a mão direita perde
+                força. A filha liga para o SAMU 192.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Além dos sinais vitais, que dado o serviço precisa ter logo?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      A hora em que ela foi vista bem pela última vez: 9h30. É
+                      ela que define quais tratamentos de reperfusão ainda
+                      cabem. A glicemia capilar também entra cedo, porque
+                      hipoglicemia pode imitar AVC <a href="#ref-avc" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Fala pouco fluente, compreensão relativamente boa e mão direita fraca. Onde fica a lesão provável?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      No hemisfério esquerdo, que é o dominante para a
+                      linguagem na maioria dos destros: giro frontal inferior,
+                      a área de Broca, e o córtex motor vizinho. A fraqueza fica
+                      do lado oposto porque o trato corticoespinal cruza no bulbo.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Ela pede água. Pode beber?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Ainda não. A diretriz pede triagem de deglutição antes de
+                      qualquer comida, líquido ou remédio pela boca. Quem falha
+                      segue para avaliação completa, que pode ser feita por
+                      fonoaudiólogo <a href="#ref-avc" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#tresd" data-ver3d="cerebro:inferior_frontal_gyrus_opercular_part_R">Ver a área de Broca no 3D</a>
+                <a class="btn ghost" href="#tresd" data-ver3d="cerebro:precentral_gyrus_R">Ver o giro pré-central esquerdo</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-apgar" data-caso="ped internato" data-find="caso recem nascido apgar reanimacao neonatal teste da orelhinha pediatria">
+              <p class="kicker">Pediatria · neonatologia</p>
+              <h3>O primeiro minuto de vida</h3>
+              <p class="case-lead">
+                Parto a termo. Com 1 minuto, o bebê tem o corpo rosado e as
+                mãos e pés azulados, frequência cardíaca de 90, faz careta ao
+                estímulo, tem alguma flexão dos membros e respira de forma
+                irregular.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Qual é o Apgar de 1 minuto?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      5. Cor 1, frequência 1 (abaixo de 100), irritabilidade 1
+                      (careta), tônus 1 (alguma flexão) e respiração 1
+                      (irregular). Confira na calculadora de Apgar, logo abaixo.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>A equipe esperou o Apgar de 1 minuto para decidir se reanimava. Está certo?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Não. A reanimação começa antes do primeiro minuto, guiada
+                      por respiração, tônus e frequência cardíaca. O Apgar
+                      descreve o estado e a resposta, não decide o início
+                      <a href="#ref-apgar" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Se o Apgar de 5 minutos ainda for menor que 7, o que se faz com a nota?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Repete-se a cada 5 minutos, até 20 minutos. Apgar baixo,
+                      sozinho, não prova asfixia nem prevê o desenvolvimento
+                      da criança <a href="#ref-apgar" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Na alta, o teste da orelhinha falha à direita. O bebê é surdo?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Não dá para dizer. Triagem que falha pede reteste e, se
+                      falhar de novo, diagnóstico audiológico. O exame é
+                      obrigatório nas maternidades do Brasil desde 2010
+                      <a href="#ref-orelhinha" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#ferramentas">Abrir a calculadora de Apgar</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-orelha" data-caso="cm" data-find="caso perda auditiva weber rinne condutiva neurossensorial surdez subita otorrino fono">
+              <p class="kicker">Otorrinolaringologia · audiologia</p>
+              <h3>O ouvido tampado depois da gripe</h3>
+              <p class="case-lead">
+                Homem de 34 anos sente o ouvido esquerdo tampado e ouve pior
+                desse lado há cinco dias, desde uma gripe. Sem tontura.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>No Weber, o som vai para a esquerda. O que isso pode significar?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Duas leituras: perda condutiva à esquerda ou
+                      neurossensorial à direita. O Weber sozinho não decide.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>No Rinne esquerdo, a via óssea soa mais alto que a aérea. E agora?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Rinne negativo à esquerda aponta para perda condutiva
+                      desse lado. Somado ao Weber, o quadro fecha com condução:
+                      cerume, efusão no ouvido médio ou problema nos ossículos.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Ouvido tampado já prova que a perda é condutiva?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Não. A perda neurossensorial súbita também dá sensação de
+                      ouvido tampado, e diapasão varia entre examinadores. Por
+                      isso a diretriz pede separar os dois tipos logo na
+                      primeira consulta e fazer audiometria o quanto antes, em
+                      até 14 dias do início <a href="#ref-surdez" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#ouvido">Rever a ficha da orelha</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-tce" data-caso="urgencia internato" data-find="caso trauma cranioencefalico tce glasgow pupila gcs-p herniacao neurocirurgia">
+              <p class="kicker">Trauma · neurologia</p>
+              <h3>Queda de moto</h3>
+              <p class="case-lead">
+                Motociclista de 25 anos, sem capacete, bateu a cabeça. Abre os
+                olhos só quando o socorrista aperta o leito da unha, fala
+                palavras soltas e leva a mão até o ponto da dor.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Qual é a Glasgow?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      10: abertura ocular 2, verbal 3, motora 5. Escreva assim,
+                      AO2 RV3 RM5, porque a soma sozinha esconde o que mudou
+                      <a href="#ref-gcs" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Como se classifica esse trauma?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Moderado, de 9 a 12. Leve vai de 13 a 15 e grave, de 3 a 8
+                      <a href="#ref-gcs" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Meia hora depois, a pupila direita dilata e para de reagir à luz. O que muda?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      A Glasgow com pupilas, a GCS-P, tira 1 ponto por pupila
+                      sem reação: 10 − 1 = 9 <a href="#ref-gcsp" class="cite">[R]</a>.
+                      Pupila que para de reagir sugere compressão do III nervo
+                      por herniação e pede neurocirurgia imediata.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#ferramentas">Abrir a calculadora de Glasgow</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-cefa" data-caso="ped cm internato" data-find="caso corpo estranho aspiracao bronquio direito engasgo broncoscopia pneumologia pediatria">
+              <p class="kicker">Pneumologia · pediatria</p>
+              <h3>O amendoim que sumiu</h3>
+              <p class="case-lead">
+                Menino de 3 anos engasga com amendoim, tosse muito e melhora.
+                Dois dias depois tem tosse que não passa e chiado só no lado
+                direito do tórax.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Em que lado o corpo estranho costuma parar?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      No adulto, o brônquio principal direito é o destino mais
+                      comum: é mais largo, mais curto e mais vertical. Na
+                      criança pequena, o esquerdo aparece quase tanto quanto o
+                      direito, porque o ângulo dos dois ainda é parecido
+                      <a href="#ref-cefa" class="cite">[R]</a>. Aqui, o chiado
+                      à direita orienta, mas não fecha.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>O raio-x de tórax veio normal. Isso afasta?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Não. Amendoim não aparece no raio-x, e o exame é normal
+                      em boa parte dos casos confirmados. O achado mais comum é
+                      ar preso de um lado. Engasgo testemunhado com sintomas
+                      pede broncoscopia, que confirma e retira
+                      <a href="#ref-cefa" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Num adulto sentado que aspira, que segmentos o material tende a alcançar?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Os basais do lobo inferior direito. Deitado de costas, o
+                      segmento superior do lobo inferior e o posterior do lobo
+                      superior, que ficam mais baixos nessa posição.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#tresd" data-ver3d="pulmao:right_main_bronchus">Ver o brônquio principal direito no 3D</a>
+                <a class="btn ghost" href="#tresd" data-ver3d="pulmao:right_posterior_basal">Ver o brônquio basal posterior</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-pe" data-caso="go internato" data-find="caso pre-eclampsia hipertensao gestacional proteinúria eclampsia obstetricia">
+              <p class="kicker">Ginecologia e obstetrícia</p>
+              <h3>A pressão subiu depois da 20ª semana</h3>
+              <p class="case-lead">
+                Primigesta de 28 anos, 32 semanas. Era normotensa no pré-natal.
+                Hoje a pressão é 148/96 mmHg, há cefaleia occipital e a fita
+                de urina marca uma cruz de proteína.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Qual é o diagnóstico de trabalho, e por quê?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Pré-eclâmpsia. Hipertensão a partir da 20ª semana, em
+                      quem era normotensa, mais proteinúria significativa.
+                      Uma cruz na fita equivale a cerca de 30 mg/dL e já conta
+                      quando os outros métodos não estão à mão
+                      <a href="#ref-pe" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Se a fita viesse limpa, pré-eclâmpsia estaria afastada?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Não. Sem proteinúria ainda é pré-eclâmpsia se houver
+                      disfunção de órgão-alvo (plaquetas, fígado, rim, pulmão,
+                      iminência de eclâmpsia) ou sofrimento placentário, como
+                      restrição de crescimento. Hipertensão gestacional é o
+                      nome temporário só quando nada disso aparece
+                      <a href="#ref-pe" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Cefaleia occipital e escotomas. O que muda no destino dela?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      São sinais premonitórios de eclâmpsia. O manual do
+                      Ministério da Saúde trata isso como urgência obstétrica
+                      hospitalar, não como retorno de ambulatório. PA ≥ 160/110
+                      também entra nessa lista <a href="#ref-pe" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#ferramentas">Abrir o Apgar, para o outro extremo da obstetrícia</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-sepse" data-caso="cm internato urgencia" data-find="caso sepse qsofa infeccao urinaria choque lactato">
+              <p class="kicker">Infectologia · urgência</p>
+              <h3>Febre, confusão e pressão baixa</h3>
+              <p class="case-lead">
+                Mulher de 72 anos, com infecção urinária tratada em casa.
+                Chega febril, confusa, com frequência respiratória de 24 e
+                pressão 92/58 mmHg. A filha diz que desde ontem ela “não está
+                ela mesma”.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Qual é o qSOFA, e o que ele significa?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      3: FR ≥ 22, alteração mental e PA sistólica ≤ 100. Fora
+                      da UTI, dois ou três pontos marcam quem, com infecção
+                      suspeita, tem mais chance de ir mal. Não é o diagnóstico
+                      de sepse <a href="#ref-sepsis3" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>O que, então, define sepse?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Disfunção orgânica ameaçadora da vida por resposta
+                      desregulada à infecção. Na prática, um aumento de 2
+                      pontos ou mais no SOFA. qSOFA só pede para você
+                      investigar essa disfunção e agir
+                      <a href="#ref-sepsis3" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Com essa pressão e essa confusão, o antibiótico pode esperar o resultado da cultura?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Não. Colha culturas se isso não atrasar. No choque
+                      séptico possível, a Surviving Sepsis pede antimicrobiano
+                      imediatamente, dentro da primeira hora. Lactato também
+                      entra cedo. Esta página não escolhe o fármaco: isso é
+                      do protocolo do serviço <a href="#ref-ssc" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#ferramentas">Abrir a calculadora de qSOFA</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-pac" data-caso="cm mfc internato" data-find="caso pneumonia comunitaria curb-65 ureia confusao idoso">
+              <p class="kicker">Pneumologia · medicina de família</p>
+              <h3>Tosse, febre e 70 anos</h3>
+              <p class="case-lead">
+                Homem de 70 anos, tosse produtiva e febre há três dias. Está
+                confuso, respira 32 vezes por minuto, pressão 88/54 mmHg.
+                A ureia veio 58 mg/dL. Saturação 94% em ar ambiente.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Qual é o CURB-65?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      5. Confusão, ureia alta, FR &gt; 30, pressão baixa e
+                      idade ≥ 65. Cada item vale um ponto
+                      <a href="#ref-curb" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>O que essa nota sugere sobre o local de tratamento?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Risco alto. Zero ou um ponto: ambulatorial entra na
+                      conversa. Dois: pensar em internar. Três ou mais:
+                      hospital, e os mais altos pedem olhar de UTI. A SBPT
+                      usa esse recorte no Brasil
+                      <a href="#ref-sbpt" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>A saturação de 94% e a nota 5 bastam para fechar a conduta?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Não. A própria diretriz pede oxigenação, comorbidade,
+                      ingestão oral e o contexto social junto da escala. CURB-65
+                      ordena o raciocínio; não substitui o exame
+                      <a href="#ref-sbpt" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#ferramentas">Abrir a calculadora de CURB-65</a>
+                <a class="btn ghost" href="#tresd" data-ver3d="pulmao:right_anterior_bronchopulmonary_segment">Ver um segmento do lobo superior direito</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-has" data-caso="mfc internato" data-find="caso hipertensao arterial primaria consultorio pcdt 140 90">
+              <p class="kicker">Medicina de família e comunidade</p>
+              <h3>148 por 94, numa consulta só</h3>
+              <p class="case-lead">
+                Homem de 52 anos, sem queixa, vem renovar receita da
+                esposa. A pressão no consultório, depois de cinco minutos
+                sentado, é 148/94 mmHg. Não usa remédio. Não há dor no
+                peito, falta de ar nem edema.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Dá para fechar hipertensão hoje?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Em geral, não. O PCDT do SUS diagnostica HAS no adulto
+                      com PA de consultório ≥ 140/90 mmHg que se mantém em
+                      outra ocasião. Grau 1 pede confirmação em 7 a 14 dias.
+                      Uma medida isolada fecha só se a PA for ≥ 180/110 ou
+                      houver doença cardiovascular ou lesão de órgão-alvo
+                      <a href="#ref-has" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Que armadilha o consultório esconde?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Hipertensão do avental branco: alta só no consultório.
+                      Hipertensão mascarada: normal no consultório, alta em
+                      casa. MAPA e MRPA separam as duas quando a dúvida
+                      importa para o tratamento <a href="#ref-has" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Enquanto espera a confirmação, o que já cabe na APS?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Medir de novo do jeito certo, olhar fatores de risco,
+                      orientar sódio, peso, movimento, álcool e tabaco, e
+                      marcar o retorno. O tratamento medicamentoso espera o
+                      diagnóstico, salvo emergência hipertensiva — que este
+                      caso não é.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#ferramentas">Abrir o IMC, que entra na mesma consulta</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-apendicite" data-caso="cirurgia internato" data-find="caso apendicite abdome agudo mcburney peritonite cirurgia">
+              <p class="kicker">Cirurgia</p>
+              <h3>A dor que mudou de lugar</h3>
+              <p class="case-lead">
+                Rapaz de 22 anos. A dor começou ontem ao redor do umbigo,
+                agora finca no lado direito baixo. Não quer comer. Temperatura
+                37,9 °C. A descompressão no ponto de McBurney dói.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Por que a dor começa no umbigo e depois vai para a fossa ilíaca direita?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Primeiro a dor é visceral, pouco localizada, no
+                      território do intestino médio, que o apêndice herda.
+                      Quando a inflamação chega ao peritônio parietal, a dor
+                      vira somática e finca no ponto em que o apêndice
+                      encosta na parede — classicamente McBurney.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Onde fica o ponto de McBurney?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Cerca de um terço do caminho da espinha ilíaca
+                      ântero-superior direita até o umbigo. É um marco, não
+                      uma lei: apêndice retrocecal, pélvico ou em gestante
+                      muda o lugar da dor.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Descompressão dolorosa. O que isso sugere, e o que não fecha?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Irritação peritoneal. Junto da migração da dor, da
+                      anorexia e da febre, o quadro clássico de apendicite
+                      pede avaliação cirúrgica. Imagem ajuda no duvidoso;
+                      não substitui o exame quando o peritônio já fala.
+                      Abra o intestino no 3D só para ver o território.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="#tresd" data-ver3d="intestino:ileum_terminal">Ver o íleo terminal no 3D</a>
+              </p>
+            </article>
+
+            <article class="case" id="caso-suicidio" data-caso="mental internato mfc" data-find="caso suicidio depressao saude mental escuta cvv">
+              <p class="kicker">Saúde mental · medicina de família</p>
+              <h3>A frase que não pode passar</h3>
+              <p class="case-lead">
+                Mulher de 28 anos volta à unidade com cansaço e insônia.
+                No fim da consulta diz, baixo: “às vezes penso que era
+                melhor não existir”. Não há ferimento. Ela olha para a porta.
+              </p>
+              <ol class="case-steps">
+                <li>
+                  <p>Perguntar se ela pensa em suicídio aumenta o risco?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Não. A linha de cuidado do Ministério da Saúde pede
+                      que o risco seja investigado em toda consulta de
+                      depressão. O profissional não deve ter receio de
+                      perguntar; deve perguntar com calma e sem julgamento
+                      <a href="#ref-suicidio" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>O que avaliar, além da frase?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      Intencionalidade, plano, meios, tentativas anteriores,
+                      isolamento, uso de substância e a rede de apoio. A
+                      escuta já é parte do manejo. Encaminhe com certeza de
+                      atendimento, não com um papel solto
+                      <a href="#ref-suicidio" class="cite">[R]</a>.
+                    </p>
+                  </details>
+                </li>
+                <li>
+                  <p>Que números e deveres cabem neste caso, no Brasil?</p>
+                  <details class="case-answer">
+                    <summary>Mostrar resposta</summary>
+                    <p>
+                      CVV 188, apoio emocional 24 horas. SAMU 192 se a
+                      segurança estiver em jogo agora. Tentativa e violência
+                      autoprovocada são notificação compulsória. Esta página
+                      não descreve métodos e não substitui o serviço.
+                    </p>
+                  </details>
+                </li>
+              </ol>
+              <p class="case-foot">
+                <a class="btn ghost" href="https://www.cvv.org.br/">CVV 188</a>
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="ferramentas">
+        <div class="wrap">
+          <h2>Escalas e contas da prática</h2>
+          <p class="section-intro">
+            Glasgow, Apgar, IMC, valor preditivo, qSOFA e CURB-65. Use os
+            dados de um caso, do simulado ou de um colega no treino de
+            semiologia. Não use para decidir a conduta de um paciente real.
+          </p>
+          <div class="tools">
+            <form class="tool" data-tool="glasgow" data-find="glasgow escala coma gcs pupilas trauma">
+              <h3>Escala de coma de Glasgow</h3>
+              <label>Abertura ocular (AO)
+                <select name="o">
+                  <option value="4">4 · Espontânea</option>
+                  <option value="3">3 · Ao som</option>
+                  <option value="2">2 · À pressão</option>
+                  <option value="1">1 · Nenhuma</option>
+                  <option value="NT">NT · Não testável</option>
+                </select>
+              </label>
+              <label>Resposta verbal (RV)
+                <select name="v">
+                  <option value="5">5 · Orientada</option>
+                  <option value="4">4 · Confusa</option>
+                  <option value="3">3 · Palavras</option>
+                  <option value="2">2 · Sons</option>
+                  <option value="1">1 · Nenhuma</option>
+                  <option value="NT">NT · Não testável</option>
+                </select>
+              </label>
+              <label>Resposta motora (RM)
+                <select name="m">
+                  <option value="6">6 · Obedece a comandos</option>
+                  <option value="5">5 · Localiza</option>
+                  <option value="4">4 · Flexão normal</option>
+                  <option value="3">3 · Flexão anormal</option>
+                  <option value="2">2 · Extensão</option>
+                  <option value="1">1 · Nenhuma</option>
+                  <option value="NT">NT · Não testável</option>
+                </select>
+              </label>
+              <label>Pupilas à luz
+                <select name="p">
+                  <option value="0">As duas reagem</option>
+                  <option value="1">Uma não reage</option>
+                  <option value="2">Nenhuma reage</option>
+                  <option value="">Não avaliadas</option>
+                </select>
+              </label>
+              <output class="tool-out" data-out></output>
+              <p class="tool-src">
+                Níveis da versão de 2014 da escala
+                <a href="#ref-gcs" class="cite">[R]</a>. GCS-P é a Glasgow
+                menos o número de pupilas sem reação
+                <a href="#ref-gcsp" class="cite">[R]</a>.
+              </p>
+            </form>
+
+            <form class="tool" data-tool="apgar" data-find="apgar recem nascido neonatal escala">
+              <h3>Índice de Apgar</h3>
+              <label>Cor
+                <select name="cor">
+                  <option value="2">2 · Toda rosada</option>
+                  <option value="1">1 · Corpo rosado, extremidades azuladas</option>
+                  <option value="0">0 · Azulada ou pálida</option>
+                </select>
+              </label>
+              <label>Frequência cardíaca
+                <select name="fc">
+                  <option value="2">2 · 100 ou mais por minuto</option>
+                  <option value="1">1 · Menos de 100</option>
+                  <option value="0">0 · Ausente</option>
+                </select>
+              </label>
+              <label>Irritabilidade reflexa
+                <select name="irr">
+                  <option value="2">2 · Choro, tosse ou espirro</option>
+                  <option value="1">1 · Careta</option>
+                  <option value="0">0 · Sem resposta</option>
+                </select>
+              </label>
+              <label>Tônus
+                <select name="tonus">
+                  <option value="2">2 · Movimento ativo</option>
+                  <option value="1">1 · Alguma flexão</option>
+                  <option value="0">0 · Flácido</option>
+                </select>
+              </label>
+              <label>Respiração
+                <select name="resp">
+                  <option value="2">2 · Boa, choro forte</option>
+                  <option value="1">1 · Fraca ou irregular</option>
+                  <option value="0">0 · Ausente</option>
+                </select>
+              </label>
+              <output class="tool-out" data-out></output>
+              <p class="tool-src">
+                Faixas da AAP e do ACOG para o 5º minuto. O Apgar não decide o
+                início da reanimação <a href="#ref-apgar" class="cite">[R]</a>.
+              </p>
+            </form>
+
+            <form class="tool" data-tool="imc" data-find="imc indice massa corporal obesidade peso altura nutricao">
+              <h3>Índice de massa corporal</h3>
+              <label>Peso, em kg
+                <input name="peso" type="number" inputmode="decimal" min="2" max="400" step="0.1" value="70" />
+              </label>
+              <label>Altura, em cm
+                <input name="altura" type="number" inputmode="decimal" min="40" max="250" step="0.5" value="170" />
+              </label>
+              <output class="tool-out" data-out></output>
+              <p class="tool-src">
+                Classes da OMS para adultos <a href="#ref-imc" class="cite">[R]</a>.
+                De 5 a 19 anos usa-se o IMC por idade, e idosos têm pontos de
+                corte próprios na vigilância nutricional do SUS. O IMC não
+                separa gordura de músculo.
+              </p>
+            </form>
+
+            <form class="tool" data-tool="preditivo" data-find="valor preditivo positivo negativo sensibilidade especificidade prevalencia epidemiologia">
+              <h3>Valor preditivo de um teste</h3>
+              <label>Sensibilidade, em %
+                <input name="sens" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="90" />
+              </label>
+              <label>Especificidade, em %
+                <input name="espec" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="90" />
+              </label>
+              <label>Prevalência na população testada, em %
+                <input name="prev" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="10" />
+              </label>
+              <output class="tool-out" data-out></output>
+              <p class="tool-src">
+                Troque só a prevalência e veja o valor preditivo positivo
+                mudar. É o mesmo teste, em outra população.
+              </p>
+            </form>
+
+            <form class="tool" data-tool="qsofa" data-find="qsofa sepse infeccao pressao frequencia respiratoria consciencia">
+              <h3>qSOFA</h3>
+              <label>Frequência respiratória
+                <select name="fr">
+                  <option value="0">Menos de 22 por minuto</option>
+                  <option value="1">22 ou mais por minuto</option>
+                </select>
+              </label>
+              <label>Estado mental
+                <select name="mental">
+                  <option value="0">Normal</option>
+                  <option value="1">Alterado</option>
+                </select>
+              </label>
+              <label>Pressão arterial sistólica
+                <select name="pas">
+                  <option value="0">Acima de 100 mmHg</option>
+                  <option value="1">100 mmHg ou menos</option>
+                </select>
+              </label>
+              <output class="tool-out" data-out></output>
+              <p class="tool-src">
+                Cada item vale 1. Dois ou três pontos, fora da UTI, pedem
+                olhar de disfunção orgânica. qSOFA não diagnostica sepse
+                <a href="#ref-sepsis3" class="cite">[R]</a>.
+              </p>
+            </form>
+
+            <form class="tool" data-tool="curb" data-find="curb-65 pneumonia comunitaria gravidade ureia">
+              <h3>CURB-65</h3>
+              <label>Confusão mental nova
+                <select name="conf">
+                  <option value="0">Não</option>
+                  <option value="1">Sim</option>
+                </select>
+              </label>
+              <label>Ureia
+                <select name="ureia">
+                  <option value="0">7 mmol/L ou menos (cerca de 42 mg/dL ou menos)</option>
+                  <option value="1">Mais de 7 mmol/L (a SBPT usa &gt; 50 mg/dL)</option>
+                </select>
+              </label>
+              <label>Frequência respiratória
+                <select name="fr">
+                  <option value="0">30 ou menos por minuto</option>
+                  <option value="1">Mais de 30 por minuto</option>
+                </select>
+              </label>
+              <label>Pressão arterial
+                <select name="pa">
+                  <option value="0">Sistólica 90 ou mais e diastólica 60 ou mais</option>
+                  <option value="1">Sistólica &lt; 90 ou diastólica &lt; 60 mmHg</option>
+                </select>
+              </label>
+              <label>Idade
+                <select name="idade">
+                  <option value="0">Menos de 65 anos</option>
+                  <option value="1">65 anos ou mais</option>
+                </select>
+              </label>
+              <output class="tool-out" data-out></output>
+              <p class="tool-src">
+                Lim e cols., Thorax 2003: ureia &gt; 7 mmol/L
+                <a href="#ref-curb" class="cite">[R]</a>.
+                A SBPT, no Brasil, usa ureia &gt; 50 mg/dL
+                <a href="#ref-sbpt" class="cite">[R]</a>.
+                A escala não dispensa oxigenação nem comorbidade.
+              </p>
+            </form>
           </div>
         </div>
       </section>
@@ -801,6 +2598,36 @@
               <h3><a href="https://educapes.capes.gov.br/">EduCAPES</a> e <a href="https://bdtd.ibict.br/">BDTD</a></h3>
               <p>EduCAPES guarda recursos educacionais abertos. A Biblioteca Digital de Teses e Dissertações encontra pesquisas brasileiras de fono, anatomia e saúde.</p>
             </article>
+            <article class="resource" data-find="dcn medicina cne ces 2025 7200 horas internato">
+              <small>Norma · graduação</small>
+              <h3><a href="https://www.gov.br/mec/pt-br/cne/2025/outubro-2025/rces003_25.pdf">DCN de Medicina, Resolução CNE/CES nº 3/2025</a></h3>
+              <p>Texto oficial: curso presencial, 7.200 horas no mínimo, internato de dois anos e pelo menos 35% da carga. Leia o PDF, não o resumo.</p>
+            </article>
+            <article class="resource" data-find="pcdt hipertensao arterial sus ministerio saude">
+              <small>Brasil · protocolo</small>
+              <h3><a href="https://www.gov.br/saude/pt-br/assuntos/pcdt/h/hipertensao-arterial-sistemica.pdf">PCDT de hipertensão arterial sistêmica</a></h3>
+              <p>Protocolo do SUS, 2025. Diagnóstico, graus, MAPA, MRPA e o papel da atenção primária. Para o restante dos PCDT, o portal do Ministério da Saúde.</p>
+            </article>
+            <article class="resource" data-find="manual gestacao alto risco pre-eclampsia ministerio saude">
+              <small>Brasil · obstetrícia</small>
+              <h3><a href="https://bvsms.saude.gov.br/bvs/publicacoes/manual_gestacao_alto_risco.pdf">Manual de gestação de alto risco, 2022</a></h3>
+              <p>Ministério da Saúde. Capítulo das síndromes hipertensivas: pré-eclâmpsia com e sem proteinúria, sinais de gravidade e urgências obstétricas.</p>
+            </article>
+            <article class="resource" data-find="sbpt pneumonia comunitaria curb-65 jbpneumo">
+              <small>Brasil · pneumologia</small>
+              <h3><a href="https://doi.org/10.1590/s1806-37562018000000130">Recomendações SBPT 2018 para PAC</a></h3>
+              <p>Atualização aberta no Jornal Brasileiro de Pneumologia. CURB-65, CRB-65 e o que a escala não cobre. O artigo original do escore está no Thorax de 2003.</p>
+            </article>
+            <article class="resource" data-find="sepsis-3 jama singer qsofa surviving sepsis">
+              <small>Consenso · sepse</small>
+              <h3><a href="https://doi.org/10.1001/jama.2016.0287">Sepsis-3, JAMA 2016</a></h3>
+              <p>Definição vigente de sepse e o qSOFA. A conduta da primeira hora está na <a href="https://doi.org/10.1097/CCM.0000000000005337">Surviving Sepsis Campaign 2021</a>.</p>
+            </article>
+            <article class="resource" data-find="linha cuidado depressao suicidio ministerio saude cvv">
+              <small>Brasil · saúde mental</small>
+              <h3><a href="https://linhasdecuidado.saude.gov.br/portal/depressao/unidade-de-atencao-primaria/manejo-inicial-conduta/">Linha de cuidado da depressão, APS</a></h3>
+              <p>Como avaliar risco de suicídio na atenção primária. CVV 188 para apoio emocional. Diretrizes nacionais de prevenção: Portaria GM/MS nº 1.876/2006.</p>
+            </article>
           </div>
         </div>
       </section>
@@ -874,6 +2701,11 @@
             <label class="check"><input type="checkbox" data-check="h3" /> <span>Expliquei penetração e aspiração em voz alta, com um exemplo.</span></label>
             <label class="check"><input type="checkbox" data-check="h4" /> <span>Abri um atlas 3D e localizei laringe, cóclea, diafragma e rins.</span></label>
             <label class="check"><input type="checkbox" data-check="h5" /> <span>Li um capítulo inteiro de livro aberto, não só esta ficha.</span></label>
+            <label class="check"><input type="checkbox" data-check="i1" /> <span><strong>Internato.</strong> Resolvi um caso de cada área: clínica, cirurgia, GO, pediatria, MFC e saúde mental.</span></label>
+            <label class="check"><input type="checkbox" data-check="i2" /> <span>Calculei Glasgow, Apgar, qSOFA e CURB-65 sem olhar a ficha.</span></label>
+            <label class="check"><input type="checkbox" data-check="i3" /> <span>Abri o PDF da DCN e marquei os artigos do internato (32 a 35).</span></label>
+            <label class="check"><input type="checkbox" data-check="i4" /> <span>Fiz um caderno antigo do Enamed ou do Revalida, no site do Inep.</span></label>
+            <label class="check"><input type="checkbox" data-check="i5" /> <span>Escolhi três especialidades na lista do CFM e li o tempo de residência de cada uma.</span></label>
           </div>
         </div>
       </section>
@@ -882,9 +2714,11 @@
         <div class="wrap">
           <h2>Simulados</h2>
           <p class="section-intro">
-            Quarenta questões originais, em cinco provas. Escolha uma, responda
-            sem voltar ao texto e leia a explicação antes de seguir. O
-            resultado mostra o que errar de novo amanhã.
+            <span data-conta="questoes">Questões originais, em várias provas.</span>
+            Escolha uma, responda sem voltar ao texto e leia a explicação antes
+            de seguir. O resultado mostra o que errar de novo amanhã. Para
+            treinar com prova oficial, veja os cadernos antigos em
+            <a href="#carreira">Provas e residência</a>.
           </p>
           <div data-quiz>
             <div class="grid exams" data-exams></div>
@@ -922,6 +2756,98 @@
         </div>
       </section>
 
+      <section class="band" id="carreira">
+        <div class="wrap">
+          <h2>Provas e residência</h2>
+          <p class="section-intro">
+            As três provas nacionais que aparecem no caminho de quem faz
+            medicina no Brasil, e a lista oficial de especialidades. Datas e
+            taxas mudam a cada edição: confira sempre o edital do ano.
+          </p>
+          <div class="grid">
+            <article class="card exam-card" data-find="enamed inep enade prova estudante quarto ano concluinte">
+              <small>Inep · durante a graduação</small>
+              <h3>Enamed</h3>
+              <ul class="remember">
+                <li>É a modalidade do Enade para os cursos de medicina <a href="#ref-enamed-manual" class="cite">[R]</a>.</li>
+                <li>100 questões objetivas, com quatro alternativas, montadas a partir de casos clínicos e situações-problema <a href="#ref-enamed-manual" class="cite">[R]</a>.</li>
+                <li>Sete áreas: clínica médica, cirurgia, ginecologia e obstetrícia, pediatria, medicina de família, saúde mental e saúde coletiva <a href="#ref-enamed-portaria" class="cite">[R]</a>.</li>
+                <li>Duas etapas obrigatórias: no 8º semestre, antes do internato, e no 12º <a href="#ref-enamed" class="cite">[R]</a>.</li>
+                <li>Nota de 0 a 100, pela teoria de resposta ao item. No concluinte, 60 ou mais é proficiente. No 8º semestre a nota é só diagnóstica, sem esse rótulo <a href="#ref-enamed" class="cite">[R]</a>.</li>
+                <li>A primeira nota do concluinte vai para o histórico e pode ser usada no Enare de acesso direto <a href="#ref-enamed" class="cite">[R]</a>.</li>
+              </ul>
+              <p><a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enamed/provas-e-gabaritos">Cadernos e gabaritos do Enamed</a></p>
+            </article>
+            <article class="card exam-card" data-find="revalida inep diploma estrangeiro habilidades clinicas estacoes">
+              <small>Inep · diploma do exterior</small>
+              <h3>Revalida</h3>
+              <ul class="remember">
+                <li>Para quem se formou em medicina fora do Brasil e quer revalidar o diploma.</li>
+                <li>1ª etapa: 100 questões objetivas, em cinco horas <a href="#ref-revalida" class="cite">[R]</a>.</li>
+                <li>2ª etapa: habilidades clínicas em dez estações, com história, exames, hipóteses, procedimentos e orientação ao paciente <a href="#ref-revalida" class="cite">[R]</a>.</li>
+                <li>Cobre clínica médica, cirurgia, ginecologia e obstetrícia, pediatria e medicina de família, com saúde coletiva e saúde mental de forma interdisciplinar <a href="#ref-revalida-areas" class="cite">[R]</a>.</li>
+                <li>Só faz a 2ª etapa quem passa na 1ª <a href="#ref-revalida-areas" class="cite">[R]</a>.</li>
+              </ul>
+              <p><a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/revalida/provas-e-gabaritos">Provas e gabaritos desde 2011</a></p>
+            </article>
+            <article class="card exam-card" data-find="enare residencia medica hu brasil acesso direto pre-requisito">
+              <small>HU Brasil · residência</small>
+              <h3>Enare</h3>
+              <ul class="remember">
+                <li>Exame Nacional de Residência, coordenado pela HU Brasil, a rede dos hospitais universitários federais <a href="#ref-enare" class="cite">[R]</a>.</li>
+                <li>Acesso direto: a nota usada é a do Enamed. Não há outra prova do Enare para essa modalidade <a href="#ref-enare" class="cite">[R]</a>.</li>
+                <li>Inscrever-se no Enamed não basta: é preciso confirmar a inscrição também no Enare, no prazo do edital <a href="#ref-enare" class="cite">[R]</a>.</li>
+                <li>Pré-requisito, ano adicional e área de atuação: prova própria, com 80 questões de cinco alternativas <a href="#ref-enare-prova" class="cite">[R]</a>.</li>
+                <li>Outras seleções de residência, de estados, universidades e hospitais, têm editais próprios.</li>
+              </ul>
+              <p><a href="https://www.gov.br/hubrasil/pt-br/ensino-e-pesquisa/exame-nacional-de-residencia-enare">Página oficial do Enare</a></p>
+            </article>
+          </div>
+
+          <div class="spec-head">
+            <div>
+              <h3>As 55 especialidades médicas</h3>
+              <p>
+                Lista da Resolução CFM nº 2.472/2026 <a href="#ref-cfm" class="cite">[R]</a>.
+                Acesso direto entra logo depois da graduação. Pré-requisito
+                exige uma residência anterior. A duração é a do programa de
+                residência credenciado pela CNRM. O título também pode vir de
+                prova da sociedade da especialidade, em convênio com a AMB.
+              </p>
+            </div>
+          </div>
+          <div class="spec-tools">
+            <label class="sr-only" for="spec-busca">Filtrar especialidades</label>
+            <input id="spec-busca" type="search" data-spec-filtro placeholder="Ex.: cirurgia, pediatria, 5 anos" />
+            <div class="filters" role="group" aria-label="Tipo de acesso" data-spec-tipos>
+              <button type="button" data-spec-tipo="tudo" aria-pressed="true">Todas</button>
+              <button type="button" data-spec-tipo="direto" aria-pressed="false">Acesso direto</button>
+              <button type="button" data-spec-tipo="pre" aria-pressed="false">Com pré-requisito</button>
+            </div>
+          </div>
+          <p class="spec-status" data-spec-status aria-live="polite"></p>
+          <div class="table-wrap spec-wrap">
+            <table class="spec-table">
+              <caption class="sr-only">Especialidades médicas, forma de acesso e duração da residência</caption>
+              <thead>
+                <tr><th scope="col">Especialidade</th><th scope="col">Acesso</th><th scope="col">Residência</th></tr>
+              </thead>
+              <tbody data-spec></tbody>
+            </table>
+          </div>
+          <details class="topic areas-topic">
+            <summary><h3>As 64 áreas de atuação</h3><em>abrir</em></summary>
+            <p>
+              Em geral, a área de atuação vem depois de uma especialidade.
+              Foniatria, que conversa com a fonoaudiologia, pede residência ou
+              título em otorrinolaringologia e tem programa de um ano
+              <a href="#ref-cfm" class="cite">[R]</a>.
+            </p>
+            <ul class="flow" data-areas></ul>
+          </details>
+        </div>
+      </section>
+
       <section class="band" id="glossario">
         <div class="wrap">
           <h2>Glossário mínimo</h2>
@@ -938,6 +2864,15 @@
             <article class="term" data-find="afasia"><h3>Afasia</h3><p>Alteração de linguagem adquirida, em geral por lesão no hemisfério dominante.</p></article>
             <article class="term" data-find="pragmatica"><h3>Pragmática</h3><p>Uso da linguagem no contexto: turno, ironia, pedido e o que não está dito.</p></article>
             <article class="term" data-find="imitanciometria"><h3>Imitanciometria</h3><p>Mede a mobilidade do tímpano e os reflexos do ouvido médio. Não substitui a audiometria.</p></article>
+            <article class="term" data-find="cone medular cauda equina"><h3>Cone medular</h3><p>Ponta final da medula espinal. No adulto fica perto de L1–L2. Abaixo dele seguem as raízes da cauda equina <a href="#ref-medula" class="cite">[R]</a>.</p></article>
+            <article class="term" data-find="valor preditivo"><h3>Valor preditivo</h3><p>Chance de o resultado estar certo. Depende do teste e também da prevalência na população testada.</p></article>
+            <article class="term" data-find="internato estagio"><h3>Internato</h3><p>Estágio curricular obrigatório em serviço, com supervisão. Pela DCN de 2025, dura no mínimo dois anos e soma pelo menos 35% da carga horária.</p></article>
+            <article class="term" data-find="residencia medica cnrm"><h3>Residência médica</h3><p>Pós-graduação em serviço, credenciada pela Comissão Nacional de Residência Médica. É o caminho principal para o título de especialista.</p></article>
+            <article class="term" data-find="qsofa sepse"><h3>qSOFA</h3><p>Três sinais à beira do leito: FR ≥ 22, mental alterado, PA sistólica ≤ 100. Dois ou três pontos, fora da UTI, pedem investigar sepse. Não são o diagnóstico <a href="#ref-sepsis3" class="cite">[R]</a>.</p></article>
+            <article class="term" data-find="curb-65 pneumonia"><h3>CURB-65</h3><p>Confusão, ureia alta, FR &gt; 30, pressão baixa e idade ≥ 65. Ordena o local de tratamento da pneumonia comunitária, junto da oxigenação e das comorbidades.</p></article>
+            <article class="term" data-find="pre-eclampsia proteinúria"><h3>Pré-eclâmpsia</h3><p>Hipertensão após a 20ª semana, em quem era normotensa, com proteinúria ou com disfunção de órgão-alvo ou sofrimento placentário <a href="#ref-pe" class="cite">[R]</a>.</p></article>
+            <article class="term" data-find="sepse sofa"><h3>Sepse</h3><p>Disfunção orgânica ameaçadora da vida por resposta desregulada à infecção. Na prática, ΔSOFA ≥ 2 <a href="#ref-sepsis3" class="cite">[R]</a>.</p></article>
+            <article class="term" data-find="enamed sete areas"><h3>Enamed</h3><p>Exame nacional da formação médica. Duas etapas, 100 questões, sete áreas. No concluinte, 60 pontos marcam proficiência.</p></article>
           </div>
         </div>
       </section>
@@ -946,10 +2881,51 @@
         <div class="wrap">
           <h2>De onde veio o material</h2>
           <p>
-            As fichas e as questões foram escritas para esta página como
-            revisão. Elas não copiam livro. Quando o assunto apertar, o texto
-            de referência é o link, não o resumo.
+            As fichas, os casos e as questões foram escritos para esta página
+            como revisão. Eles não copiam livro. Cada número entre colchetes
+            no texto leva a uma destas fontes originais. Quando o assunto
+            apertar, o texto de referência é o link, não o resumo.
           </p>
+          <h3 class="refs-title">Referências numeradas</h3>
+          <ol class="refs" data-refs>
+            <li id="ref-dcn">Brasil. Conselho Nacional de Educação, Câmara de Educação Superior. <a href="https://www.gov.br/mec/pt-br/cne/2025/outubro-2025/rces003_25.pdf">Resolução CNE/CES nº 3, de 30 de setembro de 2025</a>. Institui as Diretrizes Curriculares Nacionais do Curso de Graduação em Medicina. Diário Oficial da União, 1º out. 2025, seção 1, p. 35–37.</li>
+            <li id="ref-enamed">Inep. <a href="https://www.gov.br/inep/pt-br/acesso-a-informacao/perguntas-frequentes/exame-nacional-de-avaliacao-da-formacao-medica-enamed">Perguntas frequentes: Exame Nacional de Avaliação da Formação Médica (Enamed)</a>. 2026.</li>
+            <li id="ref-enamed-manual">Inep. <a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/enamed/inep-lanca-manual-explicativo-sobre-o-enamed">Inep lança manual explicativo sobre o Enamed</a>. 2026.</li>
+            <li id="ref-enamed-portaria">Brasil. Ministério da Educação. <a href="https://www.in.gov.br/en/web/dou/-/portaria-n-413-de-18-de-junho-de-2025-637197707">Portaria nº 413, de 18 de junho de 2025</a>. Regulamenta o Exame Nacional de Avaliação da Formação Médica (Enamed). Diário Oficial da União.</li>
+            <li id="ref-revalida">Inep. <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/revalida/provas-e-gabaritos">Revalida: provas e gabaritos</a>. Atualizado em 2026.</li>
+            <li id="ref-revalida-areas">Inep. <a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/revalida/confira-novas-orientacoes-para-a-1a-etapa-do-revalida-2026-2">Confira novas orientações para a 1ª etapa do Revalida 2026/2</a>. 2026.</li>
+            <li id="ref-enare">HU Brasil. <a href="https://www.gov.br/hubrasil/pt-br/ensino-e-pesquisa/exame-nacional-de-residencia-enare/perguntas-frequentes">Enare: perguntas frequentes</a>. 2026.</li>
+            <li id="ref-enare-prova">HU Brasil. <a href="https://www.gov.br/hubrasil/pt-br/comunicacao/noticias/locais-de-prova-do-enare-e-enamed-2026-ja-podem-ser-consultados">Locais de prova do Enare e Enamed 2026 já podem ser consultados</a>. 2026.</li>
+            <li id="ref-cfm">Conselho Federal de Medicina. <a href="https://www.in.gov.br/web/dou/-/resolucao-cfm-n-2.472-de-24-de-setembro-de-2026-740664066">Resolução CFM nº 2.472, de 24 de setembro de 2026</a>. Relação de especialidades e áreas de atuação médicas. Diário Oficial da União, 28 out. 2026, seção 1, p. 153.</li>
+            <li id="ref-dunlosky">Dunlosky J, Rawson KA, Marsh EJ, Nathan MJ, Willingham DT. Improving students’ learning with effective learning techniques. Psychological Science in the Public Interest. 2013;14(1):4–58. <a href="https://doi.org/10.1177/1529100612453266">doi:10.1177/1529100612453266</a>.</li>
+            <li id="ref-roediger">Roediger HL, Karpicke JD. Test-enhanced learning: taking memory tests improves long-term retention. Psychological Science. 2006;17(3):249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x">doi:10.1111/j.1467-9280.2006.01693.x</a>.</li>
+            <li id="ref-larsen">Larsen DP, Butler AC, Roediger HL. Repeated testing improves long-term retention relative to repeated study: a randomised controlled trial. Medical Education. 2009;43(12):1174–1181. <a href="https://doi.org/10.1111/j.1365-2923.2009.03518.x">doi:10.1111/j.1365-2923.2009.03518.x</a>.</li>
+            <li id="ref-cepeda">Cepeda NJ, Pashler H, Vul E, Wixted JT, Rohrer D. Distributed practice in verbal recall tasks: a review and quantitative synthesis. Psychological Bulletin. 2006;132(3):354–380. <a href="https://doi.org/10.1037/0033-2909.132.3.354">doi:10.1037/0033-2909.132.3.354</a>.</li>
+            <li id="ref-hatala">Hatala RM, Brooks LR, Norman GR. Practice makes perfect: the critical role of mixed practice in the acquisition of ECG interpretation skills. Advances in Health Sciences Education. 2003;8(1):17–26. <a href="https://doi.org/10.1023/A:1022687404380">doi:10.1023/A:1022687404380</a>.</li>
+            <li id="ref-chamberland">Chamberland M, St-Onge C, Setrakian J, et al. The influence of medical students’ self-explanations on diagnostic performance. Medical Education. 2011;45(7):688–695. <a href="https://doi.org/10.1111/j.1365-2923.2011.03933.x">doi:10.1111/j.1365-2923.2011.03933.x</a>.</li>
+            <li id="ref-sca">Rao SV, O’Donoghue ML, Ruel M, et al. 2025 ACC/AHA/ACEP/NAEMSP/SCAI guideline for the management of patients with acute coronary syndromes. Circulation. 2025;151(13):e771–e862. <a href="https://doi.org/10.1161/CIR.0000000000001309">doi:10.1161/CIR.0000000000001309</a>.</li>
+            <li id="ref-avc">Powers WJ, Rabinstein AA, Ackerson T, et al. Guidelines for the early management of patients with acute ischemic stroke: 2019 update. Stroke. 2019;50(12):e344–e418. <a href="https://doi.org/10.1161/STR.0000000000000211">doi:10.1161/STR.0000000000000211</a>.</li>
+            <li id="ref-gcs">Munakomi S, Margetis K, Iverson LM. <a href="https://www.ncbi.nlm.nih.gov/books/NBK513298/">Glasgow Coma Scale</a>. StatPearls, NCBI Bookshelf, atualizado em 2026. Veja também o <a href="https://www.glasgowcomascale.org/">site oficial da escala</a>.</li>
+            <li id="ref-gcsp">Brennan PM, Murray GD, Teasdale GM. Simplifying the use of prognostic information in traumatic brain injury. Part 1: the GCS-Pupils score. Journal of Neurosurgery. 2018;128(6):1612–1620. <a href="https://doi.org/10.3171/2017.12.JNS172780">doi:10.3171/2017.12.JNS172780</a>.</li>
+            <li id="ref-apgar">American Academy of Pediatrics; American College of Obstetricians and Gynecologists. The Apgar score. Pediatrics. 2015;136(4):819–822. <a href="https://doi.org/10.1542/peds.2015-2651">doi:10.1542/peds.2015-2651</a>.</li>
+            <li id="ref-orelhinha">Brasil. <a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12303.htm">Lei nº 12.303, de 2 de agosto de 2010</a>. Torna obrigatório o exame de emissões otoacústicas evocadas.</li>
+            <li id="ref-imc">World Health Organization. <a href="https://iris.who.int/bitstream/handle/10665/42330/WHO_TRS_894.pdf">Obesity: preventing and managing the global epidemic</a>. WHO Technical Report Series 894. Genebra, 2000. Tabela 2.1.</li>
+            <li id="ref-surdez">Chandrasekhar SS, Tsai Do BS, Schwartz SR, et al. Clinical practice guideline: sudden hearing loss (update). Otolaryngology–Head and Neck Surgery. 2019;161(1 suppl):S1–S45. <a href="https://doi.org/10.1177/0194599819859885">doi:10.1177/0194599819859885</a>.</li>
+            <li id="ref-disfonia">Stachler RJ, Francis DO, Schwartz SR, et al. Clinical practice guideline: hoarseness (dysphonia) (update). Otolaryngology–Head and Neck Surgery. 2018;158(1 suppl):S1–S42. <a href="https://doi.org/10.1177/0194599817751030">doi:10.1177/0194599817751030</a>.</li>
+            <li id="ref-pas">Rosenbek JC, Robbins JA, Roecker EB, Coyle JL, Wood JL. A penetration-aspiration scale. Dysphagia. 1996;11(2):93–98. <a href="https://doi.org/10.1007/BF00417897">doi:10.1007/BF00417897</a>.</li>
+            <li id="ref-cefa"><a href="https://www.ncbi.nlm.nih.gov/books/NBK531480/">Foreign Body Aspiration</a>. StatPearls, NCBI Bookshelf.</li>
+            <li id="ref-medula">Harrow-Mortelliti M, Reddy V, Jimsheleishvili G. <a href="https://www.ncbi.nlm.nih.gov/books/NBK544267/">Physiology, Spinal Cord</a>. StatPearls, NCBI Bookshelf, 2023.</li>
+            <li id="ref-isncsci">American Spinal Injury Association; ISCoS. <a href="https://asia-spinalinjury.org/isncsci-resources/">International Standards for Neurological Classification of Spinal Cord Injury (ISNCSCI), 9ª edição, 2026</a>. <a href="https://doi.org/10.46292/sci26-00067">doi:10.46292/sci26-00067</a>.</li>
+            <li id="ref-hubmap">HuBMAP Consortium. <a href="https://hubmapconsortium.github.io/ccf/pages/ccf-3d-reference-library.html">CCF 3D Reference Library</a>, licença CC BY 4.0, sobre o <a href="https://www.nlm.nih.gov/research/visible/visible_human.html">Visible Human Project</a> da National Library of Medicine.</li>
+            <li id="ref-sepsis3">Singer M, Deutschman CS, Seymour CW, et al. The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). JAMA. 2016;315(8):801–810. <a href="https://doi.org/10.1001/jama.2016.0287">doi:10.1001/jama.2016.0287</a>.</li>
+            <li id="ref-ssc">Evans L, Rhodes A, Alhazzani W, et al. Surviving Sepsis Campaign: international guidelines for management of sepsis and septic shock 2021. Critical Care Medicine. 2021;49(11):e1063–e1143. <a href="https://doi.org/10.1097/CCM.0000000000005337">doi:10.1097/CCM.0000000000005337</a>.</li>
+            <li id="ref-curb">Lim WS, van der Eerden MM, Laing R, et al. Defining community acquired pneumonia severity on presentation to hospital: an international derivation and validation study. Thorax. 2003;58(5):377–382. <a href="https://doi.org/10.1136/thorax.58.5.377">doi:10.1136/thorax.58.5.377</a>.</li>
+            <li id="ref-sbpt">Corrêa RA, Lundgren FLC, Pereira-Silva JL, et al. 2018 recommendations for the management of community acquired pneumonia. Jornal Brasileiro de Pneumologia. 2018;44(5):405–412. <a href="https://doi.org/10.1590/s1806-37562018000000130">doi:10.1590/s1806-37562018000000130</a>.</li>
+            <li id="ref-pe">Brasil. Ministério da Saúde. Secretaria de Atenção Primária à Saúde. <a href="https://bvsms.saude.gov.br/bvs/publicacoes/manual_gestacao_alto_risco.pdf">Manual de gestação de alto risco</a>. Brasília: Ministério da Saúde; 2022. Capítulo 11, síndromes hipertensivas.</li>
+            <li id="ref-has">Brasil. Ministério da Saúde. <a href="https://www.gov.br/saude/pt-br/assuntos/pcdt/h/hipertensao-arterial-sistemica.pdf">Protocolo Clínico e Diretrizes Terapêuticas da Hipertensão Arterial Sistêmica</a>. Portaria SECTICS/MS nº 49, de 23 de julho de 2025.</li>
+            <li id="ref-suicidio">Brasil. Ministério da Saúde. <a href="https://linhasdecuidado.saude.gov.br/portal/depressao/unidade-de-atencao-primaria/manejo-inicial-conduta/">Linha de cuidado da depressão no adulto: manejo inicial na atenção primária</a>. Ver também a <a href="https://bvsms.saude.gov.br/bvs/saudelegis/gm/2006/prt1876_14_08_2006.html">Portaria GM/MS nº 1.876, de 14 de agosto de 2006</a>, que institui as Diretrizes Nacionais para Prevenção do Suicídio.</li>
+          </ol>
+          <h3 class="refs-title">Base das fichas e das pranchas</h3>
           <ul class="remember">
             <li>Anatomia e fisiologia de base: <a href="https://openstax.org/details/books/anatomy-and-physiology-2e">OpenStax Anatomy and Physiology 2e</a> e <a href="https://open.oregonstate.education/aandp/">Oregon State</a>.</li>
             <li>Anatomia em português, acesso aberto: <a href="https://portais.univasf.edu.br/noticias/professor-da-univasf-lanca-e-book-de-anatomia-humana-basica/copy2_of_ebook_Anatomia_Humana_Sistematica_Basica.pdf">Anatomia Humana Sistemática Básica</a>, UNIVASF, 2020.</li>
@@ -957,6 +2933,7 @@
             <li>Clínica em português: <a href="https://www.msdmanuals.com/pt/profissional">Manuais MSD</a>.</li>
             <li>Fonoaudiologia: <a href="https://www.scielo.br/j/codas/">CoDAS</a>, <a href="https://www.scielo.br/j/rcefac/">CEFAC</a>, <a href="https://www.sbfa.org.br/">SBFa</a> e <a href="https://iddsi.org/">IDDSI</a>.</li>
             <li>Cursos: <a href="https://www.unasus.gov.br/">UNA-SUS</a>, <a href="https://avasus.ufrn.br/">AVASUS</a> e <a href="https://fiocruz.br/campus-virtual-fiocruz">Campus Virtual Fiocruz</a>.</li>
+            <li>Normas e protocolos do internato: <a href="https://www.gov.br/mec/pt-br/cne/2025/outubro-2025/rces003_25.pdf">DCN 2025</a>, <a href="https://www.gov.br/saude/pt-br/assuntos/pcdt/h/hipertensao-arterial-sistemica.pdf">PCDT de HAS</a>, <a href="https://bvsms.saude.gov.br/bvs/publicacoes/manual_gestacao_alto_risco.pdf">Manual de gestação de alto risco</a>.</li>
           </ul>
           <p class="note">
             Terminologia anatômica muda devagar, e diretriz clínica muda mais
@@ -980,6 +2957,7 @@
       <img alt="" />
       <p></p>
     </dialog>
+    <script src="js/medicina-3d-dados.js"></script>
     <script src="js/medicina.js"></script>
   </body>
 </html>
