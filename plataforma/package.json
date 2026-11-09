@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3040",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start -p 3040",
     "db:up": "docker compose up -d --wait",
     "db:setup": "docker compose up -d --wait && prisma db push && tsx prisma/seed.ts",
@@ -12,6 +12,7 @@
   "dependencies": {
     "@prisma/client": "^6.16.2",
     "next": "^15.5.4",
+    "prisma": "^6.16.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
@@ -19,7 +20,6 @@
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
-    "prisma": "^6.16.2",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }

@@ -98,15 +98,14 @@ export default async function Inicio() {
         </div>
       </section>
 
-      {process.env.NODE_ENV !== "production" ? (
-        <aside className="cartao" style={{ marginTop: "1.6rem" }}>
-          <h2>Acesso local de demonstração</h2>
-          <p className="muted">
-            Todas usam a senha aprenda-local. Ana e Moderação continuam. Também há Bruno, Camila, Diego, Elena,
-            Felipe, Helena, Igor e Rita, conversando em áreas diferentes.
-          </p>
-        </aside>
-      ) : null}
+      <aside className="cartao" style={{ marginTop: "1.6rem" }}>
+        <h2>Contas para experimentar</h2>
+        <p className="muted">
+          Todas usam a senha aprenda-local. Ana e Moderação continuam. Também há Bruno, Camila, Diego, Elena,
+          Felipe, Helena, Igor e Rita, conversando em áreas diferentes. O e-mail é o apelido seguido de
+          @aprenda.local, como bruno@aprenda.local.
+        </p>
+      </aside>
     </div>
   );
 }
