@@ -1722,6 +1722,9 @@ body.is-erased .tema-launch {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.55rem;
+    padding: 0 0.75rem;
+    overflow-x: auto;
     background: #141816;
 }
 

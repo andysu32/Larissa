@@ -1,0 +1,382 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id                 String   @id @default(cuid())
+  email              String   @unique
+  senhaHash          String
+  nome               String
+  apelido            String
+  nascimento         DateTime
+  restrito           Boolean  @default(false)
+  bloqueado          Boolean  @default(false)
+  publicacaoRestrita Boolean  @default(false)
+  criadoEm           DateTime @default(now())
+
+  perfil           Perfil?
+  papeis           PapelUsuario[]
+  sessoes          Sessao[]
+  reputacao        Reputacao?
+  eventosReputacao EventoReputacao[]
+  perguntas        Pergunta[]
+  respostas        Resposta[]            @relation("AutorResposta")
+  vereditos        Resposta[]            @relation("VereditoResposta")
+  votos            Voto[]
+  membros          MembroComunidade[]
+  publicacoes      Publicacao[]
+  comentarios      Comentario[]
+  votosEnquete     VotoEnquete[]
+  denuncias        Denuncia[]
+  acoesModeracao   AcaoModeracao[]
+  apelacoes        Apelacao[]
+  objetivo         ObjetivoEstudo?
+  revisoes         RevisaoConteudo[]
+}
+
+model Sessao {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  usuarioId String
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  expiraEm  DateTime
+  criadoEm  DateTime @default(now())
+}
+
+model Perfil {
+  usuarioId          String  @id
+  usuario            Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  bio                String  @default("")
+  mostrarNome        Boolean @default(false)
+  mostrarAreas       Boolean @default(true)
+  mostrarReputacao   Boolean @default(true)
+  mostrarObjetivos   Boolean @default(false)
+  mostrarProgresso   Boolean @default(false)
+  mostrarComunidades Boolean @default(true)
+  tamanhoFonte       String  @default("md")
+}
+
+model PapelUsuario {
+  id        String          @id @default(cuid())
+  usuarioId String
+  papel     String
+  areaId    String?
+  usuario   Usuario         @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  area      NoConhecimento? @relation(fields: [areaId], references: [id], onDelete: SetNull)
+
+  @@index([usuarioId])
+}
+
+model NoConhecimento {
+  id           String           @id @default(cuid())
+  nome         String
+  slug         String           @unique
+  tipo         String
+  paiId        String?
+  pai          NoConhecimento?  @relation("Arvore", fields: [paiId], references: [id])
+  filhos       NoConhecimento[] @relation("Arvore")
+  requisitos   NoRequisito[]    @relation("NoPrincipal")
+  requeridoPor NoRequisito[]    @relation("NoRequisito")
+  papeis       PapelUsuario[]
+  perguntas    PerguntaNo[]
+  comunidades  Comunidade[]
+}
+
+model NoRequisito {
+  noId        String
+  requisitoId String
+  no          NoConhecimento @relation("NoPrincipal", fields: [noId], references: [id], onDelete: Cascade)
+  requisito   NoConhecimento @relation("NoRequisito", fields: [requisitoId], references: [id], onDelete: Cascade)
+
+  @@id([noId, requisitoId])
+}
+
+model Pergunta {
+  id               String       @id @default(cuid())
+  titulo           String
+  corpo            String
+  dificuldade      String
+  nivelEducacional String
+  objetivo         String
+  oculto           Boolean      @default(false)
+  autorId          String
+  autor            Usuario      @relation(fields: [autorId], references: [id])
+  criadaEm         DateTime     @default(now())
+  atualizadaEm     DateTime     @updatedAt
+  nos              PerguntaNo[]
+  respostas        Resposta[]
+  publicacoes      Publicacao[]
+
+  @@index([autorId, criadaEm])
+}
+
+model PerguntaNo {
+  perguntaId String
+  noId       String
+  pergunta   Pergunta       @relation(fields: [perguntaId], references: [id], onDelete: Cascade)
+  no         NoConhecimento @relation(fields: [noId], references: [id], onDelete: Cascade)
+
+  @@id([perguntaId, noId])
+}
+
+model Resposta {
+  id                 String     @id @default(cuid())
+  corpo              String
+  estado             String     @default("nao_verificada")
+  explicacaoVeredito String     @default("")
+  oculto             Boolean    @default(false)
+  perguntaId         String
+  pergunta           Pergunta   @relation(fields: [perguntaId], references: [id], onDelete: Cascade)
+  autorId            String
+  autor              Usuario    @relation("AutorResposta", fields: [autorId], references: [id])
+  vereditoPorId      String?
+  vereditoPor        Usuario?   @relation("VereditoResposta", fields: [vereditoPorId], references: [id], onDelete: SetNull)
+  criadaEm           DateTime   @default(now())
+  atualizadaEm       DateTime   @updatedAt
+  pareceres          ParecerIa[]
+  fontes             Fonte[]
+  votos              Voto[]
+
+  @@index([perguntaId])
+  @@index([autorId, criadaEm])
+}
+
+model ParecerIa {
+  id         String   @id @default(cuid())
+  respostaId String
+  resposta   Resposta @relation(fields: [respostaId], references: [id], onDelete: Cascade)
+  confianca  String
+  texto      String
+  criadoEm   DateTime @default(now())
+}
+
+model Fonte {
+  id         String   @id @default(cuid())
+  respostaId String
+  resposta   Resposta @relation(fields: [respostaId], references: [id], onDelete: Cascade)
+  titulo     String
+  url        String   @default("")
+  citacao    String   @default("")
+}
+
+model Voto {
+  id         String   @id @default(cuid())
+  usuarioId  String
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  respostaId String
+  resposta   Resposta @relation(fields: [respostaId], references: [id], onDelete: Cascade)
+  valor      Int
+  criadoEm   DateTime @default(now())
+
+  @@unique([usuarioId, respostaId])
+}
+
+model Reputacao {
+  usuarioId    String  @id
+  usuario      Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  precisao     Int     @default(0)
+  clareza      Int     @default(0)
+  contribuicao Int     @default(0)
+}
+
+model EventoReputacao {
+  id                String   @id @default(cuid())
+  usuarioId         String
+  usuario           Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  tipo              String
+  detalhe           String
+  deltaPrecisao     Int      @default(0)
+  deltaClareza      Int      @default(0)
+  deltaContribuicao Int      @default(0)
+  criadoEm          DateTime @default(now())
+
+  @@index([usuarioId, criadoEm])
+}
+
+model Comunidade {
+  id          String             @id @default(cuid())
+  nome        String
+  slug        String             @unique
+  descricao   String
+  regras      String
+  noId        String?
+  no          NoConhecimento?    @relation(fields: [noId], references: [id], onDelete: SetNull)
+  membros     MembroComunidade[]
+  publicacoes Publicacao[]
+}
+
+model MembroComunidade {
+  usuarioId    String
+  comunidadeId String
+  usuario      Usuario    @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  comunidade   Comunidade @relation(fields: [comunidadeId], references: [id], onDelete: Cascade)
+  criadoEm     DateTime   @default(now())
+
+  @@id([usuarioId, comunidadeId])
+}
+
+model Publicacao {
+  id           String      @id @default(cuid())
+  titulo       String
+  corpo        String
+  etiqueta     String
+  oculto       Boolean     @default(false)
+  comunidadeId String
+  comunidade   Comunidade  @relation(fields: [comunidadeId], references: [id], onDelete: Cascade)
+  autorId      String
+  autor        Usuario     @relation(fields: [autorId], references: [id])
+  perguntaId   String?
+  pergunta     Pergunta?   @relation(fields: [perguntaId], references: [id], onDelete: SetNull)
+  criadaEm     DateTime    @default(now())
+  comentarios  Comentario[]
+  enquete      Enquete?
+
+  @@index([comunidadeId, criadaEm])
+}
+
+model Comentario {
+  id           String     @id @default(cuid())
+  corpo        String
+  oculto       Boolean    @default(false)
+  publicacaoId String
+  publicacao   Publicacao @relation(fields: [publicacaoId], references: [id], onDelete: Cascade)
+  autorId      String
+  autor        Usuario    @relation(fields: [autorId], references: [id])
+  criadoEm     DateTime   @default(now())
+}
+
+model Enquete {
+  id           String         @id @default(cuid())
+  publicacaoId String         @unique
+  publicacao   Publicacao     @relation(fields: [publicacaoId], references: [id], onDelete: Cascade)
+  opcoes       OpcaoEnquete[]
+  votos        VotoEnquete[]
+}
+
+model OpcaoEnquete {
+  id        String        @id @default(cuid())
+  enqueteId String
+  enquete   Enquete       @relation(fields: [enqueteId], references: [id], onDelete: Cascade)
+  texto     String
+  votos     VotoEnquete[]
+}
+
+model VotoEnquete {
+  usuarioId String
+  enqueteId String
+  opcaoId   String
+  usuario   Usuario      @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  enquete   Enquete      @relation(fields: [enqueteId], references: [id], onDelete: Cascade)
+  opcao     OpcaoEnquete @relation(fields: [opcaoId], references: [id], onDelete: Cascade)
+
+  @@id([usuarioId, enqueteId])
+}
+
+model ObjetivoEstudo {
+  usuarioId     String  @id
+  usuario       Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  descricao     String
+  nivel         String  @default("")
+  prova         String  @default("")
+  minutosPorDia Int?
+  dificuldades  String  @default("")
+}
+
+model Denuncia {
+  id       String          @id @default(cuid())
+  autorId  String
+  autor    Usuario         @relation(fields: [autorId], references: [id])
+  alvoTipo String
+  alvoId   String
+  motivo   String
+  detalhe  String          @default("")
+  status   String          @default("aberta")
+  criadaEm DateTime        @default(now())
+  acoes    AcaoModeracao[]
+
+  @@index([status, criadaEm])
+  @@index([alvoTipo, alvoId])
+}
+
+model AcaoModeracao {
+  id          String    @id @default(cuid())
+  moderadorId String
+  moderador   Usuario   @relation(fields: [moderadorId], references: [id])
+  denunciaId  String?
+  denuncia    Denuncia? @relation(fields: [denunciaId], references: [id])
+  alvoTipo    String
+  alvoId      String
+  acao        String
+  motivo      String
+  criadoEm    DateTime  @default(now())
+  apelacoes   Apelacao[]
+
+  @@index([alvoTipo, alvoId])
+}
+
+model Apelacao {
+  id           String        @id @default(cuid())
+  acaoId       String
+  acao         AcaoModeracao @relation(fields: [acaoId], references: [id], onDelete: Cascade)
+  autorId      String
+  autor        Usuario       @relation(fields: [autorId], references: [id])
+  texto        String
+  status       String        @default("aberta")
+  julgadaPorId String?
+  resultado    String        @default("")
+  criadaEm     DateTime      @default(now())
+}
+
+model RevisaoConteudo {
+  id       String   @id @default(cuid())
+  alvoTipo String
+  alvoId   String
+  editorId String
+  editor   Usuario  @relation(fields: [editorId], references: [id])
+  resumo   String
+  criadoEm DateTime @default(now())
+
+  @@index([alvoTipo, alvoId])
+}
+
+model Questao {
+  id          String   @id @default(cuid())
+  enunciado   String
+  tipo        String
+  dificuldade String
+  direitoUso  String
+  criadaEm    DateTime @default(now())
+}
+
+model Prova {
+  id          String   @id @default(cuid())
+  nome        String
+  instituicao String
+  ano         Int
+  urlOficial  String
+  direitoUso  String
+  criadaEm    DateTime @default(now())
+}
+
+model Livro {
+  id         String   @id @default(cuid())
+  titulo     String
+  autores    String
+  tipoAcesso String
+  ondeObter  String
+  direitoUso String
+  criadaEm   DateTime @default(now())
+}
+
+model Job {
+  id       String   @id @default(cuid())
+  tipo     String
+  payload  String
+  status   String   @default("pendente")
+  criadoEm DateTime @default(now())
+}
