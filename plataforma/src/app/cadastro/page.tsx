@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { AvisoErro } from "@/components/AvisoErro";
+import { caminhoInterno } from "@/lib/texto";
 import { acaoCadastrar } from "./actions";
 
 export default async function PaginaCadastro({
   searchParams,
 }: {
-  searchParams: Promise<{ erro?: string }>;
+  searchParams: Promise<{ erro?: string; depois?: string }>;
 }) {
-  const { erro } = await searchParams;
+  const { erro, depois } = await searchParams;
+  const destino = caminhoInterno(depois);
 
   return (
     <div className="pagina">
@@ -15,6 +17,7 @@ export default async function PaginaCadastro({
       <p className="subtitulo">Comece a estudar e ajudar outras pessoas na plataforma Aprenda.</p>
       <AvisoErro erro={erro} />
       <form className="pilha cartao" action={acaoCadastrar}>
+        <input type="hidden" name="depois" value={destino} />
         <div className="campo">
           <label htmlFor="nome">Nome</label>
           <input id="nome" name="nome" autoComplete="name" required />
@@ -48,7 +51,8 @@ export default async function PaginaCadastro({
         </button>
       </form>
       <p className="muted">
-        Já tem conta? <Link href="/entrar">Entrar</Link>
+        Já tem conta?{" "}
+        <Link href={destino === "/" ? "/entrar" : `/entrar?depois=${encodeURIComponent(destino)}`}>Entrar</Link>
       </p>
     </div>
   );

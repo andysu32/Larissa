@@ -221,6 +221,28 @@ textarea { min-height: 140px; resize: vertical; }
 .aviso { background: var(--ambar-claro); color: #5c3b09; }
 .ok { background: var(--verde-claro); color: var(--verde); }
 
+button[aria-pressed="true"] {
+  border-color: var(--verde);
+  background: var(--verde-claro);
+}
+
+.recolhido {
+  border: 1px solid var(--linha);
+  border-radius: 12px;
+  padding: 0.35rem 0.9rem 0.8rem;
+  background: white;
+}
+
+.recolhido summary {
+  cursor: pointer;
+  font-weight: 650;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.recolhido form { margin-top: 0.4rem; }
+
 .selo {
   display: grid;
   gap: 0.2rem;

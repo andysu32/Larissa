@@ -23,8 +23,10 @@ export function Shell({
         </Link>
         <nav aria-label="Principal">
           <Link href="/perguntas">Perguntas</Link>
+          <Link href="/revisao">Revisão</Link>
           <Link href="/mapa">Mapa</Link>
           <Link href="/comunidades">Comunidades</Link>
+          <Link href="/biblioteca">Biblioteca</Link>
           <Link href="/busca">Busca</Link>
           <Link href="/progresso">Progresso</Link>
           {moderador ? <Link href="/moderacao">Moderação</Link> : null}

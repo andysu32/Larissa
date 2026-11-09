@@ -19,6 +19,7 @@ export type ResultadoBusca = {
   comunidades: { slug: string; nome: string; descricao: string }[];
   pessoas: { id: string; nomeVisivel: string; precisao: number | null }[];
   nos: { slug: string; nome: string; tipo: string }[];
+  livros: { slug: string; titulo: string; autores: string; tipoAcesso: string }[];
 };
 
 function termosDe(termo: string): string[] {
@@ -48,10 +49,11 @@ export async function buscar(termo: string): Promise<ResultadoBusca> {
       comunidades: [],
       pessoas: [],
       nos: [],
+      livros: [],
     };
   }
 
-  const [perguntas, respostas, comunidades, pessoas, nos] = await Promise.all([
+  const [perguntas, respostas, comunidades, pessoas, nos, livros] = await Promise.all([
     db.pergunta.findMany({
       where: { oculto: false },
       orderBy: { criadaEm: "desc" },
@@ -70,6 +72,9 @@ export async function buscar(termo: string): Promise<ResultadoBusca> {
       include: { perfil: true, reputacao: true },
     }),
     db.noConhecimento.findMany({ select: { slug: true, nome: true, tipo: true } }),
+    db.livro.findMany({
+      select: { slug: true, titulo: true, autores: true, descricao: true, tipoAcesso: true },
+    }),
   ]);
 
   return {
@@ -113,5 +118,14 @@ export async function buscar(termo: string): Promise<ResultadoBusca> {
             : null,
       })),
     nos: nos.filter((item) => contem(item.nome, termos)).slice(0, 20),
+    livros: livros
+      .filter((item) => contem(`${item.titulo} ${item.autores} ${item.descricao}`, termos))
+      .slice(0, 20)
+      .map((item) => ({
+        slug: item.slug,
+        titulo: item.titulo,
+        autores: item.autores,
+        tipoAcesso: item.tipoAcesso,
+      })),
   };
 }

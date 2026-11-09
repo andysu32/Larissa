@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { ampliar } from "./ampliar";
 import { hashSenha } from "../src/lib/password";
 
 const db = new PrismaClient();
@@ -163,6 +164,42 @@ async function main() {
     },
   });
 
+  await db.resposta.upsert({
+    where: { id: "seed-vertice-r2" },
+    update: {},
+    create: {
+      id: "seed-vertice-r2",
+      perguntaId: "seed-vertice",
+      autorId: ana.id,
+      estado: "revisao_humana",
+      corpo:
+        "O vértice é o ponto mais alto ou mais baixo da parábola. A abscissa é x = -b/(2a). O valor de c indica o corte no eixo y e só coincide com o vértice quando b = 0.",
+      pareceres: {
+        create: {
+          id: "seed-parecer-vertice-2",
+          confianca: "baixa",
+          texto: "A revisão automática não confirma correção e não classifica a resposta como certa. Uma pessoa precisa analisar.",
+        },
+      },
+    },
+  });
+
+  await db.pergunta.upsert({
+    where: { id: "seed-antes-derivada" },
+    update: {},
+    create: {
+      id: "seed-antes-derivada",
+      titulo: "O que preciso dominar antes de estudar derivada?",
+      corpo:
+        "Quero estudar para um vestibular que cobra cálculo. Não sei se posso ir direto para derivada ou se preciso revisar funções e limites antes.",
+      dificuldade: "facil",
+      nivelEducacional: "vestibular",
+      objetivo: "estudar para o vestibular",
+      autorId: ana.id,
+      nos: { create: [{ noId: derivada.id }] },
+    },
+  });
+
   const comunidades = [
     {
       slug: "matematica",
@@ -246,6 +283,8 @@ async function main() {
       },
     });
   }
+
+  await ampliar(db);
 }
 
 main()

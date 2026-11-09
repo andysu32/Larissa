@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AvisoErro } from "@/components/AvisoErro";
+import { AvisoOk } from "@/components/AvisoOk";
 import { EstadoSelo } from "@/components/EstadoSelo";
 import { MOTIVOS_DENUNCIA } from "@/lib/moderacao";
 import { ROTULO_DIFICULDADE, ROTULO_ESTADO, ROTULO_NIVEL } from "@/lib/rotulos";
@@ -28,32 +29,34 @@ function FormularioDenuncia({
   rotulo: string;
 }) {
   return (
-    <form className="pilha cartao" action={acaoDenunciar}>
-      <input type="hidden" name="perguntaId" value={perguntaId} />
-      <input type="hidden" name="alvoTipo" value={alvoTipo} />
-      <input type="hidden" name="alvoId" value={alvoId} />
-      <p className="meta">{rotulo}</p>
-      <div className="campo">
-        <label htmlFor={`motivo-${alvoId}`}>Motivo</label>
-        <select id={`motivo-${alvoId}`} name="motivo" required defaultValue="">
-          <option value="" disabled>
-            Escolha
-          </option>
-          {MOTIVOS_DENUNCIA.map((motivo) => (
-            <option key={motivo.id} value={motivo.id}>
-              {motivo.rotulo}
+    <details className="recolhido">
+      <summary>{rotulo}</summary>
+      <form className="pilha" action={acaoDenunciar}>
+        <input type="hidden" name="perguntaId" value={perguntaId} />
+        <input type="hidden" name="alvoTipo" value={alvoTipo} />
+        <input type="hidden" name="alvoId" value={alvoId} />
+        <div className="campo">
+          <label htmlFor={`motivo-${alvoId}`}>Motivo</label>
+          <select id={`motivo-${alvoId}`} name="motivo" required defaultValue="">
+            <option value="" disabled>
+              Escolha
             </option>
-          ))}
-        </select>
-      </div>
-      <div className="campo">
-        <label htmlFor={`detalhe-${alvoId}`}>Detalhe (opcional)</label>
-        <textarea id={`detalhe-${alvoId}`} name="detalhe" maxLength={500} rows={3} />
-      </div>
-      <button className="btn btn-ghost" type="submit">
-        Enviar denúncia
-      </button>
-    </form>
+            {MOTIVOS_DENUNCIA.map((motivo) => (
+              <option key={motivo.id} value={motivo.id}>
+                {motivo.rotulo}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="campo">
+          <label htmlFor={`detalhe-${alvoId}`}>Detalhe (opcional)</label>
+          <textarea id={`detalhe-${alvoId}`} name="detalhe" maxLength={500} rows={3} />
+        </div>
+        <button className="btn btn-ghost" type="submit">
+          Enviar denúncia
+        </button>
+      </form>
+    </details>
   );
 }
 
@@ -62,10 +65,10 @@ export default async function PaginaPergunta({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ erro?: string }>;
+  searchParams: Promise<{ erro?: string; ok?: string }>;
 }) {
   const { id } = await params;
-  const { erro } = await searchParams;
+  const { erro, ok } = await searchParams;
   const usuario = await getUsuarioAtual();
   const pergunta = await obterPergunta(id, usuario);
   if (!pergunta) notFound();
@@ -81,6 +84,21 @@ export default async function PaginaPergunta({
       )
     : {};
 
+  const respostasOrdenadas = [...pergunta.respostas].sort((a, b) => {
+    const ordem = [
+      "verificada_especialista",
+      "correta",
+      "parcialmente_correta",
+      "revisao_humana",
+      "em_analise",
+      "nao_verificada",
+      "incorreta",
+    ];
+    const diferenca = ordem.indexOf(a.estado) - ordem.indexOf(b.estado);
+    if (diferenca !== 0) return diferenca;
+    return a.criadaEm.getTime() - b.criadaEm.getTime();
+  });
+
   return (
     <div className="pagina">
       <p className="olho">
@@ -88,17 +106,26 @@ export default async function PaginaPergunta({
       </p>
       <h1>{pergunta.titulo}</h1>
       <AvisoErro erro={erro} />
+      <AvisoOk mensagem={ok} />
 
       <article className="cartao pilha">
         <p className="meta">
-          {pergunta.autor} · {formatarData(pergunta.criadaEm)}
+          <Link href={`/pessoas/${pergunta.autorId}`}>{pergunta.autor}</Link> · {formatarData(pergunta.criadaEm)}
         </p>
         <p className="meta">
           {ROTULO_DIFICULDADE[pergunta.dificuldade] ?? pergunta.dificuldade} ·{" "}
           {ROTULO_NIVEL[pergunta.nivelEducacional] ?? pergunta.nivelEducacional} · {pergunta.objetivo}
         </p>
         {pergunta.assuntos.length > 0 ? (
-          <p className="muted">Assuntos: {pergunta.assuntos.map((item) => item.nome).join(" · ")}</p>
+          <p className="muted">
+            Assuntos:{" "}
+            {pergunta.assuntos.map((item, indice) => (
+              <span key={item.id}>
+                {indice > 0 ? " · " : null}
+                <Link href={`/perguntas?assunto=${item.slug}`}>{item.nome}</Link>
+              </span>
+            ))}
+          </p>
         ) : null}
         <p style={{ whiteSpace: "pre-wrap" }}>{pergunta.corpo}</p>
       </article>
@@ -119,7 +146,7 @@ export default async function PaginaPergunta({
         {pergunta.respostas.length === 0 ? (
           <p className="muted">Ninguém respondeu ainda.</p>
         ) : (
-          pergunta.respostas.map((resposta) => {
+          respostasOrdenadas.map((resposta) => {
             const opcoes: string[] = opcoesMapa[resposta.id] ?? [];
             const souAutor = usuario?.id === resposta.autorId;
             const possoVotar = usuario && !souAutor;
@@ -176,7 +203,7 @@ export default async function PaginaPergunta({
                       <input type="hidden" name="perguntaId" value={pergunta.id} />
                       <input type="hidden" name="respostaId" value={resposta.id} />
                       <input type="hidden" name="valor" value="1" />
-                      <button className="btn btn-ghost" type="submit">
+                      <button className="btn btn-ghost" type="submit" aria-pressed={resposta.meuVoto === 1}>
                         Isto me ajudou a entender
                       </button>
                     </form>
@@ -184,7 +211,7 @@ export default async function PaginaPergunta({
                       <input type="hidden" name="perguntaId" value={pergunta.id} />
                       <input type="hidden" name="respostaId" value={resposta.id} />
                       <input type="hidden" name="valor" value="-1" />
-                      <button className="btn btn-ghost" type="submit">
+                      <button className="btn btn-ghost" type="submit" aria-pressed={resposta.meuVoto === -1}>
                         Isto ficou confuso
                       </button>
                     </form>
@@ -230,7 +257,7 @@ export default async function PaginaPergunta({
                       Registrar veredito
                     </button>
                   </form>
-                ) : usuario ? (
+                ) : usuario && !souAutor ? (
                   <p className="muted">Você pode contribuir, mas não fechar este veredito.</p>
                 ) : null}
 
@@ -275,7 +302,12 @@ export default async function PaginaPergunta({
             </button>
           </form>
         </section>
-      ) : null}
+      ) : (
+        <p className="muted" style={{ marginTop: "1.6rem" }}>
+          <Link href={`/entrar?depois=/perguntas/${pergunta.id}`}>Entre</Link> para responder. A resposta nasce em
+          revisão humana e não vira gabarito sozinha.
+        </p>
+      )}
     </div>
   );
 }

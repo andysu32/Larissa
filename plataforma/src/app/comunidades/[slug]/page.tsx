@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AvisoErro } from "@/components/AvisoErro";
+import { AvisoOk } from "@/components/AvisoOk";
 import { obterComunidade } from "@/lib/comunidades";
 import { MOTIVOS_DENUNCIA } from "@/lib/moderacao";
 import { getUsuarioAtual } from "@/lib/session";
@@ -26,10 +27,10 @@ export default async function PaginaComunidade({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ erro?: string }>;
+  searchParams: Promise<{ erro?: string; ok?: string }>;
 }) {
   const { slug } = await params;
-  const { erro } = await searchParams;
+  const { erro, ok } = await searchParams;
   const usuario = await getUsuarioAtual();
   const comunidade = await obterComunidade(slug, usuario?.id ?? null);
   if (!comunidade) notFound();
@@ -40,11 +41,19 @@ export default async function PaginaComunidade({
       <h1>{comunidade.nome}</h1>
       <p className="muted">{comunidade.descricao}</p>
       <AvisoErro erro={erro} />
+      <AvisoOk mensagem={ok} />
 
       <section className="pilha cartao" aria-label="Regras da comunidade">
         <h2>Regras</h2>
         <p>{comunidade.regras}</p>
       </section>
+
+      {!usuario ? (
+        <p>
+          <Link href={`/entrar?depois=/comunidades/${comunidade.slug}`}>Entre</Link> para participar desta
+          comunidade.
+        </p>
+      ) : null}
 
       {usuario && !comunidade.souMembro ? (
         <form className="pilha cartao" action={acaoEntrarComunidade}>

@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { AvisoErro } from "@/components/AvisoErro";
 import { obterMinhaConta } from "@/lib/contas";
+import { listarPerguntas } from "@/lib/perguntas";
 import { eventosRecentes } from "@/lib/reputacao";
 import { acoesContra } from "@/lib/moderacao";
 import { getUsuarioAtual } from "@/lib/session";
@@ -38,9 +40,10 @@ export default async function PaginaPerfil({
   const conta = await obterMinhaConta(usuario.id);
   if (!conta) redirect("/entrar");
 
-  const [eventos, acoes] = await Promise.all([
+  const [eventos, acoes, minhas] = await Promise.all([
     eventosRecentes(usuario.id),
     acoesContra(usuario.id),
+    listarPerguntas(20, { autorId: usuario.id }),
   ]);
 
   return (
@@ -139,6 +142,23 @@ export default async function PaginaPerfil({
           Salvar alterações
         </button>
       </form>
+
+      <section className="pilha" aria-label="Minhas perguntas">
+        <h2>Minhas perguntas</h2>
+        {minhas.length === 0 ? (
+          <p className="muted">
+            Você ainda não publicou uma dúvida. <Link href="/perguntas/nova">Abrir a primeira</Link>.
+          </p>
+        ) : (
+          <ul className="lista">
+            {minhas.map((pergunta) => (
+              <li key={pergunta.id}>
+                <Link href={`/perguntas/${pergunta.id}`}>{pergunta.titulo}</Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <section className="pilha" aria-label="Eventos recentes de reputação">
         <h2>Eventos recentes</h2>

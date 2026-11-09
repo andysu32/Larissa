@@ -44,6 +44,14 @@ export default async function Inicio() {
             {mapa.map((no) => no.nome).join(", ") || "O mapa de conhecimento aparece aqui."}
           </p>
         </Link>
+        <Link className="cartao-link" href="/revisao">
+          <h2>Ver a fila de revisão</h2>
+          <p className="muted">Respostas que ainda precisam de uma pessoa.</p>
+        </Link>
+        <Link className="cartao-link" href="/biblioteca">
+          <h2>Abrir a biblioteca</h2>
+          <p className="muted">Materiais gratuitos no link oficial. Livro comercial fica sem arquivo.</p>
+        </Link>
         <Link className="cartao-link" href="/progresso">
           <h2>Registrar o objetivo</h2>
           <p className="muted">Diga o que você está estudando. A trilha automática vem depois.</p>
@@ -65,7 +73,8 @@ export default async function Inicio() {
                   <h3>{pergunta.titulo}</h3>
                   <p className="meta">
                     {pergunta.autor} · {ROTULO_DIFICULDADE[pergunta.dificuldade] ?? pergunta.dificuldade} ·{" "}
-                    {pergunta.totalRespostas} respostas
+                    {pergunta.totalRespostas}{" "}
+                    {pergunta.totalRespostas === 1 ? "resposta" : "respostas"}
                     {pergunta.melhorEstado
                       ? ` · ${ROTULO_ESTADO[pergunta.melhorEstado] ?? pergunta.melhorEstado}`
                       : ""}
@@ -93,8 +102,8 @@ export default async function Inicio() {
         <aside className="cartao" style={{ marginTop: "1.6rem" }}>
           <h2>Acesso local de demonstração</h2>
           <p className="muted">
-            Estudante: ana@aprenda.local · Moderação, também especialista em Matemática:
-            moderacao@aprenda.local · Senha das duas contas: aprenda-local
+            Todas usam a senha aprenda-local. Ana e Moderação continuam. Também há Bruno, Camila, Diego, Elena,
+            Felipe, Helena, Igor e Rita, conversando em áreas diferentes.
           </p>
         </aside>
       ) : null}

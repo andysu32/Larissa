@@ -1,4 +1,5 @@
 import { db } from "./db";
+import { idsDaSubarvore } from "./arvore";
 import { podePublicar } from "./guardas";
 import { dentroDoLimite } from "./limites";
 import { somarReputacao } from "./reputacao";
@@ -34,9 +35,19 @@ function melhorEstado(estados: string[]): string | null {
   return [...estados].sort((a, b) => ORDEM_ESTADO.indexOf(a) - ORDEM_ESTADO.indexOf(b))[0] ?? null;
 }
 
-export async function listarPerguntas(limite = 50): Promise<PerguntaLista[]> {
+export async function listarPerguntas(
+  limite = 50,
+  filtro?: { assunto?: string; autorId?: string },
+): Promise<PerguntaLista[]> {
+  const ids = filtro?.assunto ? await idsDaSubarvore(filtro.assunto) : null;
+  if (filtro?.assunto && !ids) return [];
+
   const perguntas = await db.pergunta.findMany({
-    where: { oculto: false },
+    where: {
+      oculto: false,
+      ...(filtro?.autorId ? { autorId: filtro.autorId } : {}),
+      ...(ids ? { nos: { some: { noId: { in: ids } } } } : {}),
+    },
     orderBy: { criadaEm: "desc" },
     take: limite,
     include: {

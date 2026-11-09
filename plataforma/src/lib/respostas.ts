@@ -251,3 +251,42 @@ export async function votarClareza(
   });
   return { ok: true };
 }
+
+export type ItemRevisao = {
+  id: string;
+  trecho: string;
+  estado: string;
+  criadaEm: Date;
+  autor: string;
+  perguntaId: string;
+  perguntaTitulo: string;
+};
+
+export async function listarPendentes(limite = 40): Promise<ItemRevisao[]> {
+  const respostas = await db.resposta.findMany({
+    where: {
+      oculto: false,
+      pergunta: { oculto: false },
+      estado: { in: ["revisao_humana", "em_analise", "nao_verificada"] },
+    },
+    orderBy: { criadaEm: "asc" },
+    take: limite,
+    include: {
+      pergunta: { select: { id: true, titulo: true } },
+      autor: { include: { perfil: true } },
+    },
+  });
+
+  return respostas.map((resposta) => {
+    const limpo = resposta.corpo.replace(/\s+/g, " ").trim();
+    return {
+      id: resposta.id,
+      trecho: limpo.length > 180 ? `${limpo.slice(0, 177)}…` : limpo,
+      estado: resposta.estado,
+      criadaEm: resposta.criadaEm,
+      autor: apresentarAutor(resposta.autor),
+      perguntaId: resposta.pergunta.id,
+      perguntaTitulo: resposta.pergunta.titulo,
+    };
+  });
+}

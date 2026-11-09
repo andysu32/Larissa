@@ -20,7 +20,8 @@ export default async function PaginaNovaPergunta({
 
       {!usuario ? (
         <p className="muted">
-          Para publicar uma pergunta, <Link href="/entrar">entre na sua conta</Link>.
+          Para publicar uma pergunta,{" "}
+          <Link href="/entrar?depois=/perguntas/nova">entre na sua conta</Link>.
         </p>
       ) : (
         <form className="pilha cartao" action={acaoCriarPergunta}>

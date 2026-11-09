@@ -16,7 +16,8 @@ export default async function PaginaBusca({
     resultado.respostas.length === 0 &&
     resultado.comunidades.length === 0 &&
     resultado.pessoas.length === 0 &&
-    resultado.nos.length === 0;
+    resultado.nos.length === 0 &&
+    resultado.livros.length === 0;
 
   return (
     <div className="pagina">
@@ -120,6 +121,23 @@ export default async function PaginaBusca({
                   <strong>{no.nome}</strong>
                 </Link>
                 <p className="meta">{no.tipo}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {resultado.livros.length > 0 ? (
+        <section className="pilha" aria-label="Biblioteca">
+          <h2>Biblioteca</h2>
+          <ul className="lista">
+            {resultado.livros.map((livro) => (
+              <li key={livro.slug} className="cartao">
+                <Link href={`/biblioteca/${livro.slug}`}>
+                  <strong>{livro.titulo}</strong>
+                </Link>
+                <p className="muted">{livro.autores}</p>
+                <p className="meta">{livro.tipoAcesso === "comercial" ? "Comercial, sem arquivo" : "Link gratuito"}</p>
               </li>
             ))}
           </ul>

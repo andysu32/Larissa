@@ -77,3 +77,27 @@ export async function arvoreConhecimento(): Promise<NoArvore[]> {
 
   return montar(null);
 }
+
+export async function idsDaSubarvore(slug: string): Promise<string[] | null> {
+  const nos = await db.noConhecimento.findMany({ select: { id: true, slug: true, paiId: true } });
+  const alvo = nos.find((no) => no.slug === slug);
+  if (!alvo) return null;
+
+  const filhos = new Map<string, string[]>();
+  for (const no of nos) {
+    if (!no.paiId) continue;
+    const lista = filhos.get(no.paiId) ?? [];
+    lista.push(no.id);
+    filhos.set(no.paiId, lista);
+  }
+
+  const ids = new Set<string>();
+  const pilha = [alvo.id];
+  while (pilha.length > 0) {
+    const atual = pilha.pop();
+    if (!atual || ids.has(atual)) continue;
+    ids.add(atual);
+    for (const filho of filhos.get(atual) ?? []) pilha.push(filho);
+  }
+  return [...ids];
+}

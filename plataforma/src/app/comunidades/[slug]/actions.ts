@@ -34,7 +34,7 @@ export async function acaoEntrarComunidade(formData: FormData) {
   const usuario = await exigirUsuario();
   const resultado = await entrarComunidade(usuario, slug);
   if (!resultado.ok) falha(slug, resultado.erro);
-  sucesso(slug);
+  redirect(`/comunidades/${encodeURIComponent(slug)}?ok=${encodeURIComponent("Você entrou na comunidade.")}`);
 }
 
 export async function acaoCriarPublicacao(formData: FormData) {

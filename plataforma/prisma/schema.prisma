@@ -85,6 +85,7 @@ model NoConhecimento {
   papeis       PapelUsuario[]
   perguntas    PerguntaNo[]
   comunidades  Comunidade[]
+  livros       Livro[]
 }
 
 model NoRequisito {
@@ -364,13 +365,20 @@ model Prova {
 }
 
 model Livro {
-  id         String   @id @default(cuid())
+  id         String          @id @default(cuid())
+  slug       String          @unique
   titulo     String
   autores    String
+  descricao  String          @default("")
+  nivel      String          @default("")
+  edicao     String          @default("")
+  isbn       String          @default("")
   tipoAcesso String
   ondeObter  String
   direitoUso String
-  criadaEm   DateTime @default(now())
+  noId       String?
+  no         NoConhecimento? @relation(fields: [noId], references: [id], onDelete: SetNull)
+  criadaEm   DateTime        @default(now())
 }
 
 model Job {

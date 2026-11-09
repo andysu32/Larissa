@@ -35,7 +35,7 @@ export async function acaoCriarResposta(formData: FormData) {
     fontes,
   });
   if (!resultado.ok) falha(perguntaId, resultado.erro);
-  redirect(`/perguntas/${perguntaId}`);
+  redirect(`/perguntas/${perguntaId}?ok=${encodeURIComponent("Resposta publicada. Ela aguarda revisão humana.")}`);
 }
 
 export async function acaoEditarResposta(formData: FormData) {
@@ -48,7 +48,9 @@ export async function acaoEditarResposta(formData: FormData) {
     corpo: String(formData.get("corpo") ?? ""),
   });
   if (!resultado.ok) falha(perguntaId, resultado.erro);
-  redirect(`/perguntas/${perguntaId}`);
+  redirect(
+    `/perguntas/${perguntaId}?ok=${encodeURIComponent("Edição salva. Se havia veredito, a resposta voltou para revisão humana.")}`,
+  );
 }
 
 export async function acaoVotarClareza(formData: FormData) {
@@ -59,7 +61,9 @@ export async function acaoVotarClareza(formData: FormData) {
 
   const resultado = await votarClareza(usuario, String(formData.get("respostaId") ?? ""), valor);
   if (!resultado.ok) falha(perguntaId, resultado.erro);
-  redirect(`/perguntas/${perguntaId}`);
+  redirect(
+    `/perguntas/${perguntaId}?ok=${encodeURIComponent("Avaliação de clareza registrada. Isso não muda se a resposta está correta.")}`,
+  );
 }
 
 export async function acaoAplicarVeredito(formData: FormData) {
@@ -73,7 +77,7 @@ export async function acaoAplicarVeredito(formData: FormData) {
     explicacao: String(formData.get("explicacao") ?? ""),
   });
   if (!resultado.ok) falha(perguntaId, resultado.erro);
-  redirect(`/perguntas/${perguntaId}`);
+  redirect(`/perguntas/${perguntaId}?ok=${encodeURIComponent("Veredito registrado com a explicação.")}`);
 }
 
 export async function acaoDenunciar(formData: FormData) {
@@ -88,5 +92,5 @@ export async function acaoDenunciar(formData: FormData) {
     detalhe: String(formData.get("detalhe") ?? ""),
   });
   if (!resultado.ok) falha(perguntaId, resultado.erro);
-  redirect(`/perguntas/${perguntaId}`);
+  redirect(`/perguntas/${perguntaId}?ok=${encodeURIComponent("Denúncia enviada para a moderação.")}`);
 }

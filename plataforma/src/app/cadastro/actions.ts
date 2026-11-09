@@ -2,12 +2,10 @@
 
 import { redirect } from "next/navigation";
 import { cadastrar } from "@/lib/contas";
-
-function falha(caminho: string, mensagem: string): never {
-  redirect(`${caminho}?erro=${encodeURIComponent(mensagem)}`);
-}
+import { caminhoInterno } from "@/lib/texto";
 
 export async function acaoCadastrar(formData: FormData) {
+  const depois = caminhoInterno(String(formData.get("depois") ?? ""));
   const confirmacao = formData.get("confirmacao") === "sim" ? "sim" : "";
   const objetivoBruto = String(formData.get("objetivo") ?? "").trim();
   const resultado = await cadastrar({
@@ -19,6 +17,10 @@ export async function acaoCadastrar(formData: FormData) {
     confirmacao,
     objetivo: objetivoBruto || undefined,
   });
-  if (!resultado.ok) falha("/cadastro", resultado.erro);
-  redirect("/");
+  if (!resultado.ok) {
+    const consulta = new URLSearchParams({ erro: resultado.erro });
+    if (depois !== "/") consulta.set("depois", depois);
+    redirect(`/cadastro?${consulta.toString()}`);
+  }
+  redirect(depois);
 }

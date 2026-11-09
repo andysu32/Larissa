@@ -45,6 +45,15 @@ export function formatarData(data: Date): string {
   }).format(data);
 }
 
+export function caminhoInterno(valor: string | null | undefined, padrao = "/"): string {
+  if (!valor) return padrao;
+  const caminho = valor.trim();
+  if (!caminho.startsWith("/") || caminho.startsWith("//") || caminho.includes("\\") || caminho.includes("://")) {
+    return padrao;
+  }
+  return caminho;
+}
+
 export const MENSAGEM_FRAUDE =
   "A plataforma ajuda a entender o conteúdo. Pedidos para fazer uma prova ou tarefa no seu lugar não são publicados.";
 
