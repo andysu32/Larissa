@@ -265,7 +265,7 @@
             <a href="#digestao" data-find="nefrologia rim nefron">
               <small>Clínica</small>
               <strong>Nefrologia</strong>
-              <span>Néfron, rim em 3D e a ficha do sistema urinário.</span>
+              <span>Néfron, cálices, pelve e ureter no 3D.</span>
             </a>
             <a href="#digestao" data-find="endocrinologia insulina pancreas">
               <small>Clínica</small>
@@ -305,7 +305,7 @@
           <ol class="how3d">
             <li><strong>Escolha o órgão.</strong> Arraste para girar. Use a roda do mouse ou dois dedos para chegar perto.</li>
             <li><strong>Toque uma parte.</strong> Aparecem o nome, o grupo e o que costuma cair em prova. Na lista, o toque também marca.</li>
-            <li><strong>Disseque.</strong> Isolar separa a peça. Ao meio corta essa peça pela metade, como uma laranja na mesa. O número em cada parte diz qual é qual.</li>
+            <li><strong>Disseque o órgão.</strong> Órgão ao meio corta o órgão inteiro pela metade, como uma laranja na mesa. Os números ficam na face cortada.</li>
           </ol>
           <div class="organ-picker" data-organs role="group" aria-label="Escolha o órgão"></div>
           <div class="stage3d">
@@ -329,8 +329,9 @@
               <div class="stage-tools" role="group" aria-label="Ferramentas do modelo">
                 <button type="button" data-3d-xray aria-pressed="false">Raio-x</button>
                 <button type="button" data-3d-inside aria-pressed="false">Por dentro</button>
+                <button type="button" data-3d-organ-half aria-pressed="false">Órgão ao meio</button>
                 <button type="button" data-3d-isolate aria-pressed="false">Isolar</button>
-                <button type="button" data-3d-half aria-pressed="false">Ao meio</button>
+                <button type="button" data-3d-half aria-pressed="false">Peça ao meio</button>
                 <button type="button" data-3d-reset>Recentrar</button>
                 <button type="button" data-3d-spin aria-pressed="false">Girar</button>
               </div>
@@ -1463,8 +1464,10 @@
               <p>
                 O rim filtra o plasma, reabsorve o que o corpo quer guardar e
                 secreta o que precisa sair. A unidade desse trabalho é o
-                néfron, com corpúsculo e túbulos. Ureter conduz urina à
-                bexiga. Uretra a conduz para fora. O baço não é órgão
+                néfron, com corpúsculo e túbulos. A urina pronta sai pela
+                papila, entra num cálice menor, passa pelo cálice maior e pela
+                pelve, e o ureter a conduz à bexiga. Uretra a conduz para fora.
+                O baço não é órgão
                 digestório: filtra sangue e participa da imunidade.
               </p>
               <ul class="remember">
