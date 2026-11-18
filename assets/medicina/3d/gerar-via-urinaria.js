@@ -109,21 +109,22 @@ const hubs = {
     inferior: [-0.051, 0.268, Z]
 };
 
-/* Rim fresco e bem irrigado: córtex vermelho-castanho, medula vinho, mucosa rosada. */
+/* Referência: atlas UNEB — corte frontal / vascularização.
+   Parênquima vermelho-castanho; seio e vias em creme; artéria vermelha viva. */
 const CORES = {
-    capsule: [0.58, 0.22, 0.20, 1],
-    hilum: [0.38, 0.16, 0.16, 1],
-    papilla: [0.72, 0.32, 0.28, 1],
-    pyramid: [0.48, 0.12, 0.15, 1],
-    column: [0.66, 0.16, 0.13, 1],
-    cortex: [0.64, 0.14, 0.12, 1],
-    menor: [0.78, 0.48, 0.42, 1],
-    maior: [0.72, 0.4, 0.36, 1],
-    pelve: [0.68, 0.34, 0.32, 1],
-    jup: [0.62, 0.28, 0.26, 1],
-    ureter: [0.7, 0.38, 0.34, 1],
-    arteria: [0.82, 0.1, 0.12, 1],
-    veia: [0.28, 0.14, 0.32, 1]
+    capsule: [0.52, 0.3, 0.24, 1],
+    hilum: [0.42, 0.26, 0.22, 1],
+    papilla: [0.62, 0.36, 0.28, 1],
+    pyramid: [0.4, 0.16, 0.14, 1],
+    column: [0.56, 0.24, 0.18, 1],
+    cortex: [0.58, 0.22, 0.17, 1],
+    menor: [0.9, 0.8, 0.58, 1],
+    maior: [0.86, 0.72, 0.5, 1],
+    pelve: [0.88, 0.76, 0.55, 1],
+    jup: [0.8, 0.64, 0.48, 1],
+    ureter: [0.78, 0.62, 0.48, 1],
+    arteria: [0.88, 0.12, 0.12, 1],
+    veia: [0.32, 0.2, 0.38, 1]
 };
 
 const pecas = [];

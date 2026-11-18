@@ -706,14 +706,14 @@
         },
         {
             id: "rim", nome: "Rim", peso: "0,9 MB",
-            titulo: "Parênquima, vasos e via urinária",
+            titulo: "Corte frontal: córtex, medula e vasos",
             casca: function (chave) { return /capsule|outer_cortex|renal_column/.test(chave); },
             frente: "Este é o rim direito, em forma de feijão. A borda côncava, o hilo, olha para a linha média e um pouco para a frente.",
             direita: "Pelo lado direito do paciente se vê a borda lateral, convexa. O rim direito costuma ficar um pouco mais baixo que o esquerdo, por causa do fígado.",
             atras: "Por trás, o rim se apoia nos músculos da parede posterior do abdome, junto das últimas costelas. É por isso que se percute o rim pelas costas.",
             esquerda: "Pelo lado esquerdo você olha o hilo. Da frente para trás: veia (roxa), artéria (vermelha) e pelve. Dela saem os cálices, por dentro, e o ureter, para baixo.",
             cima: "O polo superior fica coberto pela glândula suprarrenal, que não faz parte deste modelo. Os cálices maiores de cima drenam as papilas A a D.",
-            baixo: "Embaixo, o cálice maior inferior reúne as papilas G a J. O ureter desce a partir da junção ureteropélvica. Use Órgão ao meio para abrir o seio e ver papila, cálice e pelve de uma vez."
+            baixo: "Embaixo, o cálice maior inferior reúne as papilas G a J. Órgão ao meio abre um corte frontal, no estilo do atlas de peças: córtex, pirâmides, papilas, cálices e vasos."
         },
         {
             id: "figado", nome: "Fígado", peso: "0,5 MB",
@@ -1176,16 +1176,26 @@
 
         function ajustarLuz() {
             var foco = aoMeio || orgaoMeio || (isolar && !!selecionado);
-            viewer.exposure = foco ? 1.2 : 1.05;
-            viewer.shadowIntensity = orgaoMeio ? 0.28 : foco ? 0.22 : 0.9;
-            if (orgaoMeio) viewer.exposure = 1.06;
-            if (orgaoMeio) viewer.fieldOfView = "32deg";
-            else if (aoMeio) viewer.fieldOfView = "34deg";
-            else viewer.fieldOfView = "auto";
+            viewer.exposure = foco ? 1.15 : 1.05;
+            viewer.shadowIntensity = orgaoMeio ? 0.18 : foco ? 0.22 : 0.9;
+            if (orgaoMeio) {
+                viewer.exposure = atual && atual.id === "rim" ? 1.18 : 1.08;
+                viewer.fieldOfView = "30deg";
+            } else if (aoMeio) {
+                viewer.fieldOfView = "34deg";
+            } else {
+                viewer.fieldOfView = "auto";
+            }
+        }
+
+        function congelarCorteOrgao() {
+            /* Rim: corte frontal como no atlas UNEB. Demais órgãos: sagital. */
+            if (atual && atual.id === "rim") normalFixo = { x: 0, y: 0, z: 1 };
+            else normalFixo = { x: 1, y: 0, z: 0 };
         }
 
         function congelarVertical() {
-            normalFixo = { x: 1, y: 0, z: 0 };
+            congelarCorteOrgao();
         }
 
         function marcarCamada() {
@@ -1205,12 +1215,16 @@
 
         function enquadrarOrgao() {
             var caixa = dados.caixa;
-            congelarVertical();
+            congelarCorteOrgao();
             var empurra = caixa[3] * 0.03;
             pulso = 1 - pulso;
-            viewer.cameraTarget = metros(caixa[0] + normalFixo.x * empurra + pulso * 0.00001) + " " +
-                metros(caixa[1]) + " " + metros(caixa[2]);
-            viewer.cameraOrbit = "-90deg 90deg " + metros(caixa[3] * 2.35);
+            viewer.cameraTarget =
+                metros(caixa[0] + normalFixo.x * empurra + pulso * 0.00001) + " " +
+                metros(caixa[1] + normalFixo.y * empurra) + " " +
+                metros(caixa[2] + normalFixo.z * empurra);
+            /* Olha de frente para a face do corte (UNEB: corte frontal do rim). */
+            viewer.cameraOrbit = (atual && atual.id === "rim" ? "0deg 90deg " : "-90deg 90deg ") +
+                metros(caixa[3] * 2.35);
             ajustarLuz();
         }
 
@@ -1225,53 +1239,14 @@
             return pontoCortado(vetorA);
         }
 
-        function misturarCor(base, alvo, t) {
-            return [
-                base[0] + (alvo[0] - base[0]) * t,
-                base[1] + (alvo[1] - base[1]) * t,
-                base[2] + (alvo[2] - base[2]) * t
-            ];
-        }
-
-        function corNoCorte(m) {
-            if (!orgaoMeio && !(aoMeio && m.nome === selecionado)) return null;
-            var n = m.nome;
-            var c = m.cor;
-            var rgb = [c[0], c[1], c[2]];
-            if (atual.id === "rim") {
-                if (/kidney_capsule|hilum_of_kidney/.test(n)) rgb = misturarCor(rgb, [0.36, 0.16, 0.14], 0.55);
-                else if (/outer_cortex/.test(n)) rgb = misturarCor(rgb, [0.52, 0.16, 0.13], 0.35);
-                else if (/renal_column/.test(n)) rgb = misturarCor(rgb, [0.6, 0.2, 0.16], 0.3);
-                else if (/renal_pyramid/.test(n)) rgb = misturarCor(rgb, [0.5, 0.26, 0.22], 0.45);
-                else if (/renal_papilla/.test(n)) rgb = misturarCor(rgb, [0.7, 0.42, 0.36], 0.4);
-                else if (/minor_calyx|major_calyx/.test(n)) rgb = misturarCor(rgb, [0.72, 0.48, 0.42], 0.35);
-                else if (/renal_pelvis|ureteropelvic|ureter_R/.test(n)) rgb = misturarCor(rgb, [0.66, 0.38, 0.34], 0.3);
-                else if (/renal_artery/.test(n)) rgb = misturarCor(rgb, [0.78, 0.16, 0.16], 0.25);
-                else if (/renal_vein/.test(n)) rgb = misturarCor(rgb, [0.32, 0.2, 0.4], 0.25);
-            } else if (m.casca) {
-                rgb = [c[0] * 0.78, c[1] * 0.78, c[2] * 0.78];
-            } else {
-                rgb = [
-                    Math.min(1, c[0] * 1.06 + 0.02),
-                    Math.min(1, c[1] * 1.04 + 0.015),
-                    Math.min(1, c[2] * 1.03 + 0.01)
-                ];
-            }
-            if (orgaoMeio && m.casca) {
-                rgb = [rgb[0] * 0.88, rgb[1] * 0.88, rgb[2] * 0.88];
-            }
-            return rgb;
-        }
-
         function pintar() {
             if ((porDentro || aoMeio) && !planoLista) garantirVetores();
             var gl = rendererWebGL();
             if (gl && (porDentro || aoMeio)) gl.localClippingEnabled = true;
             var corteAberto = orgaoMeio || aoMeio;
             materiais.forEach(function (m) {
-                var ajuste = corNoCorte(m);
-                var cor = ajuste || m.cor;
-                var alfa = m.cor[3];
+                var cor = m.cor;
+                var alfa = cor[3];
                 var modo = m.modo;
                 var escolhido = m.nome === selecionado;
                 var esconder = !!(selecionado && (isolar || aoMeio) && !escolhido);
@@ -1282,7 +1257,7 @@
                 m.mat.pbrMetallicRoughness.setBaseColorFactor([cor[0], cor[1], cor[2], esconder ? 0 : alfa]);
                 m.mat.setAlphaMode(esconder ? "MASK" : modo);
                 if (escolhido) {
-                    m.mat.setEmissiveFactor(corteAberto ? [0.14, 0.08, 0.03] : [0.16, 0.1, 0.02]);
+                    m.mat.setEmissiveFactor(corteAberto ? [0.12, 0.07, 0.03] : [0.16, 0.1, 0.02]);
                 } else {
                     m.mat.setEmissiveFactor([0, 0, 0]);
                 }
@@ -1400,9 +1375,11 @@
             }
             if (dicaCorte) {
                 dicaCorte.textContent = orgaoMeio
-                    ? "Corte vertical no meio. A casca escurece um pouco para a face interna aparecer. A camada 3 é o centro."
+                    ? (atual && atual.id === "rim"
+                        ? "Corte frontal no meio, como nas peças do atlas. Córtex castanho, medula mais escura, vias em creme e artérias vermelhas. A camada 3 é o centro."
+                        : "Corte no meio. A camada 3 é o centro. Gire e toque um número.")
                     : aoMeio
-                        ? "A peça está aberta no meio, na vertical. Gire para ver o interior."
+                        ? "A peça está aberta no meio. Gire para ver o interior."
                         : "Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada.";
             }
         }
@@ -1442,7 +1419,11 @@
             enquadrarOrgao();
             aplicarCorte();
             atualizarMarcadores();
-            if (status) status.textContent = "Órgão aberto no meio, na vertical. A camada 3 é o centro. Gire e toque um número.";
+            if (status) {
+                status.textContent = atual && atual.id === "rim"
+                    ? "Corte frontal no meio, no estilo das peças do atlas. A camada 3 é o centro. Toque um número."
+                    : "Órgão aberto no meio. A camada 3 é o centro. Gire e toque um número.";
+            }
         }
 
         function definirAoMeio(ligado) {
