@@ -871,6 +871,7 @@
         var isolar = false;
         var aoMeio = false;
         var orgaoMeio = false;
+        var normalFixo = null;
         var girando = false;
         var quiz = null;
         var pulso = 0;
@@ -1052,7 +1053,7 @@
                 aplicandoCorte = false;
                 return;
             }
-            var normal = normalLocal(theta, phi);
+            var normal = (orgaoMeio || aoMeio) && normalFixo ? normalFixo : normalLocal(theta, phi);
             var peca = aoMeio && selecionado ? partes[selecionado] : null;
             var origem = peca ? peca.centro : dados.caixa;
             var alcance = peca
@@ -1107,6 +1108,7 @@
             }
             alternar(btnInside, porDentro);
             if (painelCorte) painelCorte.hidden = !porDentro;
+            rotuloDoCorte();
             viewer.classList.toggle("is-inside", porDentro);
             var perto = dados.caixa[3] * (porDentro ? 0.03 : 0.06);
             viewer.minCameraOrbit = "auto 1deg " + metros(perto);
@@ -1140,7 +1142,7 @@
             var alvoZ = c[2];
             if (aoMeio) {
                 var empurra = Math.max(c[3] * 0.18, caixa[3] * 0.02);
-                var paraDentro = eixoCorte === "olhar" ? normalDe(theta, phi) : normalLocal();
+                var paraDentro = normalFixo || normalDe(theta, phi);
                 alvoX += paraDentro.x * empurra;
                 alvoY += paraDentro.y * empurra;
                 alvoZ += paraDentro.z * empurra;
@@ -1179,15 +1181,20 @@
             else viewer.fieldOfView = "auto";
         }
 
+        function congelarDeFrente() {
+            var frente = vistas.filter(function (v) { return v.id === "frente"; })[0];
+            normalFixo = normalDe(frente.theta * Math.PI / 180, frente.phi * Math.PI / 180);
+            return frente;
+        }
+
         function enquadrarOrgao() {
             var caixa = dados.caixa;
-            var orbita = viewer.getCameraOrbit();
-            var normal = eixoCorte === "olhar" ? normalDe(orbita.theta, orbita.phi) : normalLocal();
-            var empurra = caixa[3] * 0.05;
+            var frente = congelarDeFrente();
+            var empurra = caixa[3] * 0.04;
             pulso = 1 - pulso;
-            viewer.cameraTarget = metros(caixa[0] + normal.x * empurra + pulso * 0.00001) + " " +
-                metros(caixa[1] + normal.y * empurra) + " " + metros(caixa[2] + normal.z * empurra);
-            viewer.cameraOrbit = orbita.theta + "rad " + orbita.phi + "rad " + metros(caixa[3] * 2.15);
+            viewer.cameraTarget = metros(caixa[0] + normalFixo.x * empurra + pulso * 0.00001) + " " +
+                metros(caixa[1] + normalFixo.y * empurra) + " " + metros(caixa[2] + normalFixo.z * empurra);
+            viewer.cameraOrbit = frente.theta + "deg " + frente.phi + "deg " + metros(caixa[3] * 2.05);
             ajustarLuz();
         }
 
@@ -1321,21 +1328,27 @@
         }
 
         function rotuloDoCorte() {
+            var meio = orgaoMeio || aoMeio;
+            if (painelCorte) {
+                painelCorte.hidden = !porDentro && !meio;
+                painelCorte.classList.toggle("is-simples", meio);
+            }
             if (rotuloCorte) {
-                rotuloCorte.textContent = orgaoMeio ? "Faca no órgão inteiro" : aoMeio ? "Faca na peça isolada" : "Profundidade do corte";
+                rotuloCorte.textContent = orgaoMeio ? "Aberto no meio" : aoMeio ? "Peça aberta no meio" : "Profundidade do corte";
             }
             if (dicaCorte) {
                 dicaCorte.textContent = orgaoMeio
-                    ? "50 corta o órgão exatamente no meio, como uma laranja na mesa. A metade da frente sai e os números ficam na face cortada."
+                    ? "A metade da frente saiu. Gire o órgão para olhar o interior, como uma peça aberta na mesa."
                     : aoMeio
-                        ? "50 corta a peça isolada no meio. Para a esquerda sobra mais peça; para a direita a faca avança."
-                        : "Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada. Órgão ao meio abre o órgão inteiro.";
+                        ? "A peça está aberta no meio. Gire para ver o interior."
+                        : "Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada.";
             }
         }
 
         function definirOrgaoMeio(ligado) {
             if (!ligado) {
                 orgaoMeio = false;
+                normalFixo = null;
                 alternar(btnOrgao, false);
                 rotuloDoCorte();
                 ajustarLuz();
@@ -1364,7 +1377,7 @@
             enquadrarOrgao();
             aplicarCorte();
             atualizarMarcadores();
-            if (status) status.textContent = "Órgão cortado ao meio. Gire para ver a face cortada e toque um número para saber o nome.";
+            if (status) status.textContent = "Órgão aberto no meio. Gire para ver por dentro e toque um número para saber o nome.";
         }
 
         function definirAoMeio(ligado) {
@@ -1378,6 +1391,9 @@
             alternar(btnMeio, aoMeio);
             if (aoMeio) {
                 orgaoMeio = false;
+                normalFixo = null;
+                var orbitaAtual = viewer.getCameraOrbit();
+                normalFixo = normalDe(orbitaAtual.theta, orbitaAtual.phi);
                 alternar(btnOrgao, false);
                 isolar = true;
                 alternar(btnIsolar, true);
@@ -1393,12 +1409,13 @@
                 aproximar(partes[selecionado]);
                 return;
             }
+            normalFixo = null;
             rotuloDoCorte();
             pintar();
             if (porDentro) aplicarCorte();
             else limparCorte();
             atualizarMarcadores();
-            if (status) status.textContent = "A peça voltou inteira. Ao meio corta de novo pela metade.";
+            if (status) status.textContent = "A peça voltou inteira. Peça ao meio abre de novo pela metade.";
         }
 
         function marcarNaLista(chave) {
@@ -1717,7 +1734,8 @@
             });
         }
         viewer.addEventListener("camera-change", function () {
-            if (eixoCorte !== "olhar" || (!porDentro && !aoMeio && !orgaoMeio)) return;
+            if (orgaoMeio || aoMeio) return;
+            if (eixoCorte !== "olhar" || !porDentro) return;
             if (!aoMeio && !orgaoMeio && cortePreso && selecionado && partes[selecionado]) {
                 profundidade = profundidadeNoPonto(partes[selecionado].centro, normalLocal());
                 if (controleCorte) {

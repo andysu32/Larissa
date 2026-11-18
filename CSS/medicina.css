@@ -964,6 +964,12 @@ model-viewer.is-pointing { cursor: pointer; }
     color: rgba(246, 239, 228, 0.78);
     font-size: 0.88rem;
 }
+.cut-panel.is-simples .cut-depth,
+.cut-panel.is-simples .cut-axes { display: none; }
+.cut-panel.is-simples .cut-hint {
+    color: var(--cream);
+    font-size: 0.98rem;
+}
 .marca3d {
     display: grid;
     place-items: center;
