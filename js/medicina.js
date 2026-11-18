@@ -706,12 +706,12 @@
         },
         {
             id: "rim", nome: "Rim", peso: "0,9 MB",
-            titulo: "Da papila ao ureter",
+            titulo: "Parênquima, vasos e via urinária",
             casca: function (chave) { return /capsule|outer_cortex|renal_column/.test(chave); },
             frente: "Este é o rim direito, em forma de feijão. A borda côncava, o hilo, olha para a linha média e um pouco para a frente.",
             direita: "Pelo lado direito do paciente se vê a borda lateral, convexa. O rim direito costuma ficar um pouco mais baixo que o esquerdo, por causa do fígado.",
             atras: "Por trás, o rim se apoia nos músculos da parede posterior do abdome, junto das últimas costelas. É por isso que se percute o rim pelas costas.",
-            esquerda: "Pelo lado esquerdo você olha o hilo. Da frente para trás passam a veia, a artéria e a pelve. Dela saem os cálices, por dentro, e o ureter, para baixo.",
+            esquerda: "Pelo lado esquerdo você olha o hilo. Da frente para trás: veia (roxa), artéria (vermelha) e pelve. Dela saem os cálices, por dentro, e o ureter, para baixo.",
             cima: "O polo superior fica coberto pela glândula suprarrenal, que não faz parte deste modelo. Os cálices maiores de cima drenam as papilas A a D.",
             baixo: "Embaixo, o cálice maior inferior reúne as papilas G a J. O ureter desce a partir da junção ureteropélvica. Use Órgão ao meio para abrir o seio e ver papila, cálice e pelve de uma vez."
         },

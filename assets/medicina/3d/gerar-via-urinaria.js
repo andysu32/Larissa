@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const dir = __dirname;
-const origem = process.argv[2] || path.join(dir, "rim.glb");
+const origem = process.argv[2] || path.join(dir, "rim-base.glb");
 const destino = path.join(dir, "rim.glb");
 
 function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
@@ -85,17 +85,11 @@ const papilas = {
     i: [-0.0685, 0.2612, 0.0042],
     j: [-0.0603, 0.2616, 0.0103]
 };
-const hilo = [-0.0556, 0.2889, 0.0033];
 const grupos = {
     superior: ["a", "b", "c", "d"],
     medio: ["e", "f"],
     inferior: ["g", "h", "i", "j"]
 };
-
-function media(chaves) {
-    const pts = chaves.map((k) => papilas[k]);
-    return pts.reduce((acc, p) => add(acc, p), [0, 0, 0]).map((v) => v / pts.length);
-}
 
 const Z = 0.001;
 const bocaDaPelve = [-0.046, 0.289, Z];
@@ -106,7 +100,8 @@ const ureter = [
     [-0.035, 0.248, Z],
     [-0.032, 0.210, Z],
     [-0.029, 0.168, Z],
-    [-0.027, 0.128, Z]
+    [-0.027, 0.128, Z],
+    [-0.026, 0.095, Z]
 ];
 const hubs = {
     superior: [-0.051, 0.307, Z],
@@ -114,50 +109,94 @@ const hubs = {
     inferior: [-0.051, 0.268, Z]
 };
 
+/* Rim fresco e bem irrigado: córtex vermelho-castanho, medula vinho, mucosa rosada. */
+const CORES = {
+    capsule: [0.58, 0.22, 0.20, 1],
+    hilum: [0.38, 0.16, 0.16, 1],
+    papilla: [0.72, 0.32, 0.28, 1],
+    pyramid: [0.48, 0.12, 0.15, 1],
+    column: [0.66, 0.16, 0.13, 1],
+    cortex: [0.64, 0.14, 0.12, 1],
+    menor: [0.78, 0.48, 0.42, 1],
+    maior: [0.72, 0.4, 0.36, 1],
+    pelve: [0.68, 0.34, 0.32, 1],
+    jup: [0.62, 0.28, 0.26, 1],
+    ureter: [0.7, 0.38, 0.34, 1],
+    arteria: [0.82, 0.1, 0.12, 1],
+    veia: [0.28, 0.14, 0.32, 1]
+};
+
 const pecas = [];
 
-function guardar(nome, cor, mesh) {
-    pecas.push({ nome, cor, mesh, caixa: caixaDe(mesh.positions) });
+function guardar(nome, cor, mesh, rough) {
+    pecas.push({ nome, cor, mesh, rough: rough == null ? 0.55 : rough, caixa: caixaDe(mesh.positions) });
 }
-
-const corMenor = [0.98, 0.9, 0.58, 1];
-const corMaior = [0.96, 0.72, 0.34, 1];
-const corPelve = [0.9, 0.5, 0.26, 1];
-const corJup = [0.72, 0.28, 0.22, 1];
-const corUreter = [0.84, 0.62, 0.38, 1];
 
 for (const [grupo, letras] of Object.entries(grupos)) {
     const hub = hubs[grupo];
-    const pescocos = {};
     for (const letra of letras) {
         const ponta = papilas[letra];
-        const pescoco = [-0.056, ponta[1], Z];
-        pescocos[letra] = pescoco;
-        const borda = mix(ponta, pescoco, 0.22);
-        const meio = mix(borda, pescoco, 0.55);
+        const pescoco = [-0.0555, ponta[1] * 0.15 + hub[1] * 0.85, Z];
+        const borda = mix(ponta, pescoco, 0.18);
+        const meio = mix(borda, pescoco, 0.5);
         const mesh = malhaVazia();
-        tubo(mesh, [borda, meio, pescoco], [0.0038, 0.0028, 0.002], 18);
-        const perto = mix(pescoco, hub, 0.78);
-        tubo(mesh, [pescoco, mix(pescoco, perto, 0.5), perto], [0.002, 0.0022, 0.0023], 14);
-        guardar("minor_calyx_R_" + letra, corMenor, mesh);
+        tubo(mesh, [borda, meio, pescoco], [0.0052, 0.0036, 0.0026], 20);
+        const perto = mix(pescoco, hub, 0.82);
+        tubo(mesh, [pescoco, mix(pescoco, perto, 0.5), perto], [0.0026, 0.0028, 0.003], 16);
+        guardar("minor_calyx_R_" + letra, CORES.menor, mesh, 0.48);
     }
     const tronco = malhaVazia();
-    tubo(tronco, [hub, mix(hub, bocaDaPelve, 0.5), bocaDaPelve], [0.0028, 0.0034, 0.004], 18);
+    tubo(tronco, [hub, mix(hub, bocaDaPelve, 0.45), bocaDaPelve], [0.0036, 0.0044, 0.0052], 20);
     const nome = grupo === "superior" ? "major_calyx_superior_R" : grupo === "medio" ? "major_calyx_middle_R" : "major_calyx_inferior_R";
-    guardar(nome, corMaior, tronco);
+    guardar(nome, CORES.maior, tronco, 0.48);
 }
 
 const pelve = malhaVazia();
-tubo(pelve, [bocaDaPelve, corpoDaPelve, mix(corpoDaPelve, jup, 0.55), jup], [0.0042, 0.0054, 0.0034, 0.0022], 18);
-guardar("renal_pelvis_R", corPelve, pelve);
+tubo(pelve, [bocaDaPelve, corpoDaPelve, mix(corpoDaPelve, jup, 0.55), jup], [0.0056, 0.0068, 0.0042, 0.0026], 20);
+guardar("renal_pelvis_R", CORES.pelve, pelve, 0.46);
 
 const juncao = malhaVazia();
-tubo(juncao, [mix(corpoDaPelve, jup, 0.45), jup, mix(jup, ureter[1], 0.35)], [0.0023, 0.00155, 0.0019], 16);
-guardar("ureteropelvic_junction_R", corJup, juncao);
+tubo(juncao, [mix(corpoDaPelve, jup, 0.4), jup, mix(jup, ureter[1], 0.4)], [0.0028, 0.0019, 0.0022], 18);
+guardar("ureteropelvic_junction_R", CORES.jup, juncao, 0.5);
 
 const tuboUreter = malhaVazia();
-tubo(tuboUreter, ureter, ureter.map(() => 0.00215), 16);
-guardar("ureter_R", corUreter, tuboUreter);
+tubo(tuboUreter, ureter, ureter.map((_, i) => 0.0024 - i * 0.00005), 18);
+guardar("ureter_R", CORES.ureter, tuboUreter, 0.5);
+
+/* No hilo, da frente para trás: veia, artéria, pelve. */
+const veia = malhaVazia();
+tubo(veia, [
+    [-0.028, 0.291, 0.014],
+    [-0.036, 0.290, 0.010],
+    [-0.046, 0.289, 0.006],
+    [-0.054, 0.2885, 0.003]
+], [0.0038, 0.0042, 0.0046, 0.0036], 18);
+guardar("renal_vein_R", CORES.veia, veia, 0.42);
+
+const arteria = malhaVazia();
+tubo(arteria, [
+    [-0.028, 0.286, 0.007],
+    [-0.036, 0.287, 0.004],
+    [-0.046, 0.288, 0.002],
+    [-0.054, 0.2888, 0.0005]
+], [0.0024, 0.0026, 0.0028, 0.0022], 16);
+guardar("renal_artery_R", CORES.arteria, arteria, 0.38);
+
+const ramoSup = malhaVazia();
+tubo(ramoSup, [
+    [-0.050, 0.2885, 0.001],
+    [-0.052, 0.298, -0.002],
+    [-0.054, 0.306, -0.006]
+], [0.0018, 0.0016, 0.0013], 12);
+guardar("renal_artery_superior_branch_R", CORES.arteria, ramoSup, 0.4);
+
+const ramoInf = malhaVazia();
+tubo(ramoInf, [
+    [-0.050, 0.2885, 0.001],
+    [-0.052, 0.278, 0.003],
+    [-0.054, 0.268, 0.006]
+], [0.0018, 0.0016, 0.0013], 12);
+guardar("renal_artery_inferior_branch_R", CORES.arteria, ramoInf, 0.4);
 
 function lerGlb(arquivo) {
     const b = fs.readFileSync(arquivo);
@@ -168,12 +207,36 @@ function lerGlb(arquivo) {
     return { json, bin: b.slice(binStart, binStart + binLen) };
 }
 
-if (lerGlb(origem).json.materials.some((m) => m.name === "ureter_R")) {
-    console.error("A base já tem a via urinária. Passe o GLB original do parênquima.");
+if (!fs.existsSync(origem)) {
+    console.error("Base não encontrada:", origem);
     process.exit(1);
 }
 
 const { json, bin } = lerGlb(origem);
+if (json.materials.some((m) => m.name === "ureter_R" || m.name === "renal_artery_R")) {
+    console.error("A base já tem via urinária/vasos. Use rim-base.glb (só o parênquima).");
+    process.exit(1);
+}
+
+function pintarParenchyma(mat) {
+    const n = mat.name;
+    let cor = null;
+    let rough = 0.58;
+    if (n === "kidney_capsule_R") { cor = CORES.capsule; rough = 0.62; }
+    else if (n === "hilum_of_kidney_R") { cor = CORES.hilum; rough = 0.55; }
+    else if (/^renal_papilla_/.test(n)) { cor = CORES.papilla; rough = 0.5; }
+    else if (/^renal_pyramid_/.test(n)) { cor = CORES.pyramid; rough = 0.52; }
+    else if (n === "renal_column_R") { cor = CORES.column; rough = 0.55; }
+    else if (n === "outer_cortex_of_kidney_R") { cor = CORES.cortex; rough = 0.56; }
+    if (!cor) return;
+    mat.pbrMetallicRoughness.baseColorFactor = cor.slice();
+    mat.pbrMetallicRoughness.roughnessFactor = rough;
+    mat.pbrMetallicRoughness.metallicFactor = 0;
+    mat.doubleSided = true;
+}
+
+for (const mat of json.materials) pintarParenchyma(mat);
+
 const partes = [bin];
 let offset = bin.length;
 
@@ -226,7 +289,7 @@ for (const peca of pecas) {
     json.materials.push({
         name: peca.nome,
         doubleSided: true,
-        pbrMetallicRoughness: { baseColorFactor: peca.cor, roughnessFactor: 0.42, metallicFactor: 0 }
+        pbrMetallicRoughness: { baseColorFactor: peca.cor, roughnessFactor: peca.rough, metallicFactor: 0 }
     });
     const meshIndex = json.meshes.length;
     json.meshes.push({

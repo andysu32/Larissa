@@ -382,12 +382,13 @@ window.ATLAS3D = {
         ]
     },
     rim: {
-        caixa: [-0.0642, 0.2853, -0.0132, 0.1125],
+        caixa: [-0.0642, 0.2853, -0.0132, 0.1792],
         grupos: {
             "Medula": "As pirâmides formam a medula renal: alças de Henle e ductos coletores, onde a urina se concentra. A ponta de cada pirâmide, a papila, pinga a urina no cálice menor.",
             "Cálices menores": "Cada cálice menor abraça uma papila. A urina sai da papila e entra aqui. Um rim tem cerca de sete a catorze cálices menores.",
             "Cálices maiores": "Dois ou três cálices maiores reúnem os menores e deságuam na pelve. Neste rim são o superior, o médio e o inferior.",
-            "Pelve e ureter": "A pelve é o funil no hilo. Da frente para trás, no hilo, passam a veia renal, a artéria renal e a pelve. Ela afina na junção ureteropélvica e segue como ureter até a bexiga."
+            "Pelve e ureter": "A pelve é o funil no hilo. Ela afina na junção ureteropélvica e segue como ureter até a bexiga.",
+            "Vasos do hilo": "No hilo, da frente para trás: veia renal, artéria renal e pelve. A artéria traz cerca de um quarto do débito cardíaco; a veia leva o sangue filtrado para a cava inferior."
         },
         partes: [
             ["kidney_capsule_R", "Cápsula renal", "Camadas", "Cápsula fibrosa fina, que se descola fácil do rim normal. Por fora ficam a gordura perirrenal e a fáscia renal.", [-0.0642, 0.2853, -0.0132, 0.1125]],
@@ -413,23 +414,27 @@ window.ATLAS3D = {
             ["renal_pyramid_i", "Pirâmide renal I", "Medula", "", [-0.076, 0.2559, -0.0003, 0.0187]],
             ["renal_pyramid_j", "Pirâmide renal J", "Medula", "", [-0.0637, 0.2489, 0.0105, 0.0244]],
             ["renal_column_R", "Colunas renais", "Camadas", "Córtex que desce entre as pirâmides. Por elas passam as artérias e veias interlobares.", [-0.0633, 0.2854, -0.0146, 0.092]],
-            ["outer_cortex_of_kidney_R", "Córtex renal", "Camadas", "Camada externa. Aqui ficam os glomérulos e os túbulos contorcidos. É onde o sangue é filtrado.", [-0.0642, 0.2853, -0.0132, 0.1123]],
-            ["minor_calyx_R_a", "Cálice menor da papila A", "Cálices menores", "Abraça a papila A, no polo superior. A urina que pinga dessa papila entra aqui.", [-0.0556, 0.3111, -0.0074, 0.0214]],
-            ["minor_calyx_R_b", "Cálice menor da papila B", "Cálices menores", "Abraça a papila B, também no polo superior.", [-0.0569, 0.3117, -0.0088, 0.0242]],
-            ["minor_calyx_R_c", "Cálice menor da papila C", "Cálices menores", "Abraça a papila C. O cálice menor é a primeira via depois da papila.", [-0.0594, 0.3077, -0.0061, 0.0189]],
-            ["minor_calyx_R_d", "Cálice menor da papila D", "Cálices menores", "Abraça a papila D. Um cálculo preso aqui é um cálculo calicinal.", [-0.059, 0.3071, -0.0071, 0.0207]],
-            ["minor_calyx_R_e", "Cálice menor da papila E", "Cálices menores", "Abraça a papila E e segue para o cálice maior médio.", [-0.0573, 0.2989, -0.0022, 0.0169]],
-            ["minor_calyx_R_f", "Cálice menor da papila F", "Cálices menores", "Abraça a papila F, perto do meio do seio renal.", [-0.055, 0.2904, -0.0007, 0.0106]],
-            ["minor_calyx_R_g", "Cálice menor da papila G", "Cálices menores", "Abraça a papila G e desce para o cálice maior inferior.", [-0.0578, 0.272, 0.0027, 0.0146]],
-            ["minor_calyx_R_h", "Cálice menor da papila H", "Cálices menores", "Abraça a papila H, no polo inferior.", [-0.0577, 0.267, 0.0037, 0.0121]],
-            ["minor_calyx_R_i", "Cálice menor da papila I", "Cálices menores", "Abraça a papila I. O polo inferior é um lugar comum de cálculo que não desce.", [-0.0585, 0.2626, 0.0029, 0.0164]],
-            ["minor_calyx_R_j", "Cálice menor da papila J", "Cálices menores", "Abraça a papila J, a mais baixa deste rim.", [-0.0566, 0.2629, 0.0043, 0.0125]],
-            ["major_calyx_superior_R", "Cálice maior superior", "Cálices maiores", "Reúne os cálices menores das papilas A a D e leva essa urina à pelve.", [-0.0479, 0.2978, 0.001, 0.0198]],
-            ["major_calyx_middle_R", "Cálice maior médio", "Cálices maiores", "Reúne os cálices menores das papilas E e F.", [-0.047, 0.2906, 0.001, 0.0084]],
-            ["major_calyx_inferior_R", "Cálice maior inferior", "Cálices maiores", "Reúne os cálices menores das papilas G a J, no polo inferior.", [-0.0479, 0.2786, 0.001, 0.0226]],
-            ["renal_pelvis_R", "Pelve renal", "Pelve e ureter", "Funil que recebe os três cálices maiores. No hilo é a estrutura mais posterior: da frente para trás passam a veia, a artéria e a pelve.", [-0.0415, 0.2829, 0.001, 0.0192]],
-            ["ureteropelvic_junction_R", "Junção ureteropélvica", "Pelve e ureter", "Onde a pelve afina e vira ureter. É o primeiro dos três estreitos em que o cálculo costuma parar. Um estreitamento congênito aqui é a obstrução da junção ureteropélvica.", [-0.0379, 0.273, 0.001, 0.0166]],
-            ["ureter_R", "Ureter", "Pelve e ureter", "Tubo muscular que leva a urina da pelve à bexiga, por peristalse. Tem cerca de 25 cm. Os três estreitos são esta saída da pelve, o cruzamento dos vasos ilíacos e a entrada na bexiga. Este modelo mostra o ureter do rim direito a partir da pelve, descendo ao lado da coluna, sem chegar à bexiga.", [-0.032, 0.201, 0.001, 0.1463]]
+            ["outer_cortex_of_kidney_R", "Córtex renal", "Camadas", "Camada externa, bem irrigada. Aqui ficam os glomérulos e os túbulos contorcidos. É onde o sangue é filtrado.", [-0.0642, 0.2853, -0.0132, 0.1123]],
+            ["minor_calyx_R_a", "Cálice menor da papila A", "Cálices menores", "Abraça a papila A, no polo superior. A urina que pinga dessa papila entra aqui.", [-0.0567, 0.3103, -0.0079, 0.0238]],
+            ["minor_calyx_R_b", "Cálice menor da papila B", "Cálices menores", "Abraça a papila B, também no polo superior.", [-0.0581, 0.3106, -0.0093, 0.0266]],
+            ["minor_calyx_R_c", "Cálice menor da papila C", "Cálices menores", "Abraça a papila C. O cálice menor é a primeira via depois da papila.", [-0.0601, 0.3076, -0.0065, 0.0211]],
+            ["minor_calyx_R_d", "Cálice menor da papila D", "Cálices menores", "Abraça a papila D. Um cálculo preso aqui é um cálculo calicinal.", [-0.0597, 0.3071, -0.0074, 0.0229]],
+            ["minor_calyx_R_e", "Cálice menor da papila E", "Cálices menores", "Abraça a papila E e segue para o cálice maior médio.", [-0.0585, 0.2972, -0.0028, 0.0178]],
+            ["minor_calyx_R_f", "Cálice menor da papila F", "Cálices menores", "Abraça a papila F, perto do meio do seio renal.", [-0.0558, 0.2908, -0.0013, 0.0116]],
+            ["minor_calyx_R_g", "Cálice menor da papila G", "Cálices menores", "Abraça a papila G e desce para o cálice maior inferior.", [-0.059, 0.2711, 0.0031, 0.0153]],
+            ["minor_calyx_R_h", "Cálice menor da papila H", "Cálices menores", "Abraça a papila H, no polo inferior.", [-0.0582, 0.2672, 0.004, 0.013]],
+            ["minor_calyx_R_i", "Cálice menor da papila I", "Cálices menores", "Abraça a papila I. O polo inferior é um lugar comum de cálculo que não desce.", [-0.0598, 0.2641, 0.0033, 0.0174]],
+            ["minor_calyx_R_j", "Cálice menor da papila J", "Cálices menores", "Abraça a papila J, a mais baixa deste rim.", [-0.0577, 0.2644, 0.0049, 0.0138]],
+            ["major_calyx_superior_R", "Cálice maior superior", "Cálices maiores", "Reúne os cálices menores das papilas A a D e leva essa urina à pelve.", [-0.0477, 0.2978, 0.001, 0.0204]],
+            ["major_calyx_middle_R", "Cálice maior médio", "Cálices maiores", "Reúne os cálices menores das papilas E e F.", [-0.0469, 0.2905, 0.001, 0.0104]],
+            ["major_calyx_inferior_R", "Cálice maior inferior", "Cálices maiores", "Reúne os cálices menores das papilas G a J, no polo inferior.", [-0.0477, 0.2787, 0.001, 0.023]],
+            ["renal_pelvis_R", "Pelve renal", "Pelve e ureter", "Funil que recebe os três cálices maiores. No hilo é a estrutura mais posterior: da frente para trás passam a veia, a artéria e a pelve.", [-0.0417, 0.2835, 0.001, 0.0206]],
+            ["ureteropelvic_junction_R", "Junção ureteropélvica", "Pelve e ureter", "Onde a pelve afina e vira ureter. É o primeiro dos três estreitos em que o cálculo costuma parar. Um estreitamento congênito aqui é a obstrução da junção ureteropélvica.", [-0.038, 0.2728, 0.001, 0.0186]],
+            ["ureter_R", "Ureter", "Pelve e ureter", "Tubo muscular que leva a urina da pelve à bexiga, por peristalse. Tem cerca de 25 cm. Os três estreitos são esta saída da pelve, o cruzamento dos vasos ilíacos e a entrada na bexiga. Este modelo mostra o ureter do rim direito a partir da pelve, descendo ao lado da coluna, sem chegar à bexiga.", [-0.0316, 0.1846, 0.001, 0.1792]],
+            ["renal_vein_R", "Veia renal", "Vasos do hilo", "Vaso mais anterior do hilo. Leva o sangue filtrado do rim para a veia cava inferior. É mais larga e de parede mais fina que a artéria.", [-0.0408, 0.2896, 0.0085, 0.029]],
+            ["renal_artery_R", "Artéria renal", "Vasos do hilo", "Vem da aorta abdominal e entra no hilo entre a veia (na frente) e a pelve (atrás). Carrega cerca de 20 a 25% do débito cardíaco para filtrar.", [-0.0408, 0.2873, 0.0038, 0.0273]],
+            ["renal_artery_superior_branch_R", "Ramo arterial superior", "Vasos do hilo", "Ramo que sobe no seio renal em direção ao polo superior e às pirâmides A a D.", [-0.0518, 0.2972, -0.0022, 0.0188]],
+            ["renal_artery_inferior_branch_R", "Ramo arterial inferior", "Vasos do hilo", "Ramo que desce no seio renal em direção ao polo inferior e às pirâmides G a J.", [-0.0518, 0.2783, 0.0032, 0.0214]]
         ]
     },
     figado: {
