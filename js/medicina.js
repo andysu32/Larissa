@@ -675,7 +675,7 @@
             direita: "Pelo lado direito do paciente aparece o átrio direito, que recebe as veias cavas. Este modelo traz câmaras, valvas e músculos papilares. Grandes vasos e coronárias não fazem parte dele.",
             atras: "Por trás fica o átrio esquerdo, a câmara mais posterior, encostada no esôfago. Por isso o ecocardiograma transesofágico enxerga tão bem o átrio esquerdo.",
             esquerda: "Pelo lado esquerdo, o ventrículo esquerdo forma a borda e o ápice. A parede dele é a mais grossa do coração, porque bombeia contra a pressão da aorta.",
-            cima: "De cima, sem os grandes vasos, aparecem as valvas. A aórtica fica no centro, encaixada entre as outras três. Ligue o raio-x para ver as quatro.",
+            cima: "De cima, sem os grandes vasos, aparecem as valvas. A aórtica fica no centro, encaixada entre as outras três. Use Por dentro para abrir a parede e marcar a tricúspide, a mitral, a aórtica e a pulmonar.",
             baixo: "Por baixo fica a face diafragmática, apoiada no diafragma e formada sobretudo pelos ventrículos. No infarto inferior, é esta parede que sofre."
         },
         {
@@ -828,8 +828,11 @@
         var hover = document.querySelector("[data-3d-hover]");
         var btnSpin = document.querySelector("[data-3d-spin]");
         var btnXray = document.querySelector("[data-3d-xray]");
+        var btnInside = document.querySelector("[data-3d-inside]");
         var btnIsolar = document.querySelector("[data-3d-isolate]");
         var btnReset = document.querySelector("[data-3d-reset]");
+        var painelCorte = document.querySelector("[data-3d-cut]");
+        var controleCorte = document.querySelector("[data-3d-depth]");
         var partGroup = document.querySelector("[data-part-group]");
         var partName = document.querySelector("[data-part-name]");
         var partInfo = document.querySelector("[data-part-info]");
@@ -852,6 +855,15 @@
         var malhas = {};
         var selecionado = null;
         var raiox = false;
+        var porDentro = false;
+        var eixoCorte = "olhar";
+        var profundidade = 0.34;
+        var cortePreso = false;
+        var nomePorMalha = new WeakMap();
+        var vetorA = null;
+        var vetorB = null;
+        var planoCorte = null;
+        var planoLista = null;
         var isolar = false;
         var girando = false;
         var quiz = null;
@@ -898,10 +910,196 @@
             copy.textContent = atual[id];
         }
 
+        function eCasca(parte) {
+            return !!(parte && atual.casca && atual.casca(parte.chave, parte.grupo));
+        }
+
+        function porSimbolo(objeto, nome) {
+            var atualObj = objeto;
+            while (atualObj) {
+                var chaves = Object.getOwnPropertySymbols(atualObj);
+                for (var i = 0; i < chaves.length; i++) {
+                    if (chaves[i].description === nome) return objeto[chaves[i]];
+                }
+                atualObj = Object.getPrototypeOf(atualObj);
+            }
+            return null;
+        }
+
+        function rendererWebGL() {
+            var ren = porSimbolo(viewer, "renderer");
+            return ren && ren.threeRenderer ? ren.threeRenderer : null;
+        }
+
+        function primeiraMalha() {
+            var chaves = Object.keys(malhas);
+            for (var i = 0; i < chaves.length; i++) {
+                if (malhas[chaves[i]][0]) return malhas[chaves[i]][0];
+            }
+            return null;
+        }
+
+        function garantirVetores() {
+            if (vetorA) return true;
+            var cena = cenaInterna(viewer);
+            var cam = cena && cena.getCamera && cena.getCamera();
+            if (!cam || !cam.position || !cam.position.clone) return false;
+            vetorA = cam.position.clone();
+            vetorB = cam.position.clone();
+            planoCorte = {
+                normal: cam.position.clone().set(0, 0, 1),
+                constant: 0,
+                clone: function () {
+                    return {
+                        normal: cam.position.clone().copy(this.normal),
+                        constant: this.constant,
+                        clone: this.clone
+                    };
+                }
+            };
+            planoLista = [planoCorte];
+            return true;
+        }
+
+        function normalDe(theta, phi) {
+            return {
+                x: -Math.sin(phi) * Math.sin(theta),
+                y: -Math.cos(phi),
+                z: -Math.sin(phi) * Math.cos(theta)
+            };
+        }
+
+        function normalLocal(theta, phi) {
+            if (eixoCorte === "lado") return { x: 1, y: 0, z: 0 };
+            if (eixoCorte === "cima") return { x: 0, y: 1, z: 0 };
+            if (eixoCorte === "frente") return { x: 0, y: 0, z: 1 };
+            if (theta == null) {
+                var orbita = viewer.getCameraOrbit();
+                theta = orbita.theta;
+                phi = orbita.phi;
+            }
+            return normalDe(theta, phi);
+        }
+
+        function alcanceCorte() {
+            return dados.caixa[3] * 0.58;
+        }
+
+        function profundidadeNoPonto(ponto, normal) {
+            var caixa = dados.caixa;
+            var alcance = alcanceCorte();
+            var along = ((ponto[0] - caixa[0]) * normal.x + (ponto[1] - caixa[1]) * normal.y + (ponto[2] - caixa[2]) * normal.z) / alcance;
+            var folga = Math.min(Math.max((ponto[3] || 0) * 0.55, caixa[3] * 0.05), caixa[3] * 0.22) / alcance;
+            along -= folga;
+            return Math.min(0.92, Math.max(0.04, (along + 1) / 2));
+        }
+
+        function cadaMaterial(fn) {
+            Object.keys(malhas).forEach(function (nome) {
+                malhas[nome].forEach(function (mesh) {
+                    var mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+                    mats.forEach(function (mat) {
+                        if (mat) fn(mat, mesh, nome);
+                    });
+                });
+            });
+        }
+
+        function garantirCorte() {
+            if (!porDentro || !garantirVetores()) return;
+            var gl = rendererWebGL();
+            if (gl) gl.localClippingEnabled = true;
+            cadaMaterial(function (mat) {
+                if (mat.userData.ladoOriginal == null) mat.userData.ladoOriginal = mat.side;
+                if (mat.side !== 2) mat.side = 2;
+                if (mat.clippingPlanes !== planoLista) {
+                    mat.clippingPlanes = planoLista;
+                    mat.clipShadows = true;
+                    mat.needsUpdate = true;
+                }
+            });
+        }
+
+        function limparCorte() {
+            cadaMaterial(function (mat, mesh) {
+                if (mat.clippingPlanes) mat.clippingPlanes = null;
+                if (mat.userData && mat.userData.ladoOriginal != null) mat.side = mat.userData.ladoOriginal;
+                if (mat.userData && mat.userData.depthOriginal != null) mat.depthWrite = mat.userData.depthOriginal;
+                mesh.visible = true;
+            });
+            var cena = cenaInterna(viewer);
+            if (cena && cena.queueRender) cena.queueRender();
+        }
+
+        var aplicandoCorte = false;
+
+        function aplicarCorte(theta, phi) {
+            if (aplicandoCorte || !porDentro || !garantirVetores()) return;
+            aplicandoCorte = true;
+            var malha = primeiraMalha();
+            var pai = malha && malha.parent;
+            if (!pai) {
+                aplicandoCorte = false;
+                return;
+            }
+            var normal = normalLocal(theta, phi);
+            var caixa = dados.caixa;
+            var desloc = alcanceCorte() * (2 * profundidade - 1);
+            pai.updateWorldMatrix(true, false);
+            vetorA.set(caixa[0] + normal.x * desloc, caixa[1] + normal.y * desloc, caixa[2] + normal.z * desloc);
+            pai.localToWorld(vetorA);
+            vetorB.set(normal.x, normal.y, normal.z);
+            if (vetorB.transformDirection) vetorB.transformDirection(pai.matrixWorld);
+            if (vetorB.normalize) vetorB.normalize();
+            else {
+                var tamanho = Math.sqrt(vetorB.x * vetorB.x + vetorB.y * vetorB.y + vetorB.z * vetorB.z) || 1;
+                vetorB.set(vetorB.x / tamanho, vetorB.y / tamanho, vetorB.z / tamanho);
+            }
+            planoCorte.normal.copy(vetorB);
+            planoCorte.constant = -vetorA.dot(planoCorte.normal);
+            garantirCorte();
+            if (!rendererWebGL()) {
+                cadaMaterial(function (mat, mesh, nome) {
+                    var item = porNome[nome];
+                    mesh.visible = !(item && item.casca && nome !== selecionado);
+                });
+            }
+            var cena = cenaInterna(viewer);
+            if (cena && cena.queueRender) cena.queueRender();
+            aplicandoCorte = false;
+        }
+
+        function pontoCortado(ponto) {
+            if (!planoCorte || !ponto) return false;
+            var n = planoCorte.normal;
+            return n.x * ponto.x + n.y * ponto.y + n.z * ponto.z + planoCorte.constant < -0.0015;
+        }
+
+        function sincronizarEixos() {
+            if (!painelCorte) return;
+            painelCorte.querySelectorAll("[data-eixo]").forEach(function (botao) {
+                botao.setAttribute("aria-pressed", botao.getAttribute("data-eixo") === eixoCorte ? "true" : "false");
+            });
+        }
+
+        function definirPorDentro(ligado) {
+            porDentro = !!ligado;
+            alternar(btnInside, porDentro);
+            if (painelCorte) painelCorte.hidden = !porDentro;
+            viewer.classList.toggle("is-inside", porDentro);
+            var perto = dados.caixa[3] * (porDentro ? 0.03 : 0.06);
+            viewer.minCameraOrbit = "auto 1deg " + metros(perto);
+            if (porDentro) aplicarCorte();
+            else limparCorte();
+        }
+
         function aproximar(parte) {
             var c = parte.centro;
             var caixa = dados.caixa;
-            var raio = Math.min(Math.max(c[3] * 3.2, caixa[3] * 0.3), caixa[3] * 1.4);
+            var interna = porDentro && !eCasca(parte);
+            var raio = interna
+                ? Math.min(Math.max(c[3] * 6, caixa[3] * 0.42), caixa[3] * 0.78)
+                : Math.min(Math.max(c[3] * 3.2, caixa[3] * 0.3), caixa[3] * 1.4);
             var orbita = viewer.getCameraOrbit();
             var theta = orbita.theta;
             var phi = orbita.phi;
@@ -909,7 +1107,7 @@
             var dy = c[1] - caixa[1];
             var dz = c[2] - caixa[2];
             var dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-            if (dist > caixa[3] * 0.12) {
+            if (!interna && dist > caixa[3] * 0.12) {
                 theta = Math.atan2(dx, dz);
                 phi = Math.min(Math.max(Math.acos(dy / dist), 0.35), 2.8);
             }
@@ -917,6 +1115,16 @@
             viewer.cameraTarget = metros(c[0] + pulso * 0.00001) + " " + metros(c[1]) + " " + metros(c[2]);
             viewer.cameraOrbit = theta + "rad " + phi + "rad " + metros(raio);
             viewer.fieldOfView = "auto";
+            if (porDentro && cortePreso) {
+                var normal = eixoCorte === "olhar" ? normalDe(theta, phi) : normalLocal();
+                profundidade = profundidadeNoPonto(c, normal);
+                if (controleCorte) {
+                    controleCorte.value = String(Math.round(profundidade * 100));
+                    controleCorte.setAttribute("aria-valuenow", controleCorte.value);
+                }
+                aplicarCorte(eixoCorte === "olhar" ? theta : null, eixoCorte === "olhar" ? phi : null);
+                if (status) status.textContent = parte.nome + " marcada no corte. Gire para olhar por dentro ou toque outra estrutura.";
+            }
         }
 
         function nomeDe(chave) {
@@ -932,17 +1140,28 @@
                 if (isolar && selecionado && !escolhido) {
                     alfa = 0.06;
                     modo = "BLEND";
+                } else if (porDentro && m.casca && !escolhido) {
+                    alfa = Math.min(alfa, 0.08);
+                    modo = "BLEND";
                 } else if (raiox && m.casca && !escolhido) {
                     alfa = Math.min(alfa, atual.alfaCasca || 0.12);
                     modo = "BLEND";
                 }
                 m.mat.pbrMetallicRoughness.setBaseColorFactor([cor[0], cor[1], cor[2], alfa]);
                 m.mat.setAlphaMode(modo);
-                m.mat.setEmissiveFactor(escolhido ? [0.42, 0.3, 0.06] : [0, 0, 0]);
+                m.mat.setEmissiveFactor(escolhido ? [0.55, 0.38, 0.05] : [0, 0, 0]);
+                var fantasma = porDentro && m.casca && !escolhido;
                 (malhas[m.nome] || []).forEach(function (malha) {
-                    malha.userData.noHit = alfa < 0.2 && !escolhido;
+                    malha.userData.noHit = (fantasma || alfa < 0.2) && !escolhido;
+                    var mats = Array.isArray(malha.material) ? malha.material : [malha.material];
+                    mats.forEach(function (mat) {
+                        if (!mat) return;
+                        if (mat.userData.depthOriginal == null) mat.userData.depthOriginal = mat.depthWrite;
+                        mat.depthWrite = fantasma || (raiox && m.casca && !escolhido) ? false : mat.userData.depthOriginal;
+                    });
                 });
             });
+            if (porDentro) garantirCorte();
         }
 
         function mostrarParte(chave) {
@@ -969,8 +1188,17 @@
             selecionado = partes[chave] ? chave : null;
             mostrarParte(selecionado);
             marcarNaLista(selecionado);
+            var parte = selecionado ? partes[selecionado] : null;
+            var interna = !!(parte && !eCasca(parte) && atual.casca);
+            cortePreso = interna;
             pintar();
-            if (selecionado && mover) aproximar(partes[selecionado]);
+            if (mover && interna) {
+                if (!porDentro) definirPorDentro(true);
+                aproximar(parte);
+                return;
+            }
+            if (mover && parte) aproximar(parte);
+            else if (porDentro) aplicarCorte();
         }
 
         function montarLista() {
@@ -1049,11 +1277,18 @@
                 porNome[mat.name] = item;
             });
             var cena = cenaInterna(viewer);
+            nomePorMalha = new WeakMap();
             if (cena && cena.traverse) {
                 cena.traverse(function (obj) {
-                    if (!obj.isMesh || !obj.material) return;
+                    if (!obj.isMesh || !obj.material || Array.isArray(obj.material)) return;
                     var nome = obj.material.name;
+                    if (!partes[nome]) {
+                        var alt = (obj.name || "").replace(/^VH_[MF]_/, "");
+                        if (partes[alt]) nome = alt;
+                    }
+                    if (!partes[nome]) return;
                     (malhas[nome] = malhas[nome] || []).push(obj);
+                    nomePorMalha.set(obj, nome);
                 });
             }
             if (btnXray) btnXray.disabled = !atual.casca;
@@ -1069,12 +1304,13 @@
                 partes[p[0]] = { chave: p[0], nome: p[1], grupo: p[2], info: p[3], centro: p[4] };
             });
             selecionado = null;
+            cortePreso = false;
             materiais = [];
             kicker.textContent = orgao.nome + " · " + dados.partes.length + " estruturas";
             title.textContent = orgao.titulo;
             viewer.setAttribute("src", "assets/medicina/3d/" + orgao.id + ".glb");
             viewer.setAttribute("alt", "Modelo tridimensional de " + orgao.nome.toLowerCase() + ", reconstruído de um corpo real");
-            viewer.minCameraOrbit = "auto 1deg " + metros(dados.caixa[3] * 0.06);
+            viewer.minCameraOrbit = "auto 1deg " + metros(dados.caixa[3] * (porDentro ? 0.03 : 0.06));
             picker.querySelectorAll("button").forEach(function (button) {
                 button.setAttribute("aria-pressed", button.getAttribute("data-orgao") === orgao.id ? "true" : "false");
             });
@@ -1085,13 +1321,34 @@
         }
 
         function pegar(event) {
-            var mat = viewer.materialFromPoint(event.clientX, event.clientY);
-            return mat && partes[mat.name] ? mat.name : null;
+            var cena = cenaInterna(viewer);
+            if (!porDentro || !cena || !cena.getNDC || !cena.hitFromPoint) {
+                var mat = viewer.materialFromPoint(event.clientX, event.clientY);
+                return mat && partes[mat.name] ? mat.name : null;
+            }
+            var bruto = cena.getNDC(event.clientX, event.clientY);
+            var ndc = { x: bruto.x, y: bruto.y };
+            var revert = [];
+            var chave = null;
+            for (var i = 0; i < 16; i++) {
+                var hit = cena.hitFromPoint(ndc);
+                if (!hit || !hit.object) break;
+                if (pontoCortado(hit.point)) {
+                    revert.push([hit.object, !!hit.object.userData.noHit]);
+                    hit.object.userData.noHit = true;
+                    continue;
+                }
+                chave = nomePorMalha.get(hit.object) || (hit.object.material && hit.object.material.name);
+                break;
+            }
+            revert.forEach(function (par) { par[0].userData.noHit = par[1]; });
+            return chave && partes[chave] ? chave : null;
         }
 
         viewer.addEventListener("load", function () {
             prepararModelo();
-            if (status) status.textContent = "Arraste para girar. Use a roda ou dois dedos para chegar perto. Toque uma parte para ver o nome.";
+            if (status) status.textContent = "Arraste para girar. Por dentro abre a parede para marcar a valva tricúspide e o que está no fundo.";
+            if (porDentro) aplicarCorte();
             if (pendente) {
                 selecionar(pendente, true);
                 pendente = null;
@@ -1153,6 +1410,51 @@
                 pintar();
             });
         }
+        if (btnInside) {
+            btnInside.addEventListener("click", function () {
+                definirPorDentro(!porDentro);
+                if (status && porDentro) {
+                    status.textContent = "Por dentro: o corte tira a parede da frente. Arraste para olhar ao redor e toque a valva, o músculo ou o núcleo.";
+                } else if (status) {
+                    status.textContent = "Vista de fora. Por dentro abre o órgão de novo.";
+                }
+            });
+        }
+        if (controleCorte) {
+            controleCorte.addEventListener("input", function () {
+                cortePreso = false;
+                profundidade = Number(controleCorte.value) / 100;
+                controleCorte.setAttribute("aria-valuenow", controleCorte.value);
+                aplicarCorte();
+            });
+        }
+        if (painelCorte) {
+            painelCorte.querySelectorAll("[data-eixo]").forEach(function (botao) {
+                botao.addEventListener("click", function () {
+                    eixoCorte = botao.getAttribute("data-eixo");
+                    sincronizarEixos();
+                    if (cortePreso && selecionado && partes[selecionado]) {
+                        profundidade = profundidadeNoPonto(partes[selecionado].centro, normalLocal());
+                        if (controleCorte) {
+                            controleCorte.value = String(Math.round(profundidade * 100));
+                            controleCorte.setAttribute("aria-valuenow", controleCorte.value);
+                        }
+                    }
+                    aplicarCorte();
+                });
+            });
+        }
+        viewer.addEventListener("camera-change", function () {
+            if (!porDentro || eixoCorte !== "olhar") return;
+            if (cortePreso && selecionado && partes[selecionado]) {
+                profundidade = profundidadeNoPonto(partes[selecionado].centro, normalLocal());
+                if (controleCorte) {
+                    controleCorte.value = String(Math.round(profundidade * 100));
+                    controleCorte.setAttribute("aria-valuenow", controleCorte.value);
+                }
+            }
+            aplicarCorte();
+        });
         if (btnIsolar) {
             btnIsolar.addEventListener("click", function () {
                 isolar = !isolar;
@@ -1163,8 +1465,11 @@
         }
         if (btnReset) {
             btnReset.addEventListener("click", function () {
+                cortePreso = false;
+                if (porDentro) definirPorDentro(false);
                 selecionar(null, false);
                 olhar("frente");
+                if (status) status.textContent = "Vista de fora, de frente. Por dentro abre o órgão de novo.";
             });
         }
         if (btnSpin) {
@@ -1195,10 +1500,22 @@
             quiz.fechada = false;
             quiz.vistas.push(alvo[0]);
             var aviso = "";
-            if (raiox && porNome[alvo[0]] && porNome[alvo[0]].casca) {
-                raiox = false;
-                alternar(btnXray, false);
-                aviso = " O raio-x foi desligado, porque esta fica por fora.";
+            var infoAlvo = porNome[alvo[0]];
+            if (infoAlvo && infoAlvo.casca) {
+                if (porDentro) definirPorDentro(false);
+                if (raiox) {
+                    raiox = false;
+                    alternar(btnXray, false);
+                    aviso = " O raio-x foi desligado, porque esta fica por fora.";
+                }
+            } else if (atual.casca && infoAlvo && !infoAlvo.casca && !porDentro) {
+                profundidade = 0.34;
+                if (controleCorte) {
+                    controleCorte.value = "34";
+                    controleCorte.setAttribute("aria-valuenow", "34");
+                }
+                definirPorDentro(true);
+                aviso = " Por dentro está ligado, para a estrutura não ficar atrás da parede.";
             }
             selecionar(null, false);
             quizAsk.textContent = "Onde fica: " + alvo[1] + "?" + aviso;

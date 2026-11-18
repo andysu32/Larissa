@@ -798,6 +798,9 @@ footer {
     margin-top: 0.8rem;
     align-items: stretch;
 }
+.stage3d,
+.stage-view,
+.stage-copy { min-width: 0; }
 model-viewer {
     width: 100%;
     height: min(68vh, 560px);
@@ -917,6 +920,50 @@ model-viewer {
 }
 .stage-tools button:disabled { opacity: 0.4; cursor: not-allowed; }
 model-viewer.is-pointing { cursor: pointer; }
+.cut-panel {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.55rem;
+    padding: 0.7rem 0.75rem 0.75rem;
+    border-radius: 16px;
+    background: #241c18;
+    color: var(--cream);
+}
+.cut-depth {
+    display: grid;
+    gap: 0.2rem;
+    font-size: 0.92rem;
+}
+.cut-depth input[type="range"] {
+    width: 100%;
+    min-height: 36px;
+    margin: 0;
+    accent-color: #e7b2a6;
+}
+.cut-axes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+.cut-axes button {
+    border: 1px solid rgba(246, 239, 228, 0.32);
+    background: transparent;
+    color: var(--cream);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    font: inherit;
+    cursor: pointer;
+}
+.cut-axes button[aria-pressed="true"] {
+    background: var(--cream);
+    color: var(--ink);
+    border-color: var(--cream);
+}
+.cut-hint {
+    margin: 0;
+    color: rgba(246, 239, 228, 0.78);
+    font-size: 0.88rem;
+}
 .hover-tag {
     position: absolute;
     z-index: 3;
@@ -1287,7 +1334,13 @@ caption {
 @media (max-width: 860px) {
     .stage3d { grid-template-columns: 1fr; }
     .how3d { grid-template-columns: 1fr; }
-    model-viewer { height: 60vh; }
+    model-viewer { height: 62vh; height: min(62svh, 560px); min-height: 260px; }
+    .stage-tools {
+        position: static;
+        margin-top: 0.55rem;
+        pointer-events: auto;
+    }
+    .stage-tools button { min-height: 44px; flex: 1 1 8.2rem; }
     .paths { grid-template-columns: 1fr 1fr; }
     .year-picker { grid-template-columns: repeat(3, 1fr); }
     .year-cols { grid-template-columns: 1fr; }
@@ -1307,7 +1360,52 @@ caption {
     .path { min-height: 0; }
     .area-map { grid-template-columns: 1fr; }
     .area-map a { min-height: 0; }
+    section { padding: 2.2rem 0; }
+    h1 { font-size: 2.3rem; }
+    .lede { font-size: 1.05rem; }
+    .wrap { width: min(1120px, calc(100% - 1.15rem)); }
+    article.lesson,
+    .year-card,
+    .case,
+    .tool,
+    .quiz,
+    .flash { padding: 1rem; }
+    article.lesson h3 { font-size: 1.45rem; }
+    .stage-copy { padding: 0.9rem; }
+    .stage-copy h3 { font-size: 1.45rem; }
+    .hero-actions .btn,
+    .quiz3d .btn { flex: 1 1 100%; }
+    .parts-head { align-items: stretch; }
+    .parts-filter,
+    .parts-filter input,
+    .spec-tools input,
+    .search input { width: 100%; }
+    .year-picker { grid-template-columns: 1fr 1fr; }
+    model-viewer { height: 54vh; height: min(54svh, 420px); min-height: 240px; border-radius: 18px; }
+    .topbar {
+        padding-left: max(0.8rem, env(safe-area-inset-left));
+        padding-right: max(0.8rem, env(safe-area-inset-right));
+    }
+    .top-links a { padding: 0.45rem 0.7rem; }
 }
+
+@media (hover: none) and (pointer: coarse) {
+    .option:hover:not(:disabled),
+    .path:hover { transform: none; }
+    .organ-picker button,
+    .view-row button,
+    .chips button,
+    .filters button,
+    .cut-axes button,
+    .option,
+    .year-picker button {
+        min-height: 44px;
+    }
+    .cut-depth input[type="range"] { min-height: 44px; }
+}
+
+.spec-table { min-width: 36rem; }
+.table-wrap { -webkit-overflow-scrolling: touch; }
 
 @media (max-width: 420px) {
     .year-picker { grid-template-columns: 1fr 1fr; }

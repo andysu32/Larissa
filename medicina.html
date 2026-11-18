@@ -304,8 +304,8 @@
           </p>
           <ol class="how3d">
             <li><strong>Escolha o órgão.</strong> Arraste para girar. Use a roda do mouse ou dois dedos para chegar perto.</li>
-            <li><strong>Toque uma parte.</strong> Aparecem o nome, o grupo e o que costuma cair em prova.</li>
-            <li><strong>Veja por dentro e treine.</strong> O raio-x tira as camadas de fora, isolar separa uma peça, e o Me teste pede que você ache cada estrutura.</li>
+            <li><strong>Toque uma parte.</strong> Aparecem o nome, o grupo e o que costuma cair em prova. Na lista, o toque também marca.</li>
+            <li><strong>Entre no órgão.</strong> Por dentro corta a parede e deixa marcar a valva tricúspide, os núcleos e o que estava escondido. O raio-x só deixa a casca transparente.</li>
           </ol>
           <div class="organ-picker" data-organs role="group" aria-label="Escolha o órgão"></div>
           <div class="stage3d">
@@ -328,9 +328,23 @@
               <p class="hover-tag" data-3d-hover hidden></p>
               <div class="stage-tools" role="group" aria-label="Ferramentas do modelo">
                 <button type="button" data-3d-xray aria-pressed="false">Raio-x</button>
+                <button type="button" data-3d-inside aria-pressed="false">Por dentro</button>
                 <button type="button" data-3d-isolate aria-pressed="false">Isolar</button>
                 <button type="button" data-3d-reset>Recentrar</button>
                 <button type="button" data-3d-spin aria-pressed="false">Girar</button>
+              </div>
+              <div class="cut-panel" data-3d-cut hidden>
+                <label class="cut-depth">
+                  <span>Profundidade do corte</span>
+                  <input type="range" min="0" max="100" value="34" data-3d-depth aria-valuemin="0" aria-valuemax="100" aria-valuenow="34" />
+                </label>
+                <div class="cut-axes" role="group" aria-label="Direção do corte">
+                  <button type="button" data-eixo="olhar" aria-pressed="true">Olhar</button>
+                  <button type="button" data-eixo="frente" aria-pressed="false">Frente</button>
+                  <button type="button" data-eixo="lado" aria-pressed="false">Lado</button>
+                  <button type="button" data-eixo="cima" aria-pressed="false">Cima</button>
+                </div>
+                <p class="cut-hint">Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada. Toque a estrutura que aparecer, como a valva tricúspide.</p>
               </div>
               <p class="stage-status" data-3d-status aria-live="polite">O primeiro órgão carrega quando esta parte aparece na tela.</p>
             </div>
