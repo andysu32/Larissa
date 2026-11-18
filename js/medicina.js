@@ -1177,8 +1177,8 @@
         function ajustarLuz() {
             var foco = aoMeio || orgaoMeio || (isolar && !!selecionado);
             viewer.exposure = foco ? 1.2 : 1.05;
-            viewer.shadowIntensity = orgaoMeio ? 0.4 : foco ? 0.22 : 0.9;
-            if (orgaoMeio) viewer.exposure = 1.02;
+            viewer.shadowIntensity = orgaoMeio ? 0.28 : foco ? 0.22 : 0.9;
+            if (orgaoMeio) viewer.exposure = 1.12;
             if (orgaoMeio) viewer.fieldOfView = "32deg";
             else if (aoMeio) viewer.fieldOfView = "34deg";
             else viewer.fieldOfView = "auto";
@@ -1225,13 +1225,84 @@
             return pontoCortado(vetorA);
         }
 
+        var paletaCorteGrupos = [
+            [0.92, 0.58, 0.22],
+            [0.22, 0.58, 0.74],
+            [0.86, 0.3, 0.38],
+            [0.42, 0.72, 0.4],
+            [0.7, 0.4, 0.78],
+            [0.94, 0.78, 0.28],
+            [0.28, 0.66, 0.58],
+            [0.78, 0.38, 0.2],
+            [0.55, 0.48, 0.86],
+            [0.9, 0.48, 0.55]
+        ];
+
+        function corDidaticaCorte(m) {
+            if (!orgaoMeio && !(aoMeio && m.nome === selecionado)) return null;
+            var n = m.nome;
+            var parte = partes[n];
+            var grupo = parte ? parte.grupo : "";
+            var rgb = null;
+            if (atual.id === "rim") {
+                if (/kidney_capsule|hilum_of_kidney/.test(n)) rgb = [0.3, 0.13, 0.12];
+                else if (/outer_cortex/.test(n)) rgb = [0.56, 0.14, 0.12];
+                else if (/renal_column/.test(n)) rgb = [0.7, 0.24, 0.18];
+                else if (/renal_pyramid/.test(n)) rgb = [0.9, 0.68, 0.34];
+                else if (/renal_papilla/.test(n)) rgb = [0.96, 0.82, 0.64];
+                else if (/minor_calyx/.test(n)) rgb = [0.94, 0.86, 0.4];
+                else if (/major_calyx/.test(n)) rgb = [0.9, 0.58, 0.24];
+                else if (/renal_pelvis|ureteropelvic|ureter_R/.test(n)) rgb = [0.84, 0.46, 0.38];
+                else if (/renal_artery/.test(n)) rgb = [0.95, 0.12, 0.14];
+                else if (/renal_vein/.test(n)) rgb = [0.3, 0.24, 0.62];
+            } else if (atual.id === "coracao") {
+                if (/valve|cusp|leaflet|chordae|papillary/.test(n)) rgb = [0.95, 0.78, 0.42];
+                else if (/atrium/.test(n)) rgb = [0.82, 0.28, 0.32];
+                else if (/ventricle/.test(n)) rgb = [0.62, 0.12, 0.16];
+                else if (/aorta|pulmonary_trunk|artery/.test(n)) rgb = [0.9, 0.18, 0.2];
+                else if (/vein|vena|sinus/.test(n)) rgb = [0.32, 0.3, 0.68];
+                else if (m.casca) rgb = [0.4, 0.16, 0.16];
+            } else if (atual.id === "cerebro") {
+                if (/ventricle|aqueduct|cistern/.test(n)) rgb = [0.55, 0.78, 0.92];
+                else if (/thalamus|basal|nucleus|putamen|caudate|hippocamp|amygdala/.test(n)) rgb = [0.86, 0.48, 0.32];
+                else if (/corpus_callosum|white|capsule|tract|fasciculus|peduncle/.test(n)) rgb = [0.92, 0.88, 0.78];
+                else if (m.casca || /cortex|gyrus|lobe/.test(n)) rgb = [0.78, 0.52, 0.48];
+            }
+            if (!rgb) {
+                if (m.casca) {
+                    rgb = [
+                        m.cor[0] * 0.42 + 0.1,
+                        m.cor[1] * 0.42 + 0.08,
+                        m.cor[2] * 0.42 + 0.08
+                    ];
+                } else {
+                    var chave = grupo || n;
+                    var h = 0;
+                    for (var i = 0; i < chave.length; i++) h = (h * 33 + chave.charCodeAt(i)) | 0;
+                    rgb = paletaCorteGrupos[Math.abs(h) % paletaCorteGrupos.length].slice();
+                }
+            }
+            if (m.nome === selecionado) {
+                rgb = [
+                    Math.min(1, rgb[0] * 1.12 + 0.08),
+                    Math.min(1, rgb[1] * 1.1 + 0.06),
+                    Math.min(1, rgb[2] * 1.08 + 0.04)
+                ];
+            } else if (orgaoMeio && m.casca) {
+                rgb = [rgb[0] * 0.82, rgb[1] * 0.82, rgb[2] * 0.82];
+            }
+            return rgb;
+        }
+
         function pintar() {
             if ((porDentro || aoMeio) && !planoLista) garantirVetores();
             var gl = rendererWebGL();
             if (gl && (porDentro || aoMeio)) gl.localClippingEnabled = true;
+            var corteDidatico = orgaoMeio || aoMeio;
             materiais.forEach(function (m) {
-                var cor = m.cor;
-                var alfa = cor[3];
+                var didatica = corDidaticaCorte(m);
+                var cor = didatica || m.cor;
+                var alfa = m.cor[3];
                 var modo = m.modo;
                 var escolhido = m.nome === selecionado;
                 var esconder = !!(selecionado && (isolar || aoMeio) && !escolhido);
@@ -1239,9 +1310,20 @@
                     alfa = Math.min(alfa, atual.alfaCasca || 0.12);
                     modo = "BLEND";
                 }
+                if (!esconder && orgaoMeio && m.casca && !escolhido) {
+                    alfa = Math.min(alfa, 0.92);
+                }
                 m.mat.pbrMetallicRoughness.setBaseColorFactor([cor[0], cor[1], cor[2], esconder ? 0 : alfa]);
                 m.mat.setAlphaMode(esconder ? "MASK" : modo);
-                m.mat.setEmissiveFactor(escolhido && !aoMeio ? [0.16, 0.1, 0.02] : [0, 0, 0]);
+                if (escolhido && corteDidatico) {
+                    m.mat.setEmissiveFactor([0.22, 0.12, 0.04]);
+                } else if (escolhido) {
+                    m.mat.setEmissiveFactor([0.16, 0.1, 0.02]);
+                } else if (orgaoMeio && didatica && !m.casca) {
+                    m.mat.setEmissiveFactor([didatica[0] * 0.06, didatica[1] * 0.05, didatica[2] * 0.04]);
+                } else {
+                    m.mat.setEmissiveFactor([0, 0, 0]);
+                }
                 var fantasma = !esconder && raiox && m.casca && !escolhido;
                 var cortar = (aoMeio && escolhido) || (porDentro && !aoMeio);
                 (malhas[m.nome] || []).forEach(function (malha) {
@@ -1266,7 +1348,9 @@
                         }
                         mat.depthWrite = fantasma ? false : mat.userData.depthOriginal !== false;
                         if (mat.roughness != null && mat.userData.roughOriginal != null) {
-                            mat.roughness = aoMeio && escolhido ? Math.min(mat.userData.roughOriginal, 0.42) : mat.userData.roughOriginal;
+                            if (corteDidatico && escolhido) mat.roughness = Math.min(mat.userData.roughOriginal, 0.38);
+                            else if (orgaoMeio && !m.casca) mat.roughness = Math.min(mat.userData.roughOriginal, 0.45);
+                            else mat.roughness = mat.userData.roughOriginal;
                         }
                     });
                 });
@@ -1354,9 +1438,9 @@
             }
             if (dicaCorte) {
                 dicaCorte.textContent = orgaoMeio
-                    ? "Corte no meio, na vertical. A camada 3 é o centro. As outras andam de um lado ao outro."
+                    ? "Corte vertical no meio. Cores didáticas separam casca, medula, vias e vasos. A camada 3 é o centro."
                     : aoMeio
-                        ? "A peça está aberta no meio, na vertical. Gire para ver o interior."
+                        ? "A peça está aberta no meio, com cor de destaque. Gire para ver o interior."
                         : "Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada.";
             }
         }
