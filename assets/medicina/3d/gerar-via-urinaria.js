@@ -2,7 +2,8 @@ const fs = require("fs");
 const path = require("path");
 
 const dir = __dirname;
-const origem = path.join(dir, "rim.glb");
+const origem = process.argv[2] || path.join(dir, "rim.glb");
+const destino = path.join(dir, "rim.glb");
 
 function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
 function add(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
@@ -96,17 +97,22 @@ function media(chaves) {
     return pts.reduce((acc, p) => add(acc, p), [0, 0, 0]).map((v) => v / pts.length);
 }
 
-const bocaDaPelve = mix(media(Object.keys(papilas)), hilo, 0.72);
-bocaDaPelve[2] -= 0.004;
-const corpoDaPelve = add(bocaDaPelve, [0.008, -0.002, -0.002]);
-const jup = add(corpoDaPelve, [0.010, -0.010, 0.001]);
+const Z = 0.001;
+const bocaDaPelve = [-0.046, 0.289, Z];
+const corpoDaPelve = [-0.041, 0.286, Z];
+const jup = [-0.037, 0.274, Z];
 const ureter = [
     jup,
-    add(jup, [0.004, -0.028, 0.004]),
-    add(jup, [0.008, -0.062, 0.008]),
-    add(jup, [0.012, -0.098, 0.006]),
-    add(jup, [0.014, -0.132, 0.002])
+    [-0.035, 0.248, Z],
+    [-0.032, 0.210, Z],
+    [-0.029, 0.168, Z],
+    [-0.027, 0.128, Z]
 ];
+const hubs = {
+    superior: [-0.051, 0.307, Z],
+    medio: [-0.049, 0.293, Z],
+    inferior: [-0.051, 0.268, Z]
+};
 
 const pecas = [];
 
@@ -114,32 +120,29 @@ function guardar(nome, cor, mesh) {
     pecas.push({ nome, cor, mesh, caixa: caixaDe(mesh.positions) });
 }
 
-const corMenor = [0.95, 0.84, 0.46, 1];
-const corMaior = [0.93, 0.62, 0.28, 1];
-const corPelve = [0.86, 0.42, 0.22, 1];
-const corJup = [0.62, 0.22, 0.2, 1];
-const corUreter = [0.78, 0.5, 0.28, 1];
+const corMenor = [0.98, 0.9, 0.58, 1];
+const corMaior = [0.96, 0.72, 0.34, 1];
+const corPelve = [0.9, 0.5, 0.26, 1];
+const corJup = [0.72, 0.28, 0.22, 1];
+const corUreter = [0.84, 0.62, 0.38, 1];
 
 for (const [grupo, letras] of Object.entries(grupos)) {
+    const hub = hubs[grupo];
     const pescocos = {};
     for (const letra of letras) {
         const ponta = papilas[letra];
-        const pescoco = mix(ponta, bocaDaPelve, 0.34);
+        const pescoco = [-0.056, ponta[1], Z];
         pescocos[letra] = pescoco;
-        const borda = mix(ponta, pescoco, 0.18);
+        const borda = mix(ponta, pescoco, 0.22);
+        const meio = mix(borda, pescoco, 0.55);
         const mesh = malhaVazia();
-        tubo(mesh, [borda, mix(borda, pescoco, 0.45), pescoco], [0.0036, 0.0026, 0.0018], 16);
+        tubo(mesh, [borda, meio, pescoco], [0.0038, 0.0028, 0.002], 18);
+        const perto = mix(pescoco, hub, 0.78);
+        tubo(mesh, [pescoco, mix(pescoco, perto, 0.5), perto], [0.002, 0.0022, 0.0023], 14);
         guardar("minor_calyx_R_" + letra, corMenor, mesh);
     }
-    const hub = mix(media(letras), bocaDaPelve, 0.58);
-    for (const letra of letras) {
-        const peca = pecas.find((p) => p.nome === "minor_calyx_R_" + letra);
-        const perto = mix(pescocos[letra], hub, 0.82);
-        tubo(peca.mesh, [pescocos[letra], mix(pescocos[letra], perto, 0.5), perto], [0.0018, 0.002, 0.0021], 12);
-        peca.caixa = caixaDe(peca.mesh.positions);
-    }
     const tronco = malhaVazia();
-    tubo(tronco, [hub, mix(hub, bocaDaPelve, 0.55), bocaDaPelve], [0.0026, 0.0031, 0.0036], 16);
+    tubo(tronco, [hub, mix(hub, bocaDaPelve, 0.5), bocaDaPelve], [0.0028, 0.0034, 0.004], 18);
     const nome = grupo === "superior" ? "major_calyx_superior_R" : grupo === "medio" ? "major_calyx_middle_R" : "major_calyx_inferior_R";
     guardar(nome, corMaior, tronco);
 }
@@ -166,7 +169,7 @@ function lerGlb(arquivo) {
 }
 
 if (lerGlb(origem).json.materials.some((m) => m.name === "ureter_R")) {
-    console.error("rim.glb já tem a via urinária. Restaure o arquivo original antes de gerar de novo.");
+    console.error("A base já tem a via urinária. Passe o GLB original do parênquima.");
     process.exit(1);
 }
 
@@ -251,7 +254,7 @@ jsonBuf.copy(out, 20);
 out.writeUInt32LE(binFinal.length, 20 + jsonBuf.length);
 out.writeUInt32LE(0x004e4942, 24 + jsonBuf.length);
 binFinal.copy(out, 28 + jsonBuf.length);
-fs.writeFileSync(origem, out);
+fs.writeFileSync(destino, out);
 
 for (const peca of pecas) {
     const c = peca.caixa.map((n) => Number(n.toFixed(4)));

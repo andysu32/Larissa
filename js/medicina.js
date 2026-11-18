@@ -707,6 +707,7 @@
         {
             id: "rim", nome: "Rim", peso: "0,9 MB",
             titulo: "Da papila ao ureter",
+            meio: 0.38,
             casca: function (chave) { return /capsule|outer_cortex|renal_column/.test(chave); },
             frente: "Este é o rim direito, em forma de feijão. A borda côncava, o hilo, olha para a linha média e um pouco para a frente.",
             direita: "Pelo lado direito do paciente se vê a borda lateral, convexa. O rim direito costuma ficar um pouco mais baixo que o esquerdo, por causa do fígado.",
@@ -1126,13 +1127,13 @@
                     ? Math.min(Math.max(c[3] * 6, caixa[3] * 0.42), caixa[3] * 0.78)
                     : Math.min(Math.max(c[3] * 3.2, caixa[3] * 0.3), caixa[3] * 1.4);
             var orbita = viewer.getCameraOrbit();
-            var theta = orbita.theta;
-            var phi = orbita.phi;
+            var theta = aoMeio ? 0 : orbita.theta;
+            var phi = aoMeio ? Math.PI / 2 : orbita.phi;
             var dx = c[0] - caixa[0];
             var dy = c[1] - caixa[1];
             var dz = c[2] - caixa[2];
             var dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-            if (!interna && dist > caixa[3] * 0.12) {
+            if (!aoMeio && !interna && dist > caixa[3] * 0.12) {
                 theta = Math.atan2(dx, dz);
                 phi = Math.min(Math.max(Math.acos(dy / dist), 0.35), 2.8);
             }
@@ -1152,7 +1153,7 @@
             ajustarLuz();
             if (aoMeio) {
                 aplicarCorte(eixoCorte === "olhar" ? theta : null, eixoCorte === "olhar" ? phi : null);
-                if (status) status.textContent = "Metade de " + parte.nome + ". O 50 da barra é o meio da peça, como uma laranja.";
+                if (status) status.textContent = parte.nome + " aberta na vertical. Gire para ver o interior.";
                 atualizarMarcadores();
                 return;
             }
@@ -1181,20 +1182,18 @@
             else viewer.fieldOfView = "auto";
         }
 
-        function congelarDeFrente() {
-            var frente = vistas.filter(function (v) { return v.id === "frente"; })[0];
-            normalFixo = normalDe(frente.theta * Math.PI / 180, frente.phi * Math.PI / 180);
-            return frente;
+        function congelarVertical() {
+            normalFixo = { x: 0, y: 0, z: -1 };
         }
 
         function enquadrarOrgao() {
             var caixa = dados.caixa;
-            var frente = congelarDeFrente();
-            var empurra = caixa[3] * 0.04;
+            congelarVertical();
+            var empurra = caixa[3] * 0.03;
             pulso = 1 - pulso;
-            viewer.cameraTarget = metros(caixa[0] + normalFixo.x * empurra + pulso * 0.00001) + " " +
+            viewer.cameraTarget = metros(caixa[0] + pulso * 0.00001) + " " +
                 metros(caixa[1] + normalFixo.y * empurra) + " " + metros(caixa[2] + normalFixo.z * empurra);
-            viewer.cameraOrbit = frente.theta + "deg " + frente.phi + "deg " + metros(caixa[3] * 2.05);
+            viewer.cameraOrbit = "0deg 90deg " + metros(caixa[3] * 2.25);
             ajustarLuz();
         }
 
@@ -1363,13 +1362,14 @@
             isolar = false;
             orgaoMeio = true;
             cortePreso = false;
-            profundidade = 0.5;
+            profundidade = typeof atual.meio === "number" ? atual.meio : 0.5;
             alternar(btnMeio, false);
             alternar(btnIsolar, false);
             alternar(btnOrgao, true);
             if (controleCorte) {
-                controleCorte.value = "50";
-                controleCorte.setAttribute("aria-valuenow", "50");
+                var valorMeio = String(Math.round(profundidade * 100));
+                controleCorte.value = valorMeio;
+                controleCorte.setAttribute("aria-valuenow", valorMeio);
             }
             rotuloDoCorte();
             if (!porDentro) definirPorDentro(true);
@@ -1391,9 +1391,7 @@
             alternar(btnMeio, aoMeio);
             if (aoMeio) {
                 orgaoMeio = false;
-                normalFixo = null;
-                var orbitaAtual = viewer.getCameraOrbit();
-                normalFixo = normalDe(orbitaAtual.theta, orbitaAtual.phi);
+                congelarVertical();
                 alternar(btnOrgao, false);
                 isolar = true;
                 alternar(btnIsolar, true);
