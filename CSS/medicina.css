@@ -970,6 +970,36 @@ model-viewer.is-pointing { cursor: pointer; }
     color: var(--cream);
     font-size: 0.98rem;
 }
+.cut-layers { display: none; }
+.cut-panel.is-simples .cut-layers {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+}
+.cut-layers > span {
+    font-size: 0.92rem;
+}
+.cut-layers div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+.cut-layers button {
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 1px solid rgba(246, 239, 228, 0.32);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--cream);
+    font: inherit;
+    cursor: pointer;
+}
+.cut-layers button[aria-pressed="true"] {
+    background: var(--cream);
+    color: var(--ink);
+    border-color: var(--cream);
+}
 .marca3d {
     display: grid;
     place-items: center;

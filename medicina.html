@@ -305,7 +305,7 @@
           <ol class="how3d">
             <li><strong>Escolha o órgão.</strong> Arraste para girar. Use a roda do mouse ou dois dedos para chegar perto.</li>
             <li><strong>Toque uma parte.</strong> Aparecem o nome, o grupo e o que costuma cair em prova. Na lista, o toque também marca.</li>
-            <li><strong>Abra no meio.</strong> Órgão ao meio tira a metade da frente. Gire para ver o interior. Não precisa mexer na profundidade.</li>
+            <li><strong>Abra no meio.</strong> Órgão ao meio parte na vertical, pelo centro. As camadas andam de um lado ao outro.</li>
           </ol>
           <div class="organ-picker" data-organs role="group" aria-label="Escolha o órgão"></div>
           <div class="stage3d">
@@ -346,7 +346,17 @@
                   <button type="button" data-eixo="lado" aria-pressed="false">Lado</button>
                   <button type="button" data-eixo="cima" aria-pressed="false">Cima</button>
                 </div>
-                <p class="cut-hint" data-3d-cut-hint>Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada. No meio da barra, a peça isolada abre como uma laranja.</p>
+                <div class="cut-layers" data-3d-layers>
+                  <span>Camadas</span>
+                  <div role="group" aria-label="Camada do corte">
+                    <button type="button" data-camada="0">1</button>
+                    <button type="button" data-camada="1">2</button>
+                    <button type="button" data-camada="2" aria-pressed="true">3</button>
+                    <button type="button" data-camada="3">4</button>
+                    <button type="button" data-camada="4">5</button>
+                  </div>
+                </div>
+                <p class="cut-hint" data-3d-cut-hint>Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada.</p>
               </div>
               <p class="stage-status" data-3d-status aria-live="polite">O primeiro órgão carrega quando esta parte aparece na tela.</p>
             </div>

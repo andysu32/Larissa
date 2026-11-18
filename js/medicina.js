@@ -707,7 +707,6 @@
         {
             id: "rim", nome: "Rim", peso: "0,9 MB",
             titulo: "Da papila ao ureter",
-            meio: 0.38,
             casca: function (chave) { return /capsule|outer_cortex|renal_column/.test(chave); },
             frente: "Este é o rim direito, em forma de feijão. A borda côncava, o hilo, olha para a linha média e um pouco para a frente.",
             direita: "Pelo lado direito do paciente se vê a borda lateral, convexa. O rim direito costuma ficar um pouco mais baixo que o esquerdo, por causa do fígado.",
@@ -873,6 +872,8 @@
         var aoMeio = false;
         var orgaoMeio = false;
         var normalFixo = null;
+        var camadaAtual = 2;
+        var camadasCorte = [0.3, 0.4, 0.5, 0.6, 0.7];
         var girando = false;
         var quiz = null;
         var pulso = 0;
@@ -1127,7 +1128,7 @@
                     ? Math.min(Math.max(c[3] * 6, caixa[3] * 0.42), caixa[3] * 0.78)
                     : Math.min(Math.max(c[3] * 3.2, caixa[3] * 0.3), caixa[3] * 1.4);
             var orbita = viewer.getCameraOrbit();
-            var theta = aoMeio ? 0 : orbita.theta;
+            var theta = aoMeio ? -Math.PI / 2 : orbita.theta;
             var phi = aoMeio ? Math.PI / 2 : orbita.phi;
             var dx = c[0] - caixa[0];
             var dy = c[1] - caixa[1];
@@ -1176,14 +1177,30 @@
         function ajustarLuz() {
             var foco = aoMeio || orgaoMeio || (isolar && !!selecionado);
             viewer.exposure = foco ? 1.2 : 1.05;
-            viewer.shadowIntensity = orgaoMeio ? 0.35 : foco ? 0.22 : 0.9;
+            viewer.shadowIntensity = orgaoMeio ? 0.4 : foco ? 0.22 : 0.9;
+            if (orgaoMeio) viewer.exposure = 1.02;
             if (orgaoMeio) viewer.fieldOfView = "32deg";
             else if (aoMeio) viewer.fieldOfView = "34deg";
             else viewer.fieldOfView = "auto";
         }
 
         function congelarVertical() {
-            normalFixo = { x: 0, y: 0, z: -1 };
+            normalFixo = { x: 1, y: 0, z: 0 };
+        }
+
+        function marcarCamada() {
+            if (!painelCorte) return;
+            painelCorte.querySelectorAll("[data-camada]").forEach(function (botao) {
+                botao.setAttribute("aria-pressed", Number(botao.getAttribute("data-camada")) === camadaAtual ? "true" : "false");
+            });
+        }
+
+        function usarCamada(indice) {
+            camadaAtual = indice;
+            profundidade = camadasCorte[indice];
+            marcarCamada();
+            aplicarCorte();
+            atualizarMarcadores();
         }
 
         function enquadrarOrgao() {
@@ -1191,9 +1208,9 @@
             congelarVertical();
             var empurra = caixa[3] * 0.03;
             pulso = 1 - pulso;
-            viewer.cameraTarget = metros(caixa[0] + pulso * 0.00001) + " " +
-                metros(caixa[1] + normalFixo.y * empurra) + " " + metros(caixa[2] + normalFixo.z * empurra);
-            viewer.cameraOrbit = "0deg 90deg " + metros(caixa[3] * 2.25);
+            viewer.cameraTarget = metros(caixa[0] + normalFixo.x * empurra + pulso * 0.00001) + " " +
+                metros(caixa[1]) + " " + metros(caixa[2]);
+            viewer.cameraOrbit = "-90deg 90deg " + metros(caixa[3] * 2.35);
             ajustarLuz();
         }
 
@@ -1337,9 +1354,9 @@
             }
             if (dicaCorte) {
                 dicaCorte.textContent = orgaoMeio
-                    ? "A metade da frente saiu. Gire o órgão para olhar o interior, como uma peça aberta na mesa."
+                    ? "Corte no meio, na vertical. A camada 3 é o centro. As outras andam de um lado ao outro."
                     : aoMeio
-                        ? "A peça está aberta no meio. Gire para ver o interior."
+                        ? "A peça está aberta no meio, na vertical. Gire para ver o interior."
                         : "Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada.";
             }
         }
@@ -1362,7 +1379,9 @@
             isolar = false;
             orgaoMeio = true;
             cortePreso = false;
-            profundidade = typeof atual.meio === "number" ? atual.meio : 0.5;
+            camadaAtual = 2;
+            profundidade = camadasCorte[camadaAtual];
+            marcarCamada();
             alternar(btnMeio, false);
             alternar(btnIsolar, false);
             alternar(btnOrgao, true);
@@ -1377,7 +1396,7 @@
             enquadrarOrgao();
             aplicarCorte();
             atualizarMarcadores();
-            if (status) status.textContent = "Órgão aberto no meio. Gire para ver por dentro e toque um número para saber o nome.";
+            if (status) status.textContent = "Órgão aberto no meio, na vertical. A camada 3 é o centro. Gire e toque um número.";
         }
 
         function definirAoMeio(ligado) {
@@ -1395,7 +1414,9 @@
                 alternar(btnOrgao, false);
                 isolar = true;
                 alternar(btnIsolar, true);
-                profundidade = 0.5;
+                camadaAtual = 2;
+                profundidade = camadasCorte[camadaAtual];
+                marcarCamada();
                 cortePreso = false;
                 if (!porDentro) definirPorDentro(true);
                 if (controleCorte) {
@@ -1716,6 +1737,15 @@
             });
         }
         if (painelCorte) {
+            painelCorte.querySelectorAll("[data-camada]").forEach(function (botao) {
+                botao.addEventListener("click", function () {
+                    if (!orgaoMeio && !aoMeio) return;
+                    usarCamada(Number(botao.getAttribute("data-camada")));
+                    if (status && orgaoMeio) {
+                        status.textContent = "Camada " + (camadaAtual + 1) + " de 5. A 3 é o meio do órgão.";
+                    }
+                });
+            });
             painelCorte.querySelectorAll("[data-eixo]").forEach(function (botao) {
                 botao.addEventListener("click", function () {
                     eixoCorte = botao.getAttribute("data-eixo");
