@@ -830,9 +830,12 @@
         var btnXray = document.querySelector("[data-3d-xray]");
         var btnInside = document.querySelector("[data-3d-inside]");
         var btnIsolar = document.querySelector("[data-3d-isolate]");
+        var btnMeio = document.querySelector("[data-3d-half]");
         var btnReset = document.querySelector("[data-3d-reset]");
         var painelCorte = document.querySelector("[data-3d-cut]");
         var controleCorte = document.querySelector("[data-3d-depth]");
+        var rotuloCorte = document.querySelector("[data-3d-depth-label]");
+        var dicaCorte = document.querySelector("[data-3d-cut-hint]");
         var partGroup = document.querySelector("[data-part-group]");
         var partName = document.querySelector("[data-part-name]");
         var partInfo = document.querySelector("[data-part-info]");
@@ -865,6 +868,7 @@
         var planoCorte = null;
         var planoLista = null;
         var isolar = false;
+        var aoMeio = false;
         var girando = false;
         var quiz = null;
         var pulso = 0;
@@ -1006,10 +1010,14 @@
         }
 
         function garantirCorte() {
-            if (!porDentro || !garantirVetores()) return;
+            if ((!porDentro && !aoMeio) || !garantirVetores()) return;
             var gl = rendererWebGL();
             if (gl) gl.localClippingEnabled = true;
-            cadaMaterial(function (mat) {
+            cadaMaterial(function (mat, mesh, nome) {
+                if (aoMeio && nome !== selecionado) {
+                    if (mat.clippingPlanes) mat.clippingPlanes = null;
+                    return;
+                }
                 if (mat.userData.ladoOriginal == null) mat.userData.ladoOriginal = mat.side;
                 if (mat.side !== 2) mat.side = 2;
                 if (mat.clippingPlanes !== planoLista) {
@@ -1034,7 +1042,7 @@
         var aplicandoCorte = false;
 
         function aplicarCorte(theta, phi) {
-            if (aplicandoCorte || !porDentro || !garantirVetores()) return;
+            if (aplicandoCorte || (!porDentro && !aoMeio) || !garantirVetores()) return;
             aplicandoCorte = true;
             var malha = primeiraMalha();
             var pai = malha && malha.parent;
@@ -1043,10 +1051,14 @@
                 return;
             }
             var normal = normalLocal(theta, phi);
-            var caixa = dados.caixa;
-            var desloc = alcanceCorte() * (2 * profundidade - 1);
+            var peca = aoMeio && selecionado ? partes[selecionado] : null;
+            var origem = peca ? peca.centro : dados.caixa;
+            var alcance = peca
+                ? Math.max(origem[3] * 0.5, dados.caixa[3] * 0.012)
+                : alcanceCorte();
+            var desloc = alcance * (2 * profundidade - 1);
             pai.updateWorldMatrix(true, false);
-            vetorA.set(caixa[0] + normal.x * desloc, caixa[1] + normal.y * desloc, caixa[2] + normal.z * desloc);
+            vetorA.set(origem[0] + normal.x * desloc, origem[1] + normal.y * desloc, origem[2] + normal.z * desloc);
             pai.localToWorld(vetorA);
             vetorB.set(normal.x, normal.y, normal.z);
             if (vetorB.transformDirection) vetorB.transformDirection(pai.matrixWorld);
@@ -1084,6 +1096,11 @@
 
         function definirPorDentro(ligado) {
             porDentro = !!ligado;
+            if (!porDentro && aoMeio) {
+                aoMeio = false;
+                alternar(btnMeio, false);
+                rotuloDoCorte();
+            }
             alternar(btnInside, porDentro);
             if (painelCorte) painelCorte.hidden = !porDentro;
             viewer.classList.toggle("is-inside", porDentro);
@@ -1097,9 +1114,11 @@
             var c = parte.centro;
             var caixa = dados.caixa;
             var interna = porDentro && !eCasca(parte);
-            var raio = interna
-                ? Math.min(Math.max(c[3] * 6, caixa[3] * 0.42), caixa[3] * 0.78)
-                : Math.min(Math.max(c[3] * 3.2, caixa[3] * 0.3), caixa[3] * 1.4);
+            var raio = aoMeio
+                ? Math.min(Math.max(c[3] * 3.6, caixa[3] * 0.32), caixa[3] * 0.95)
+                : interna
+                    ? Math.min(Math.max(c[3] * 6, caixa[3] * 0.42), caixa[3] * 0.78)
+                    : Math.min(Math.max(c[3] * 3.2, caixa[3] * 0.3), caixa[3] * 1.4);
             var orbita = viewer.getCameraOrbit();
             var theta = orbita.theta;
             var phi = orbita.phi;
@@ -1112,9 +1131,25 @@
                 phi = Math.min(Math.max(Math.acos(dy / dist), 0.35), 2.8);
             }
             pulso = 1 - pulso;
-            viewer.cameraTarget = metros(c[0] + pulso * 0.00001) + " " + metros(c[1]) + " " + metros(c[2]);
+            var alvoX = c[0];
+            var alvoY = c[1];
+            var alvoZ = c[2];
+            if (aoMeio) {
+                var empurra = Math.max(c[3] * 0.18, caixa[3] * 0.02);
+                var paraDentro = eixoCorte === "olhar" ? normalDe(theta, phi) : normalLocal();
+                alvoX += paraDentro.x * empurra;
+                alvoY += paraDentro.y * empurra;
+                alvoZ += paraDentro.z * empurra;
+            }
+            viewer.cameraTarget = metros(alvoX + pulso * 0.00001) + " " + metros(alvoY) + " " + metros(alvoZ);
             viewer.cameraOrbit = theta + "rad " + phi + "rad " + metros(raio);
-            viewer.fieldOfView = "auto";
+            ajustarLuz();
+            if (aoMeio) {
+                aplicarCorte(eixoCorte === "olhar" ? theta : null, eixoCorte === "olhar" ? phi : null);
+                if (status) status.textContent = "Metade de " + parte.nome + ". O 50 da barra é o meio da peça, como uma laranja.";
+                atualizarMarcadores();
+                return;
+            }
             if (porDentro && cortePreso) {
                 var normal = eixoCorte === "olhar" ? normalDe(theta, phi) : normalLocal();
                 profundidade = profundidadeNoPonto(c, normal);
@@ -1131,37 +1166,62 @@
             return partes[chave] ? partes[chave].nome : chave.replace(/_/g, " ");
         }
 
+        function ajustarLuz() {
+            var foco = aoMeio || (isolar && !!selecionado);
+            viewer.exposure = foco ? 1.22 : 1.05;
+            viewer.shadowIntensity = foco ? 0.22 : 0.9;
+            if (!aoMeio) viewer.fieldOfView = "auto";
+            else viewer.fieldOfView = "34deg";
+        }
+
         function pintar() {
+            if ((porDentro || aoMeio) && !planoLista) garantirVetores();
+            var gl = rendererWebGL();
+            if (gl && (porDentro || aoMeio)) gl.localClippingEnabled = true;
             materiais.forEach(function (m) {
                 var cor = m.cor;
                 var alfa = cor[3];
                 var modo = m.modo;
                 var escolhido = m.nome === selecionado;
-                if (isolar && selecionado && !escolhido) {
-                    alfa = 0.06;
-                    modo = "BLEND";
-                } else if (porDentro && m.casca && !escolhido) {
-                    alfa = Math.min(alfa, 0.08);
-                    modo = "BLEND";
-                } else if (raiox && m.casca && !escolhido) {
+                var esconder = !!(selecionado && (isolar || aoMeio) && !escolhido);
+                if (!esconder && raiox && m.casca && !escolhido) {
                     alfa = Math.min(alfa, atual.alfaCasca || 0.12);
                     modo = "BLEND";
                 }
-                m.mat.pbrMetallicRoughness.setBaseColorFactor([cor[0], cor[1], cor[2], alfa]);
-                m.mat.setAlphaMode(modo);
-                m.mat.setEmissiveFactor(escolhido ? [0.55, 0.38, 0.05] : [0, 0, 0]);
-                var fantasma = porDentro && m.casca && !escolhido;
+                m.mat.pbrMetallicRoughness.setBaseColorFactor([cor[0], cor[1], cor[2], esconder ? 0 : alfa]);
+                m.mat.setAlphaMode(esconder ? "MASK" : modo);
+                m.mat.setEmissiveFactor(escolhido && !aoMeio ? [0.16, 0.1, 0.02] : [0, 0, 0]);
+                var fantasma = !esconder && raiox && m.casca && !escolhido;
+                var cortar = (aoMeio && escolhido) || (porDentro && !aoMeio);
                 (malhas[m.nome] || []).forEach(function (malha) {
-                    malha.userData.noHit = (fantasma || alfa < 0.2) && !escolhido;
+                    malha.visible = !esconder;
+                    malha.userData.noHit = esconder || (fantasma && alfa < 0.2);
                     var mats = Array.isArray(malha.material) ? malha.material : [malha.material];
                     mats.forEach(function (mat) {
                         if (!mat) return;
+                        if (mat.userData.ladoOriginal == null) mat.userData.ladoOriginal = mat.side;
                         if (mat.userData.depthOriginal == null) mat.userData.depthOriginal = mat.depthWrite;
-                        mat.depthWrite = fantasma || (raiox && m.casca && !escolhido) ? false : mat.userData.depthOriginal;
+                        if (mat.userData.roughOriginal == null && mat.roughness != null) mat.userData.roughOriginal = mat.roughness;
+                        if (cortar && planoLista) {
+                            if (mat.clippingPlanes !== planoLista) {
+                                mat.clippingPlanes = planoLista;
+                                mat.clipShadows = true;
+                                mat.needsUpdate = true;
+                            }
+                            mat.side = 2;
+                        } else if (mat.clippingPlanes) {
+                            mat.clippingPlanes = null;
+                            mat.side = mat.userData.ladoOriginal;
+                        }
+                        mat.depthWrite = fantasma ? false : mat.userData.depthOriginal !== false;
+                        if (mat.roughness != null && mat.userData.roughOriginal != null) {
+                            mat.roughness = aoMeio && escolhido ? Math.min(mat.userData.roughOriginal, 0.42) : mat.userData.roughOriginal;
+                        }
                     });
                 });
             });
-            if (porDentro) garantirCorte();
+            ajustarLuz();
+            atualizarMarcadores();
         }
 
         function mostrarParte(chave) {
@@ -1169,13 +1229,107 @@
             if (!parte) {
                 partGroup.textContent = "Nenhuma estrutura escolhida";
                 partName.textContent = "Toque o modelo";
-                partInfo.textContent = "Clique numa parte do órgão ou escolha na lista abaixo. No celular, toque sem arrastar.";
+                partInfo.textContent = "Clique numa parte do órgão, num número ou escolha na lista. No celular, toque sem arrastar.";
                 return;
             }
-            partGroup.textContent = parte.grupo;
+            partGroup.textContent = "nº " + parte.numero + " de " + dados.partes.length + " · " + parte.grupo;
             partName.textContent = parte.nome;
             partInfo.textContent = parte.info || dados.grupos[parte.grupo] ||
                 "Use o nome para procurar a estrutura no atlas de imagens e nos livros da biblioteca.";
+        }
+
+        function atualizarMarcadores() {
+            if (!viewer) return;
+            var abertos = {};
+            if (lista) {
+                lista.querySelectorAll(".parts-group").forEach(function (bloco) {
+                    if (bloco.open) abertos[bloco.getAttribute("data-grupo")] = true;
+                });
+            }
+            viewer.querySelectorAll(".marca3d").forEach(function (marca) {
+                var chave = marca.getAttribute("data-marca");
+                var parte = partes[chave];
+                var chip = lista && lista.querySelector('[data-parte="' + chave + '"]');
+                var filtrado = chip && chip.classList.contains("is-hidden");
+                var soAPeca = (isolar || aoMeio) && selecionado;
+                var visivel = !!parte && !filtrado && (chave === selecionado || (!soAPeca && abertos[parte.grupo]));
+                marca.hidden = !visivel;
+                marca.classList.toggle("is-on", chave === selecionado);
+                marca.setAttribute("aria-pressed", chave === selecionado ? "true" : "false");
+            });
+        }
+
+        function criarMarcadores() {
+            viewer.querySelectorAll(".marca3d").forEach(function (marca) { marca.remove(); });
+            dados.partes.forEach(function (p) {
+                var parte = partes[p[0]];
+                if (!parte) return;
+                var botao = document.createElement("button");
+                botao.type = "button";
+                botao.className = "marca3d";
+                botao.slot = "hotspot-" + p[0];
+                botao.setAttribute("data-marca", p[0]);
+                botao.setAttribute("data-position", p[4][0].toFixed(4) + "m " + p[4][1].toFixed(4) + "m " + p[4][2].toFixed(4) + "m");
+                if (eCasca(parte)) {
+                    var dx = p[4][0] - dados.caixa[0];
+                    var dy = p[4][1] - dados.caixa[1];
+                    var dz = p[4][2] - dados.caixa[2];
+                    var dist = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1;
+                    botao.setAttribute("data-normal", (dx / dist).toFixed(3) + " " + (dy / dist).toFixed(3) + " " + (dz / dist).toFixed(3));
+                }
+                botao.textContent = String(parte.numero);
+                botao.title = parte.numero + ". " + parte.nome;
+                botao.setAttribute("aria-label", parte.numero + ". " + parte.nome);
+                botao.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (quiz) return;
+                    selecionar(p[0], true);
+                });
+                viewer.appendChild(botao);
+            });
+            atualizarMarcadores();
+        }
+
+        function rotuloDoCorte() {
+            if (rotuloCorte) rotuloCorte.textContent = aoMeio ? "Faca na peça isolada" : "Profundidade do corte";
+            if (dicaCorte) {
+                dicaCorte.textContent = aoMeio
+                    ? "50 corta exatamente no meio. Para a esquerda sobra mais peça; para a direita a faca avança."
+                    : "Olhar acompanha a câmera. Frente, lado e cima deixam a fatia parada. Ao meio corta só a peça isolada.";
+            }
+        }
+
+        function definirAoMeio(ligado) {
+            if (ligado && !selecionado) {
+                aoMeio = false;
+                alternar(btnMeio, false);
+                if (status) status.textContent = "Escolha uma estrutura na lista ou no modelo. Aí Ao meio corta essa peça pela metade.";
+                return;
+            }
+            aoMeio = !!ligado;
+            alternar(btnMeio, aoMeio);
+            if (aoMeio) {
+                isolar = true;
+                alternar(btnIsolar, true);
+                profundidade = 0.5;
+                cortePreso = false;
+                if (!porDentro) definirPorDentro(true);
+                if (controleCorte) {
+                    controleCorte.value = "50";
+                    controleCorte.setAttribute("aria-valuenow", "50");
+                }
+                rotuloDoCorte();
+                pintar();
+                aproximar(partes[selecionado]);
+                return;
+            }
+            rotuloDoCorte();
+            pintar();
+            if (porDentro) aplicarCorte();
+            else limparCorte();
+            atualizarMarcadores();
+            if (status) status.textContent = "A peça voltou inteira. Ao meio corta de novo pela metade.";
         }
 
         function marcarNaLista(chave) {
@@ -1189,8 +1343,29 @@
             mostrarParte(selecionado);
             marcarNaLista(selecionado);
             var parte = selecionado ? partes[selecionado] : null;
+            if (!parte && aoMeio) {
+                aoMeio = false;
+                isolar = false;
+                alternar(btnMeio, false);
+                alternar(btnIsolar, false);
+                rotuloDoCorte();
+            }
+            if (aoMeio && parte) {
+                isolar = true;
+                alternar(btnIsolar, true);
+                profundidade = 0.5;
+                cortePreso = false;
+                if (controleCorte) {
+                    controleCorte.value = "50";
+                    controleCorte.setAttribute("aria-valuenow", "50");
+                }
+                if (!porDentro) definirPorDentro(true);
+                pintar();
+                aproximar(parte);
+                return;
+            }
             var interna = !!(parte && !eCasca(parte) && atual.casca);
-            cortePreso = interna;
+            cortePreso = interna && !aoMeio;
             pintar();
             if (mover && interna) {
                 if (!porDentro) definirPorDentro(true);
@@ -1198,7 +1373,8 @@
                 return;
             }
             if (mover && parte) aproximar(parte);
-            else if (porDentro) aplicarCorte();
+            else if (porDentro || aoMeio) aplicarCorte();
+            atualizarMarcadores();
         }
 
         function montarLista() {
@@ -1217,15 +1393,21 @@
                 var bloco = document.createElement("details");
                 bloco.className = "parts-group";
                 if (aberto || index === 0) bloco.open = true;
+                bloco.setAttribute("data-grupo", grupo);
                 var resumo = document.createElement("summary");
                 resumo.textContent = grupo + " · " + porGrupo[grupo].length;
                 bloco.appendChild(resumo);
+                bloco.addEventListener("toggle", atualizarMarcadores);
                 var chips = document.createElement("div");
                 chips.className = "chips";
                 porGrupo[grupo].forEach(function (p) {
                     var chip = document.createElement("button");
                     chip.type = "button";
-                    chip.textContent = p[1];
+                    var numero = document.createElement("span");
+                    numero.className = "chip-n";
+                    numero.textContent = String(partes[p[0]].numero);
+                    chip.appendChild(numero);
+                    chip.appendChild(document.createTextNode(p[1]));
                     chip.setAttribute("data-parte", p[0]);
                     chip.setAttribute("data-busca", semAcento(p[1] + " " + p[0].replace(/_/g, " ")));
                     chip.setAttribute("aria-pressed", "false");
@@ -1240,6 +1422,7 @@
             });
             if (contagem) contagem.textContent = "(" + dados.partes.length + ")";
             if (filtro) filtro.value = "";
+            criarMarcadores();
         }
 
         if (filtro) {
@@ -1255,6 +1438,7 @@
                     bloco.classList.toggle("is-hidden", visiveis === 0);
                     if (q && visiveis) bloco.open = true;
                 });
+                atualizarMarcadores();
             });
         }
 
@@ -1300,11 +1484,16 @@
             atual = orgao;
             dados = dadosAtlas[orgao.id];
             partes = {};
-            dados.partes.forEach(function (p) {
-                partes[p[0]] = { chave: p[0], nome: p[1], grupo: p[2], info: p[3], centro: p[4] };
+            dados.partes.forEach(function (p, indice) {
+                partes[p[0]] = { chave: p[0], nome: p[1], grupo: p[2], info: p[3], centro: p[4], numero: indice + 1 };
             });
             selecionado = null;
             cortePreso = false;
+            aoMeio = false;
+            isolar = false;
+            alternar(btnMeio, false);
+            alternar(btnIsolar, false);
+            ajustarLuz();
             materiais = [];
             kicker.textContent = orgao.nome + " · " + dados.partes.length + " estruturas";
             title.textContent = orgao.titulo;
@@ -1389,7 +1578,7 @@
                     return;
                 }
                 var caixa = viewer.getBoundingClientRect();
-                hover.textContent = nomeDe(chave);
+                hover.textContent = (partes[chave] ? partes[chave].numero + " · " : "") + nomeDe(chave);
                 hover.style.left = (event.clientX - caixa.left + 14) + "px";
                 hover.style.top = (event.clientY - caixa.top + 12) + "px";
                 hover.hidden = false;
@@ -1433,7 +1622,7 @@
                 botao.addEventListener("click", function () {
                     eixoCorte = botao.getAttribute("data-eixo");
                     sincronizarEixos();
-                    if (cortePreso && selecionado && partes[selecionado]) {
+                    if (!aoMeio && cortePreso && selecionado && partes[selecionado]) {
                         profundidade = profundidadeNoPonto(partes[selecionado].centro, normalLocal());
                         if (controleCorte) {
                             controleCorte.value = String(Math.round(profundidade * 100));
@@ -1445,8 +1634,8 @@
             });
         }
         viewer.addEventListener("camera-change", function () {
-            if (!porDentro || eixoCorte !== "olhar") return;
-            if (cortePreso && selecionado && partes[selecionado]) {
+            if (eixoCorte !== "olhar" || (!porDentro && !aoMeio)) return;
+            if (!aoMeio && cortePreso && selecionado && partes[selecionado]) {
                 profundidade = profundidadeNoPonto(partes[selecionado].centro, normalLocal());
                 if (controleCorte) {
                     controleCorte.value = String(Math.round(profundidade * 100));
@@ -1457,19 +1646,36 @@
         });
         if (btnIsolar) {
             btnIsolar.addEventListener("click", function () {
+                if (isolar && aoMeio) {
+                    aoMeio = false;
+                    alternar(btnMeio, false);
+                    rotuloDoCorte();
+                }
                 isolar = !isolar;
                 alternar(btnIsolar, isolar);
-                if (isolar && !selecionado && status) status.textContent = "Escolha uma estrutura para isolar: toque o modelo ou use a lista.";
+                if (isolar && !selecionado && status) status.textContent = "Escolha uma estrutura para isolar. Depois, Ao meio corta essa peça pela metade.";
+                else if (isolar && status) status.textContent = nomeDe(selecionado) + " isolada. Ao meio abre essa peça como uma laranja.";
                 pintar();
+                if (porDentro) aplicarCorte();
+            });
+        }
+        if (btnMeio) {
+            btnMeio.addEventListener("click", function () {
+                definirAoMeio(!aoMeio);
             });
         }
         if (btnReset) {
             btnReset.addEventListener("click", function () {
                 cortePreso = false;
+                aoMeio = false;
+                isolar = false;
+                alternar(btnMeio, false);
+                alternar(btnIsolar, false);
+                rotuloDoCorte();
                 if (porDentro) definirPorDentro(false);
                 selecionar(null, false);
                 olhar("frente");
-                if (status) status.textContent = "Vista de fora, de frente. Por dentro abre o órgão de novo.";
+                if (status) status.textContent = "Vista de fora, de frente. Isolar separa uma peça e Ao meio corta essa peça pela metade.";
             });
         }
         if (btnSpin) {
@@ -1516,6 +1722,13 @@
                 }
                 definirPorDentro(true);
                 aviso = " Por dentro está ligado, para a estrutura não ficar atrás da parede.";
+            }
+            if (aoMeio || isolar) {
+                aoMeio = false;
+                isolar = false;
+                alternar(btnMeio, false);
+                alternar(btnIsolar, false);
+                rotuloDoCorte();
             }
             selecionar(null, false);
             quizAsk.textContent = "Onde fica: " + alvo[1] + "?" + aviso;

@@ -964,6 +964,28 @@ model-viewer.is-pointing { cursor: pointer; }
     color: rgba(246, 239, 228, 0.78);
     font-size: 0.88rem;
 }
+.marca3d {
+    display: grid;
+    place-items: center;
+    width: 1.55rem;
+    height: 1.55rem;
+    padding: 0;
+    border: 2px solid rgba(28, 23, 20, 0.55);
+    border-radius: 50%;
+    background: #f6efe4;
+    color: #1c1714;
+    font: 700 0.72rem/1 "Source Sans 3", "Segoe UI", sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+}
+.marca3d.is-on {
+    width: 1.9rem;
+    height: 1.9rem;
+    border-color: #f6efe4;
+    background: #9d2c1f;
+    color: white;
+    font-size: 0.82rem;
+}
 .hover-tag {
     position: absolute;
     z-index: 3;
@@ -1057,14 +1079,33 @@ model-viewer.is-pointing { cursor: pointer; }
 .parts-group summary { padding: 0.4rem 0; cursor: pointer; font-weight: 600; }
 .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0.1rem 0 0.6rem; }
 .chips button {
+    display: inline-flex;
+    align-items: center;
     border: 1px solid var(--line);
     background: white;
     color: var(--ink);
     border-radius: 999px;
-    padding: 0.28rem 0.7rem;
+    padding: 0.22rem 0.7rem 0.22rem 0.28rem;
     font: inherit;
     font-size: 0.9rem;
     cursor: pointer;
+}
+.chip-n {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.4rem;
+    height: 1.4rem;
+    margin-right: 0.4rem;
+    padding: 0 0.28rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--cream);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+.chips button[aria-pressed="true"] .chip-n {
+    background: white;
+    color: var(--pine);
 }
 .chips button:hover { border-color: var(--pine); color: var(--pine); }
 .chips button[aria-pressed="true"] { background: var(--pine); border-color: var(--pine); color: white; }
